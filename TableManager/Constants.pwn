@@ -1,0 +1,1 @@
+const MAX_TM_POKER_TABLES = 20;

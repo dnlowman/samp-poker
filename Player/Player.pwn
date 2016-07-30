@@ -1,0 +1,124 @@
+#define Pkr_IsPlayerOnAnyGame(%0) \
+            (Pkr_GetPlayerGame(%0) != -1)
+
+Pkr_GetPlayerGame(const playerid) {
+    for(new _i = 0; _i < MAX_POKER_GAMES; ++_i) {
+        new _slot = Pkr_GetPlayerSlot(playerid, _i);
+        if(_slot != -1)
+            return _i;
+    }
+    return -1;
+}
+
+Pkr_GetPlayerSlot(const playerid, const gameId) {
+    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i) {
+        if(g_rgPokerGames[gameId][PLAYERS][_i] == playerid) {
+            return _i;
+        }
+    }
+    return -1;
+}
+
+bool: Pkr_AssignPlayerToGame(const playerid, const gameId, const chips) {
+    if(Pkr_GetIsAssigned(gameId) == true) {
+        new _slot = Pkr_GetAvailablePlayerSlot(gameId);
+        if(_slot == -1) {
+            return false;
+        }
+        g_rgPokerGames[gameId][PLAYERS][_slot] = playerid;
+        Pkr_Update3DTextLabel(gameId);
+        Pkr_ShowPlayerTextDraws(playerid, gameId);
+        Pkr_SetPlayerNotReady(gameId, _slot);
+        Pkr_SetPlayerChips(gameId, _slot, chips);
+        Pkr_SetPlayerStatusInLobby(gameId, _slot);
+        Pkr_CreatePlayerPrivateCardTDs(gameId, _slot);
+        SelectTextDraw(playerid, COLOR_ORANGE);
+
+        Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has joined the game. (Game ID: %d)", Pkr_GetClientName(playerid), gameId);
+        return true;
+    }
+    return false;
+}
+
+bool: Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
+    new _slot = Pkr_GetPlayerSlot(playerid, gameId);
+    if(_slot == -1)
+        return false;
+
+    Pkr_UnassignPlayerSlotFromGame(gameId, _slot);
+
+    Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has left the game. (Game ID: %d)", Pkr_GetClientName(playerid), gameId);
+
+    if(Pkr_GetAmountOfPlayersOnGame(gameId) == 0)
+        Pkr_DestroyGame(gameId);
+
+    return true;
+}
+
+Pkr_UnassignPlayerSlotFromGame(const gameId, const playerSlot)
+{
+    if(g_rgPokerGames[gameId][PLAYERS][playerSlot] == INVALID_PLAYER_ID)
+        return;
+
+    Pkr_DestroyPlayerPrivateCardTDs(gameId, playerSlot);
+    Pkr_SetReadyTextDrawEmpty(gameId, playerSlot);
+    Pkr_HidePlayerTextDraws(Pkr_GetPlayerId(gameId, playerSlot), gameId);
+    Pkr_RemovePlayerVars(gameId, playerSlot);
+    Pkr_Update3DTextLabel(gameId);
+}
+
+#define Pkr_UnassignAllPlayers(%0) \
+            for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i) Pkr_UnassignPlayerSlotFromGame(%0, _i)
+
+Pkr_GetAmountOfPlayersOnGame(const gameId) {
+    if(Pkr_GetIsAssigned(gameId) == true) {
+        new _count = 0;
+        for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i) {
+            if(g_rgPokerGames[gameId][PLAYERS][_i] != INVALID_PLAYER_ID)
+                ++_count;
+        }
+        return _count;
+    }
+    return -1;
+}
+
+Pkr_GetAvailablePlayerSlot(const gameId) {
+    if(Pkr_GetIsAssigned(gameId) == false)
+        return -1;
+
+    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i) {
+        if(g_rgPokerGames[gameId][PLAYERS][_i] == INVALID_PLAYER_ID)
+            return _i;
+    }
+    return -1;
+}
+
+Pkr_GetGameNearPlayer(const playerid) {
+    for(new _i = 0, Float: _pos[3], Float: _distance; _i < MAX_POKER_GAMES; ++_i) {
+        Pkr_GetPosition(_i, _pos[0], _pos[1], _pos[2]);
+        _distance = GetPlayerDistanceFromPoint(playerid, _pos[0], _pos[1], _pos[2]);
+        if(_distance < 1.6 && Pkr_GetIsAssigned(_i))
+            return _i;
+    }
+    return -1;
+}
+
+Pkr_RemovePlayerVars(const gameId, const player) {
+    DeletePVar(g_rgPokerGames[gameId][PLAYERS][player], POKER_PLAYER_READY_VAR);
+    g_rgPokerGames[gameId][PLAYERS][player] = INVALID_PLAYER_ID;
+    g_rgPokerGames[gameId][PLAYER_CHIPS][player] = 0;
+    g_rgPokerGames[gameId][PLAYER_STATUS][player] = POKER_PLAYER_STATUS: EMPTY;
+    return;
+}
+
+stock Pkr_SumPotContributions(const gameId)
+{
+    new _total = 0;
+    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
+    {
+        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, _i) != POKER_PLAYER_STATUS: FOLDED)
+            _total += Pkr_GetPlayerPotContribution(gameId, _i);
+    }
+
+    return _total;
+}

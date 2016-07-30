@@ -1,0 +1,5 @@
+#include "Game.pwn"
+#include "GameState.pwn"
+#include "GameCommands.pwn"
+#include "GameDialogs.pwn"
+#include "GameCallbacks.pwn"
