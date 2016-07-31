@@ -96,10 +96,16 @@ enum POKER_GAME {
     POKER_GAME_STATUS: GAME_STATUS,
     CURRENT_BET,
     PLAYER_POT_CONTRIBUTIONS[MAX_POKER_PLAYERS],
-    PLAYER_BET_CONTRIBUTIONS[MAX_POKER_PLAYERS]
+    PLAYER_BET_CONTRIBUTIONS[MAX_POKER_PLAYERS],
+    LAST_AGGRESSIVE_PLAYER
 };
 new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
+#define Pkr_GetLastAggressivePlayer(%0) \
+            g_rgPokerGames[%0][LAST_AGGRESSIVE_PLAYER]
+
+#define Pkr_SetLastAggressivePlayer(%0,%1) \
+            g_rgPokerGames[%0][LAST_AGGRESSIVE_PLAYER] = %1
 
 #define Pkr_SetPlayerBetContribution(%0,%1,%2) \
             g_rgPokerGames[%0][PLAYER_BET_CONTRIBUTIONS][%1] = %2

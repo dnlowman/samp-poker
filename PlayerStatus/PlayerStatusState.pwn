@@ -60,6 +60,8 @@ stock bool: Pkr_HasEveryonePlayed(const gameId)
         }
     }
 
+    Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "Total players who have bet: %d", _betCount);
+
     return _betCount == 0 && !Pkr_ActivePlayers(gameId);
 }
 
