@@ -53,8 +53,6 @@ stock Pkr_GameShowRaiseDialog(const playerid, const gameId, const RAISE_DIALOG_E
     new _format[2048];
     new _slot = Pkr_GetCurrentPlayerPosition(gameId);
 
-    #pragma unused _slot
-
     format(_format, 2048, "Hi {FF9900}%s{A9C4E4},\n\nBy raising you're increasing the existing\nbet to an amount you're willing to pay.\n\n", Pkr_GetClientName(playerid));
 
     switch(error)
@@ -67,7 +65,7 @@ stock Pkr_GameShowRaiseDialog(const playerid, const gameId, const RAISE_DIALOG_E
             format(_format, 2048, "%s{D10047}Your raise must meet the last bet, please enter\na valid amount of chips you wish to raise.{A9C4E4}\n\n", _format);
     }
 
-    //format(_format, 2048, "%sYour Chips: {00AD43}$%s{A9C4E4}.\nCurrent Bet: {00AD43}$%s{A9C4E4}.\n", _format, Pkr_FormatNumber(Pkr_GetPlayerChips(gameId, _slot)), Pkr_FormatNumber(Pkr_GetCurrentBet(gameId) - Pkr_GetPlayerBet(gameId, _slot)));
+    format(_format, 2048, "%sYour Chips: {00AD43}$%s{A9C4E4}.\nMinimum raise: {00AD43}$%s{A9C4E4}.\n", _format, Pkr_FormatNumber(Pkr_GetPlayerChips(gameId, _slot)), Pkr_FormatNumber(Pkr_GetCurrentBet(gameId) - Pkr_GetPlayerBetContribution(gameId, _slot)));
     format(_format, 2048, "%sEnter the amount of chips you wish to\nraise below and click on '{FF9900}Raise{A9C4E4}' to \nproceed, if you have changed your mind\nclick on '{FF9900}Cancel{A9C4E4}'.", _format);
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: RAISE);
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Raise", _format, "Raise", "Cancel");
@@ -79,7 +77,10 @@ stock Pkr_GameShowRaiseConfirmDialog(const playerid)
     new _format[2048];
     new _gameId = Pkr_GetPlayerGame(playerid);
     new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
-    new _raiseAmount = GetPVarInt(Pkr_GetPlayerId(_gameId, _slot), "Pkr_RaiseAmount");
+
+    new _inputAmount = GetPVarInt(playerid, POKER_PLAYER_RAISE_AMOUNT_VAR);
+    new _amountToMeet = Pkr_GetCurrentBet(_gameId) - Pkr_GetPlayerBetContribution(_gameId, _slot);
+    new _raiseAmount = _inputAmount + _amountToMeet;
     new _playerChips = Pkr_GetPlayerChips(_gameId, _slot) - _raiseAmount;
 
     format(_format, sizeof(_format), "Thank you {FF9900}%s{A9C4E4},\n\nBefore you raise we would like to confirm the\namount of chips you wish to raise with.\n\n", Pkr_GetClientName(playerid));

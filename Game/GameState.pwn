@@ -293,7 +293,7 @@ static stock PkrSys_AssignBlinds(const gameId)
     Pkr_SetPlayerChips(gameId, _bigBlindPosition, Pkr_GetPlayerChips(gameId, _bigBlindPosition) - Pkr_GetBigBlind(gameId));
     Pkr_SetCurrentBet(gameId, Pkr_GetBigBlind(gameId));
     Pkr_AddToPot(gameId, Pkr_GetBigBlind(gameId));
-    Pkr_AddToPlayerBetContribution(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
+    Pkr_AddToPlayerBetContribution(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));
     printf("[!] $%d has been added to %d's bet contribution. (Big Blind)", Pkr_GetBigBlind(gameId), _bigBlindPosition);
 
     Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s is the big blind $%d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, _bigBlindPosition)), Pkr_GetBigBlind(gameId));

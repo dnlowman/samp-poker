@@ -36,13 +36,25 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new _gameId = Pkr_GetPlayerGame(playerid);
             new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
-            #pragma unused _slot
-
             new inputAmount = strval(inputtext);
+            new _amountToMeet = Pkr_GetCurrentBet(_gameId) - Pkr_GetPlayerBetContribution(_gameId, _slot);
+            new _totalCost = _amountToMeet + inputAmount;
 
             if(!Pkr_IsNumeric(inputtext))
             {
                 Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NAN);
+                return;
+            }
+
+            if(inputAmount < _amountToMeet)
+            {
+                Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: LAST_BET);
+                return;
+            }
+
+            if(Pkr_GetPlayerChips(_gameId, _slot) < _totalCost)
+            {
+                Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NO_MONEY);
                 return;
             }
 
@@ -55,6 +67,9 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             new _gameId = Pkr_GetPlayerGame(playerid);
             new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
+            new _inputAmount = GetPVarInt(playerid, POKER_PLAYER_RAISE_AMOUNT_VAR);
+            new _amountToMeet = Pkr_GetCurrentBet(_gameId) - Pkr_GetPlayerBetContribution(_gameId, _slot);
+            new _totalCost = _amountToMeet + _inputAmount;
 
             if(!response)
             {
@@ -62,7 +77,17 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return;
             }
 
-            Pkr_SetPlayerStatusRaised(_gameId, _slot, 200);
+            Pkr_AddToPot(_gameId, _totalCost);
+            Pkr_MinusPlayerChips(_gameId, _slot, _totalCost);
+            Pkr_AddToPlayerBetContribution(_gameId, _slot, _totalCost);
+
+            Pkr_SendFormattedGameMessage(_gameId, COLOR_RED, "Adding to the current bet: $%d amount: $%d", Pkr_GetCurrentBet(_gameId), _inputAmount);
+
+            Pkr_AddToCurrentBet(_gameId, _inputAmount);
+
+            Pkr_SendFormattedGameMessage(_gameId, COLOR_RED, "The current bet is now: $%d", Pkr_GetCurrentBet(_gameId));
+
+            Pkr_SetPlayerStatusRaised(_gameId, _slot, _inputAmount);
             Pkr_SetNextPlayerPlaying(_gameId);
             return;
         }

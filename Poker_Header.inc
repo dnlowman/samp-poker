@@ -128,6 +128,9 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 #define Pkr_SetCurrentBet(%0,%1)  \
             g_rgPokerGames[%0][CURRENT_BET] = %1
 
+#define Pkr_AddToCurrentBet(%0,%1)  \
+            g_rgPokerGames[%0][CURRENT_BET] = Pkr_GetCurrentBet(%0) + %1
+
 #define Pkr_GetGameStatus(%0) \
             g_rgPokerGames[%0][GAME_STATUS]
 
