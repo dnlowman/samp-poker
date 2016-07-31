@@ -1,4 +1,6 @@
+#if !defined BYTES_PER_CELL
 #define BYTES_PER_CELL 			(cellbits / 8)
+#endif
 
 stock Pkr_FormatNumber(number)
 {
