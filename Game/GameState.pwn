@@ -43,6 +43,14 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
     }
 
     new _nextPlayer = Pkr_FindNextPlayer(gameId, Pkr_GetCurrentPlayerPosition(gameId));
+
+    if(Pkr_GetLastAggressivePlayer(gameId) == _nextPlayer && Pkr_GetPlayerStatus(gameId, _nextPlayer) != POKER_PLAYER_STATUS: BIG_BLIND)
+    {
+        Pkr_DealNextRound(gameId);
+        return;
+    }
+
+
     Pkr_SetPlayerPlaying(gameId, _nextPlayer);
     return;
 }
@@ -54,10 +62,10 @@ stock Pkr_SetPlayerPlaying(const gameId, const playerSlot)
     if(Pkr_GetCurrentBet(gameId) > 0)
         Pkr_SetMenuItemOneStateRaise(gameId);
 
-    /*if(Pkr_GetCurrentBet(gameId) > Pkr_GetPlayerBet(gameId, playerSlot))
+    if(Pkr_GetCurrentBet(gameId) > Pkr_GetPlayerBetContribution(gameId, playerSlot))
         Pkr_SetMenuItemTwoStateCall(gameId);
     else
-        Pkr_SetMenuItemTwoStateCheck(gameId);*/
+        Pkr_SetMenuItemTwoStateCheck(gameId);
 
     Pkr_SetPlayerStatusPlaying(gameId, playerSlot);
     return;
@@ -118,6 +126,7 @@ stock Pkr_DealNextRound(const gameId)
     }
 
     Pkr_SetCurrentBet(gameId, 0);
+    Pkr_SetLastAggressivePlayer(gameId, INVALID_PLAYER_ID);
 
     new _dealerPosition = Pkr_GetDealerPosition(gameId);
     Pkr_SetAllPlayersStatus(gameId, POKER_PLAYER_STATUS: WAITING);
@@ -294,7 +303,7 @@ static stock PkrSys_AssignBlinds(const gameId)
     Pkr_SetCurrentBet(gameId, Pkr_GetBigBlind(gameId));
     Pkr_AddToPot(gameId, Pkr_GetBigBlind(gameId));
     Pkr_AddToPlayerBetContribution(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));
-    Pkr_SetLastAggressivePlayer(gameId, _bigBlindPosition); 
+    Pkr_SetLastAggressivePlayer(gameId, _bigBlindPosition);
     printf("[!] $%d has been added to %d's bet contribution. (Big Blind)", Pkr_GetBigBlind(gameId), _bigBlindPosition);
 
     Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s is the big blind $%d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, _bigBlindPosition)), Pkr_GetBigBlind(gameId));

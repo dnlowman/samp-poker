@@ -80,6 +80,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             Pkr_AddToPot(_gameId, _totalCost);
             Pkr_MinusPlayerChips(_gameId, _slot, _totalCost);
             Pkr_AddToPlayerBetContribution(_gameId, _slot, _totalCost);
+            Pkr_SetLastAggressivePlayer(_gameId, _slot);
 
             Pkr_SendFormattedGameMessage(_gameId, COLOR_RED, "Adding to the current bet: $%d amount: $%d", Pkr_GetCurrentBet(_gameId), _inputAmount);
 
