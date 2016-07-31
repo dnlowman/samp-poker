@@ -34,6 +34,28 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if(!response)
                 return;
 
+            new _gameId = Pkr_GetPlayerGame(playerid);
+            new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
+            new inputAmount = strval(inputtext);
+
+            if(!Pkr_IsNumeric(inputtext))
+            {
+                Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NAN);
+                return;
+            }
+
+            if((Pkr_GetSmallBlindPosition(_gameId) == _slot && inputAmount < Pkr_GetCurrentBet(_gameId) - Pkr_GetSmallBlind(_gameId)) || (inputAmount < Pkr_GetCurrentBet(_gameId) && Pkr_GetSmallBlindPosition(_gameId) != _slot))
+            {
+                Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: LAST_BET);
+                return;
+            }
+
+            if(inputAmount > Pkr_GetPlayerChips(_gameId, _slot))
+            {
+                Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NO_MONEY);
+                return;
+            }
+
             Pkr_GameShowRaiseConfirmDialog(playerid);
 
             SendClientMessageToAll(COLOR_RED, "Raise...");
