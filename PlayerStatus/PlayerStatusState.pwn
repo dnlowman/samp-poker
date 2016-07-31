@@ -73,7 +73,7 @@ stock Pkr_SetPlayerStatusInLobby(const gameId, const slot) {
 }
 
 stock Pkr_SetPlayerStatusWaiting(const gameId, const slot) {
-    if(Pkr_GetPlayerStatus(gameId, slot) == POKER_PLAYER_STATUS: FOLDED)
+    if(Pkr_GetPlayerStatus(gameId, slot) == POKER_PLAYER_STATUS: FOLDED || Pkr_GetPlayerStatus(gameId, slot) == POKER_PLAYER_STATUS: ALL_IN)
         return;
 
     g_rgPokerGames[gameId][PLAYER_STATUS][slot] = POKER_PLAYER_STATUS: WAITING;
@@ -156,6 +156,9 @@ stock Pkr_SetPlayerStatusBigBlind(const gameId, const playerSlot)
 
 stock Pkr_SetPlayerStatusDealer(const gameId, const playerSlot)
 {
+    if(Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: FOLDED || Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: ALL_IN)
+        return;
+
     g_rgPokerGames[gameId][PLAYER_STATUS][playerSlot] = POKER_PLAYER_STATUS: DEALER;
     Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, "DEALER");
 

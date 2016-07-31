@@ -29,8 +29,9 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
 
     new _hasEveryoneChecked = Pkr_HasEveryoneChecked(gameId);
     new _foldedPlayersCount = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
+    new _allInPlayersCount = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
 
-    if(_hasEveryoneChecked == _playersOn - _foldedPlayersCount)
+    if(_hasEveryoneChecked == _playersOn - (_foldedPlayersCount + _allInPlayersCount))
     {
         Pkr_DealNextRound(gameId);
         return;
@@ -49,7 +50,6 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
         Pkr_DealNextRound(gameId);
         return;
     }
-
 
     Pkr_SetPlayerPlaying(gameId, _nextPlayer);
     return;
@@ -237,7 +237,7 @@ static stock Pkr_FindNextPlayer(const gameId, const currentPlayer)
         if(_nextPlayer == MAX_POKER_PLAYERS)
             _nextPlayer = 0;
 
-        if(Pkr_GetPlayerId(gameId, _nextPlayer) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, _nextPlayer) != POKER_PLAYER_STATUS: FOLDED)
+        if(Pkr_GetPlayerId(gameId, _nextPlayer) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, _nextPlayer) != POKER_PLAYER_STATUS: FOLDED && Pkr_GetPlayerStatus(gameId, _nextPlayer) != POKER_PLAYER_STATUS: ALL_IN)
         {
             _found = true;
             break;
