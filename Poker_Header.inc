@@ -113,6 +113,9 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 #define Pkr_GetPlayerBetContribution(%0,%1) \
             g_rgPokerGames[%0][PLAYER_BET_CONTRIBUTIONS][%1]
 
+#define Pkr_ResetPlayerBetContributions(%0) \
+    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i) Pkr_SetPlayerBetContribution(%0, _i, 0)
+
 #define Pkr_AddToPlayerBetContribution(%0,%1,%2) \
             Pkr_SetPlayerBetContribution(%0, %1, Pkr_GetPlayerBetContribution(%0, %1) + %2)
 

@@ -17,3 +17,4 @@ const POKER_DEFAULT_BLIND = 100;
 #define POKER_PLAYER_GAME_VAR "PlayerPokerGame"
 #define POKER_PLAYER_READY_VAR "PlayerPokerReady"
 #define POKER_PLAYER_RAISE_AMOUNT_VAR "PlayerPokerRaiseAmount"
+#define POKER_PLAYER_BET_AMOUNT_VAR "PlayerPokerBetAmount"

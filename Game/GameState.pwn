@@ -129,6 +129,7 @@ stock Pkr_DealNextRound(const gameId)
 
     Pkr_SetCurrentBet(gameId, 0);
     Pkr_SetLastAggressivePlayer(gameId, INVALID_PLAYER_ID);
+    Pkr_ResetPlayerBetContributions(gameId);
 
     new _dealerPosition = Pkr_GetDealerPosition(gameId);
     Pkr_SetAllPlayersStatus(gameId, POKER_PLAYER_STATUS: WAITING);

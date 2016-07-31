@@ -38,7 +38,10 @@ stock Pkr_GameShowBetConfirmDialog(const playerid)
     new _format[2048];
     new _gameId = Pkr_GetPlayerGame(playerid);
     new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
-    new _betAmount = GetPVarInt(Pkr_GetPlayerId(_gameId, _slot), "Pkr_BetAmount");
+    new _betAmount = GetPVarInt(playerid, POKER_PLAYER_BET_AMOUNT_VAR);
+
+    printf("betAmount: %d", _betAmount);
+
     new _playerChips = Pkr_GetPlayerChips(_gameId, _slot) - _betAmount;
 
     format(_format, sizeof(_format), "Thank you {FF9900}%s{A9C4E4},\n\nBefore you bet we would like to confirm the\namount of chips you wish to bet with.\n\n", Pkr_GetClientName(playerid));
