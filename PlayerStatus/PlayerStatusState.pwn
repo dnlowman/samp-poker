@@ -165,6 +165,12 @@ stock Pkr_SetPlayerStatusDealer(const gameId, const playerSlot)
     return;
 }
 
+stock Pkr_SetPlayerStatusEvaluated(const gameId, const playerSlot)
+{
+    g_rgPokerGames[gameId][PLAYER_STATUS][playerSlot] = POKER_PLAYER_STATUS: EVALUATED;
+    return;
+}
+
 stock Pkr_GetFirstPlayerWithStatus(const gameId, const POKER_PLAYER_STATUS: playerState)
 {
     for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)

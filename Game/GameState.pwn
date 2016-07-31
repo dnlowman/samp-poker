@@ -262,6 +262,101 @@ stock Pkr_Evaluate(const gameId)
             REPEAT
         */
 
+        new _contributions[MAX_POKER_PLAYERS][2];
+        new _totalContributions;
+        for(new i; i < MAX_POKER_PLAYERS; ++i)
+        {
+            _contributions[i][0] = i;
+            _contributions[i][1] = Pkr_GetPlayerPotContribution(gameId, i);
+            _totalContributions += _contributions[i][1];
+        }
+
+        for(new i, _b, tmp; i < MAX_POKER_PLAYERS; ++i)
+        {
+            for(_b = 0; _b < MAX_POKER_PLAYERS; ++_b)
+            {
+                if(_contributions[i][1] < _contributions[_b][1])
+                {
+                    tmp = _contributions[i][0];
+                    _contributions[i][0] = _contributions[_b][0];
+                    _contributions[_b][0] = tmp;
+
+                    tmp = _contributions[i][1];
+                    _contributions[i][1] = _contributions[_b][1];
+                    _contributions[_b][1] = tmp;
+                }
+            }
+        }
+
+        for(new _b, _pot, count; _b < MAX_POKER_PLAYERS; ++_b)
+		{
+			_pot = 0;
+			if(_contributions[_b][1] != 0)
+			{
+                for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
+                    _winners[_i] = INVALID_PLAYER_ID;
+
+                _value = Pkr_FindWinner(gameId, _winners);
+
+				// FIND THE LOWEST
+				// SUBTRACT FROM ALL THE REST AND MAKE THE POT
+
+				new _cache = _contributions[_b][1];
+				_pot = _cache;
+				for(new i = _b; i < MAX_POKER_PLAYERS; ++i)
+				{
+					if(_contributions[i][1] != 0)
+					{
+						if(i != _b)
+						{
+							_pot += _cache;
+							_contributions[i][1] -= _contributions[_b][1];
+						}
+					}
+				}
+
+                Pkr_SetPlayerStatusEvaluated(gameId, _contributions[_b][0]);
+
+				_wincount = 0;
+				for(new i; i < MAX_POKER_PLAYERS; ++i) if(_winners[i] != INVALID_PLAYER_ID) ++_wincount;
+				if(_wincount > 1) // Multiple winners
+				{
+                    strdel(_sz, 0, sizeof(_sz));
+					Pkr_SubFromPot(gameId, -_pot);
+					for(new i = 0; i < _wincount; ++i)
+					{
+						Pkr_SetPlayerChips(_winners[i], gameId, _contributions[_b][1]);
+					    _pot -= _contributions[_b][1];
+						format(_sz, sizeof(_sz), "%s %s", _sz, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[i]]));
+					}
+
+					if(_pot > 0)
+					{
+						new _split;
+						if((Pkr_IsOdd(_split) && !Pkr_IsOdd(_wincount)) || (!Pkr_IsOdd(_split) && Pkr_IsOdd(_wincount)))
+						{
+							_pot -= 1;
+							_split = _pot / _wincount;
+						}
+						else _split = _pot / _wincount;
+						for(new i = 0; i < _wincount; ++i) Pkr_SetPlayerChips(gameId, _winners[i], _split);
+					}
+					format(_sz, sizeof(_sz), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", _sz, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
+					Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
+				}
+				else
+				{
+					// check winner, repeat...
+					format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}is the winner of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(_pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
+					Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
+					Pkr_SetPlayerChips(gameId, _winners[0], _pot);
+					Pkr_SubFromPot(gameId, _pot);
+				}
+				_contributions[_b][1] = 0;
+				++count;
+			}
+		}
+
         Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "All in evaluation...");
     }
 
