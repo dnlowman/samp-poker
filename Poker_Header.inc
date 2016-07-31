@@ -12,9 +12,9 @@ enum
 };
 
 enum POKER_GAME_POSITION {
-    Float: X,
-    Float: Y,
-    Float: Z
+    Float: PokerX,
+    Float: PokerY,
+    Float: PokerZ
 };
 
 enum POKER_PLAYER_STATUS {

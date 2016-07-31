@@ -24,9 +24,9 @@ Pkr_GetGameCount() {
 
 bool: Pkr_GetPosition(const gameId, &Float: x, &Float: y, &Float: z) {
     if(Pkr_IsValidGameId(gameId)) {
-        x = g_rgPokerGames[gameId][POSITION][X];
-        y = g_rgPokerGames[gameId][POSITION][Y];
-        z = g_rgPokerGames[gameId][POSITION][Z];
+        x = g_rgPokerGames[gameId][POSITION][PokerX];
+        y = g_rgPokerGames[gameId][POSITION][PokerY];
+        z = g_rgPokerGames[gameId][POSITION][PokerZ];
         return true;
     }
     return false;
@@ -34,9 +34,9 @@ bool: Pkr_GetPosition(const gameId, &Float: x, &Float: y, &Float: z) {
 
 bool: Pkr_SetPosition(const gameId, const Float: x, const Float: y, const Float: z) {
     if(Pkr_IsValidGameId(gameId)) {
-        g_rgPokerGames[gameId][POSITION][X] = x;
-        g_rgPokerGames[gameId][POSITION][Y] = y;
-        g_rgPokerGames[gameId][POSITION][Z] = z;
+        g_rgPokerGames[gameId][POSITION][PokerX] = x;
+        g_rgPokerGames[gameId][POSITION][PokerY] = y;
+        g_rgPokerGames[gameId][POSITION][PokerZ] = z;
         return true;
     }
     return false;
