@@ -31,6 +31,41 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
     new _foldedPlayersCount = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
     new _allInPlayersCount = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
 
+    if(_allInPlayersCount == _playersOn - _foldedPlayersCount)
+    {
+        switch(Pkr_GetGameStatus(gameId))
+        {
+            case (POKER_GAME_STATUS: INITIAL_BETTING):
+            {
+                Pkr_DealFlop(gameId);
+                Pkr_DealTurn(gameId);
+                Pkr_DealRiver(gameId);
+                Pkr_Evaluate(gameId);
+            }
+
+
+            case (POKER_GAME_STATUS: FLOP):
+            {
+                Pkr_DealTurn(gameId);
+                Pkr_DealRiver(gameId);
+                Pkr_Evaluate(gameId);
+            }
+
+            case (POKER_GAME_STATUS: TURN):
+            {
+                Pkr_DealRiver(gameId);
+                Pkr_Evaluate(gameId);
+            }
+
+            case (POKER_GAME_STATUS: RIVER):
+            {
+                Pkr_Evaluate(gameId);
+            }
+        }
+
+        return;
+    }
+
     if(_hasEveryoneChecked == _playersOn - (_foldedPlayersCount + _allInPlayersCount))
     {
         Pkr_DealNextRound(gameId);
