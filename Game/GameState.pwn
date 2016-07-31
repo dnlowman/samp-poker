@@ -190,7 +190,7 @@ stock Pkr_Evaluate(const gameId)
 
             if(Pkr_GetPotAmount(gameId) > 0)
             {
-                new _split = Pkr_GetPotAmount(gameId); // TODO: Why the fuck am I checking if this is odd?
+                new _split = Pkr_GetPotAmount(gameId);
 
                 if((Pkr_IsOdd(_split) && !Pkr_IsOdd(_wincount)) || (!Pkr_IsOdd(_split) && Pkr_IsOdd(_wincount)))
                     Pkr_SubFromPot(gameId, 1);
