@@ -1,6 +1,6 @@
 Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-    #pragma unused playerid, dialogid, response, listitem, inputtext
+    #pragma unused dialogid, listitem, inputtext
 
     new _pokerDialogId = Pkr_GetPokerDialog(playerid);
 
@@ -8,24 +8,47 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case (POKER_DIALOGS: BET):
         {
+            if(!response)
+                return;
+
+            Pkr_GameShowBetConfirmDialog(playerid);
+
             SendClientMessageToAll(COLOR_RED, "Bet...");
             return;
         }
 
         case (POKER_DIALOGS: BET_CONFIRM):
         {
+            if(!response)
+            {
+                Pkr_GameShowBetDialog(playerid);
+                return;
+            }
+
             SendClientMessageToAll(COLOR_RED, "Bet Confirm...");
             return;
         }
 
         case (POKER_DIALOGS: RAISE):
         {
+            if(!response)
+                return;
+
+            Pkr_GameShowRaiseConfirmDialog(playerid);
+
             SendClientMessageToAll(COLOR_RED, "Raise...");
             return;
         }
 
         case (POKER_DIALOGS: RAISE_CONFIRM):
         {
+            if(!response)
+            {
+                new _gameId = Pkr_GetPlayerGame(playerid);
+                Pkr_GameShowRaiseDialog(playerid, _gameId);
+                return;
+            }
+
             SendClientMessageToAll(COLOR_RED, "Raise Confirm...");
             return;
         }
