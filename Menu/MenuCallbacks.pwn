@@ -22,8 +22,9 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
 
     if(clickedid == g_rgPokerGames[_gameId][MENU_TEXTDRAWS][0]) // ALL IN
     {
-        Pkr_SetPlayerStatusAllIn(_gameId, _playerSlot);
         PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
+        Pkr_SetPlayerStatusAllIn(_gameId, _playerSlot);
+        Pkr_SetNextPlayerPlaying(_gameId);
         return;
     }
 
