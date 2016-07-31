@@ -36,41 +36,14 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new _gameId = Pkr_GetPlayerGame(playerid);
             new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
+            #pragma unused _slot
+
             new inputAmount = strval(inputtext);
 
             if(!Pkr_IsNumeric(inputtext))
             {
                 Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NAN);
                 return;
-            }
-
-            if(Pkr_GetSmallBlindPosition(_gameId) == _slot)
-            {
-                if(inputAmount < Pkr_GetCurrentBet(_gameId) - Pkr_GetSmallBlind(_gameId))
-                {
-                    Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: LAST_BET);
-                    return;
-                }
-
-                if(inputAmount + (Pkr_GetCurrentBetAggregate(_gameId) - Pkr_GetSmallBlind(_gameId)) > Pkr_GetPlayerChips(_gameId, _slot))
-                {
-                    Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NO_MONEY);
-                    return;
-                }
-            }
-            else
-            {
-                if(inputAmount < Pkr_GetCurrentBet(_gameId))
-                {
-                    Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: LAST_BET);
-                    return;
-                }
-
-                if(inputAmount + Pkr_GetCurrentBetAggregate(_gameId) > Pkr_GetPlayerChips(_gameId, _slot))
-                {
-                    Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NO_MONEY);
-                    return;
-                }
             }
 
             SetPVarInt(playerid, POKER_PLAYER_RAISE_AMOUNT_VAR, inputAmount);
@@ -80,18 +53,16 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
         case (POKER_DIALOGS: RAISE_CONFIRM):
         {
+            new _gameId = Pkr_GetPlayerGame(playerid);
+            new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
+
             if(!response)
             {
-                new _gameId = Pkr_GetPlayerGame(playerid);
                 Pkr_GameShowRaiseDialog(playerid, _gameId);
                 return;
             }
 
-            new inputAmount = GetPVarInt(playerid, POKER_PLAYER_RAISE_AMOUNT_VAR);
-            new _gameId = Pkr_GetPlayerGame(playerid);
-            new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
-
-            Pkr_SetPlayerStatusRaised(_gameId, _slot, inputAmount);
+            Pkr_SetPlayerStatusRaised(_gameId, _slot, 200);
             Pkr_SetNextPlayerPlaying(_gameId);
             return;
         }

@@ -54,7 +54,6 @@ Pkr_InitialiseGame(const gameId) {
     g_rgPokerGames[gameId][BIG_BLIND_POSITION] = -1;
     g_rgPokerGames[gameId][GAME_STATUS] = POKER_GAME_STATUS: LOBBY;
     Pkr_SetCurrentBet(gameId, 0);
-    Pkr_SetCurrentBetAggregate(gameId, 0);
     Pkr_SetCurrentPlayerPosition(gameId, -1);
 
     for(new _j = 0; _j < MAX_POKER_PLAYERS; ++_j) {
@@ -69,7 +68,6 @@ Pkr_InitialiseGame(const gameId) {
         g_rgPokerGames[gameId][PLAYER_CARD_ONE_VALUE][_j] = -1;
         g_rgPokerGames[gameId][PLAYER_CARD_TWO_VALUE][_j] = -1;
         g_rgPokerGames[gameId][PLAYER_POT_CONTRIBUTIONS][_j] = 0;
-        g_rgPokerGames[gameId][PLAYER_BET][_j] = 0;
     }
 
     for(new _i = 0; _i < MAX_TABLE_CARDS; ++_i)

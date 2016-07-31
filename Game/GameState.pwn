@@ -54,10 +54,10 @@ stock Pkr_SetPlayerPlaying(const gameId, const playerSlot)
     if(Pkr_GetCurrentBet(gameId) > 0)
         Pkr_SetMenuItemOneStateRaise(gameId);
 
-    if(Pkr_GetCurrentBet(gameId) > Pkr_GetPlayerBet(gameId, playerSlot))
+    /*if(Pkr_GetCurrentBet(gameId) > Pkr_GetPlayerBet(gameId, playerSlot))
         Pkr_SetMenuItemTwoStateCall(gameId);
     else
-        Pkr_SetMenuItemTwoStateCheck(gameId);
+        Pkr_SetMenuItemTwoStateCheck(gameId);*/
 
     Pkr_SetPlayerStatusPlaying(gameId, playerSlot);
     return;
@@ -118,8 +118,6 @@ stock Pkr_DealNextRound(const gameId)
     }
 
     Pkr_SetCurrentBet(gameId, 0);
-    Pkr_SetCurrentBetAggregate(gameId, 0);
-    Pkr_SetAllPlayerBet(gameId, 0);
 
     new _dealerPosition = Pkr_GetDealerPosition(gameId);
     Pkr_SetAllPlayersStatus(gameId, POKER_PLAYER_STATUS: WAITING);
@@ -213,7 +211,6 @@ stock Pkr_SetGameToLobby(const gameId)
     Pkr_SetSmallBlindPosition(gameId, -1);
     Pkr_SetBigBlindPosition(gameId, -1);
     Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: LOBBY);
-    Pkr_SetAllPlayerBet(gameId, 0);
     Pkr_SetAllPlayerPotContribution(gameId, 0);
     return;
 }
@@ -284,7 +281,6 @@ static stock PkrSys_AssignBlinds(const gameId)
 
     Pkr_SetPlayerStatusSmallBlind(gameId, _smallBlindPosition);
     Pkr_AddToPlayerPotContribution(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
-    Pkr_AddToPlayerBet(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
     Pkr_SetPlayerChips(gameId, _smallBlindPosition, Pkr_GetPlayerChips(gameId, _smallBlindPosition) - Pkr_GetSmallBlind(gameId));
     Pkr_AddToPot(gameId, Pkr_GetSmallBlind(gameId));
 
@@ -292,9 +288,7 @@ static stock PkrSys_AssignBlinds(const gameId)
 
     Pkr_SetPlayerStatusBigBlind(gameId, _bigBlindPosition);
     Pkr_AddToPlayerPotContribution(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));
-    Pkr_AddToPlayerBet(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));
     Pkr_SetPlayerChips(gameId, _bigBlindPosition, Pkr_GetPlayerChips(gameId, _bigBlindPosition) - Pkr_GetBigBlind(gameId));
-    Pkr_AddToCurrentBetAggregate(gameId, Pkr_GetBigBlind(gameId));
     Pkr_SetCurrentBet(gameId, Pkr_GetBigBlind(gameId));
     Pkr_AddToPot(gameId, Pkr_GetBigBlind(gameId));
 

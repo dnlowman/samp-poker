@@ -5,6 +5,14 @@ stock Pkr_SetPlayerChips(const gameId, const slot, const amount) {
     Pkr_SetPlayerChipsTextDraw(gameId, slot, _chips);
 }
 
+stock Pkr_MinusPlayerChips(const gameId, const slot, const amount)
+{
+    g_rgPokerGames[gameId][PLAYER_CHIPS][slot] -= amount;
+    new _chips[128];
+    format(_chips, sizeof(_chips), "CHIPS: ~g~$%s", Pkr_FormatNumber(g_rgPokerGames[gameId][PLAYER_CHIPS][slot]));
+    Pkr_SetPlayerChipsTextDraw(gameId, slot, _chips);
+}
+
 stock Pkr_ReturnAverageChips(const gameId) {
     new _total = 0;
     new _playerCount = 0;
