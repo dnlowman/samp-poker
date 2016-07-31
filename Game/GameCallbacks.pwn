@@ -6,13 +6,27 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
     switch(_pokerDialogId)
     {
+        case (POKER_DIALOGS: BET):
+        {
+            SendClientMessageToAll(COLOR_RED, "Bet...");
+            return;
+        }
+
+        case (POKER_DIALOGS: BET_CONFIRM):
+        {
+            SendClientMessageToAll(COLOR_RED, "Bet Confirm...");
+            return;
+        }
+
         case (POKER_DIALOGS: RAISE):
         {
+            SendClientMessageToAll(COLOR_RED, "Raise...");
             return;
         }
 
         case (POKER_DIALOGS: RAISE_CONFIRM):
         {
+            SendClientMessageToAll(COLOR_RED, "Raise Confirm...");
             return;
         }
 
