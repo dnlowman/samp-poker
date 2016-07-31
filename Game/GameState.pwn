@@ -285,6 +285,7 @@ static stock PkrSys_AssignBlinds(const gameId)
     Pkr_SetPlayerStatusSmallBlind(gameId, _smallBlindPosition);
     Pkr_AddToPlayerPotContribution(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
     Pkr_AddToPlayerBet(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
+    Pkr_AddToCurrentBetAggregate(gameId, Pkr_GetSmallBlind(gameId));
     Pkr_SetPlayerChips(gameId, _smallBlindPosition, Pkr_GetPlayerChips(gameId, _smallBlindPosition) - Pkr_GetSmallBlind(gameId));
     Pkr_AddToPot(gameId, Pkr_GetSmallBlind(gameId));
 
@@ -294,6 +295,7 @@ static stock PkrSys_AssignBlinds(const gameId)
     Pkr_AddToPlayerPotContribution(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));
     Pkr_AddToPlayerBet(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));
     Pkr_SetPlayerChips(gameId, _bigBlindPosition, Pkr_GetPlayerChips(gameId, _bigBlindPosition) - Pkr_GetBigBlind(gameId));
+    Pkr_AddToCurrentBetAggregate(gameId, Pkr_GetBigBlind(gameId));
     Pkr_SetCurrentBet(gameId, Pkr_GetBigBlind(gameId));
     Pkr_AddToPot(gameId, Pkr_GetBigBlind(gameId));
 
