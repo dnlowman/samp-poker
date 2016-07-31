@@ -94,7 +94,8 @@ enum POKER_GAME {
     BIG_BLIND_POSITION,
     CURRENT_PLAYER_POSITION,
     POKER_GAME_STATUS: GAME_STATUS,
-    CURRENT_BET,
+    CURRENT_BET, // Last aggressive action amount
+    CURRENT_BET_AGGREGATE, // Accumulation of all aggressive actions
     PLAYER_POT_CONTRIBUTIONS[MAX_POKER_PLAYERS],
     PLAYER_BET[MAX_POKER_PLAYERS]
 };
@@ -129,6 +130,15 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
 #define Pkr_SetCurrentBet(%0,%1)  \
             g_rgPokerGames[%0][CURRENT_BET] = %1
+
+#define Pkr_GetCurrentBetAggregate(%0) \
+            g_rgPokerGames[%0][CURRENT_BET_AGGREGATE]
+
+#define Pkr_SetCurrentBetAggregate(%0) \
+            g_rgPokerGames[%0][CURRENT_BET_AGGREGATE]
+
+#define Pkr_AddToCurrentBetAggregate(%0,%1) \
+            g_rgPokerGames[%0][CURRENT_BET_AGGREGATE] += %1
 
 #define Pkr_GetGameStatus(%0) \
             g_rgPokerGames[%0][GAME_STATUS]
