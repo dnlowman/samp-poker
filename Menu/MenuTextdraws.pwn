@@ -5,7 +5,7 @@
             for(new _i; _i < MAX_POKER_MENU_ITEMS; ++_i) TextDrawHideForPlayer(%0, g_rgPokerGames[%1][MENU_TEXTDRAWS][_i])
 
 #define Pkr_SetMenuItemOneBet(%0) \
-    TextDrawSetString(g_rgPokerGames[%0][MENU_TEXTDRAWS][0], "BET")
+    TextDrawSetString(g_rgPokerGames[%0][MENU_TEXTDRAWS][1], "BET")
 
 #define Pkr_SetMenuItemOneRaise(%0) \
     TextDrawSetString(g_rgPokerGames[%0][MENU_TEXTDRAWS][1], "RAISE")

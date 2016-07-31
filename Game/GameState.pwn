@@ -61,6 +61,8 @@ stock Pkr_SetPlayerPlaying(const gameId, const playerSlot)
 
     if(Pkr_GetCurrentBet(gameId) > 0)
         Pkr_SetMenuItemOneStateRaise(gameId);
+    else
+        Pkr_SetMenuItemOneStateBet(gameId);
 
     if(Pkr_GetCurrentBet(gameId) > Pkr_GetPlayerBetContribution(gameId, playerSlot))
         Pkr_SetMenuItemTwoStateCall(gameId);
