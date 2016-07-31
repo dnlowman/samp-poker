@@ -177,37 +177,57 @@ stock Pkr_Evaluate(const gameId)
         if(_winners[i] != INVALID_PLAYER_ID)
             ++_wincount;
 
-    if(_wincount > 1)
+    if(Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN) == 0)
     {
-        for(new i; i < _wincount; ++i)
+        if(_wincount > 1)
         {
-            Pkr_SetPlayerChips(gameId, _winners[i], Pkr_GetPlayerChips(gameId, _winners[i]) + g_rgPokerGames[gameId][PLAYER_POT_CONTRIBUTIONS][_winners[i]]);
-            Pkr_SubFromPot(gameId, Pkr_GetPlayerPotContribution(gameId, _winners[i]));
-            format(_sz, sizeof(_sz), "%s %s", _sz, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[i]]));
-        }
+            for(new i; i < _wincount; ++i)
+            {
+                Pkr_SetPlayerChips(gameId, _winners[i], Pkr_GetPlayerChips(gameId, _winners[i]) + g_rgPokerGames[gameId][PLAYER_POT_CONTRIBUTIONS][_winners[i]]);
+                Pkr_SubFromPot(gameId, Pkr_GetPlayerPotContribution(gameId, _winners[i]));
+                format(_sz, sizeof(_sz), "%s %s", _sz, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[i]]));
+            }
 
-        if(Pkr_GetPotAmount(gameId) > 0)
+            if(Pkr_GetPotAmount(gameId) > 0)
+            {
+                new _split = Pkr_GetPotAmount(gameId); // TODO: Why the fuck am I checking if this is odd?
+
+                if((Pkr_IsOdd(_split) && !Pkr_IsOdd(_wincount)) || (!Pkr_IsOdd(_split) && Pkr_IsOdd(_wincount)))
+                    Pkr_SubFromPot(gameId, 1);
+
+                _split /= _wincount;
+
+                for(new _i = 0; _i < _wincount; ++_i)
+                    Pkr_SetPlayerChips(gameId, _winners[_i], Pkr_GetPlayerChips(gameId, _winners[_i]) + _split);
+            }
+            format(_sz, sizeof(_sz), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", _sz, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
+            Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
+            Pkr_SetPotAmount(gameId, 0);
+        }
+        else // One winner
         {
-            new _split = Pkr_GetPotAmount(gameId); // TODO: Why the fuck am I checking if this is odd?
-
-            if((Pkr_IsOdd(_split) && !Pkr_IsOdd(_wincount)) || (!Pkr_IsOdd(_split) && Pkr_IsOdd(_wincount)))
-                Pkr_SubFromPot(gameId, 1);
-
-            _split /= _wincount;
-
-            for(new _i = 0; _i < _wincount; ++_i)
-                Pkr_SetPlayerChips(gameId, _winners[_i], Pkr_GetPlayerChips(gameId, _winners[_i]) + _split);
+            format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}wins the pot ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
+            Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
+            Pkr_SetPlayerChips(gameId, _winners[0], Pkr_GetPlayerChips(gameId, _winners[0]) + Pkr_GetPotAmount(gameId));
+            Pkr_SetPotAmount(gameId, 0);
         }
-        format(_sz, sizeof(_sz), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", _sz, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
-        Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
-        Pkr_SetPotAmount(gameId, 0);
     }
-    else // One winner
+    else
     {
-        format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}wins the pot ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
-        Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
-        Pkr_SetPlayerChips(gameId, _winners[0], Pkr_GetPlayerChips(gameId, _winners[0]) + Pkr_GetPotAmount(gameId));
-        Pkr_SetPotAmount(gameId, 0);
+        /*
+            ORDER EVERY CONTRIBUTION ASCENDING
+            MINUS LOWEST FROM EVERY PLAYER
+            CHECK WINNER
+
+            LOWEST CONTRIBUTOR EXCLUDED
+            ORDER AGAIN
+            MINUS LOWEST
+            CHECK WINNER
+
+            REPEAT
+        */
+
+        Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "All in evaluation...");
     }
 
     return;
