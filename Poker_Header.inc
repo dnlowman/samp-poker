@@ -134,8 +134,8 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 #define Pkr_GetCurrentBetAggregate(%0) \
             g_rgPokerGames[%0][CURRENT_BET_AGGREGATE]
 
-#define Pkr_SetCurrentBetAggregate(%0) \
-            g_rgPokerGames[%0][CURRENT_BET_AGGREGATE]
+#define Pkr_SetCurrentBetAggregate(%0,%1) \
+            g_rgPokerGames[%0][CURRENT_BET_AGGREGATE] = %1
 
 #define Pkr_AddToCurrentBetAggregate(%0,%1) \
             g_rgPokerGames[%0][CURRENT_BET_AGGREGATE] += %1

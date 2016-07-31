@@ -118,6 +118,7 @@ stock Pkr_DealNextRound(const gameId)
     }
 
     Pkr_SetCurrentBet(gameId, 0);
+    Pkr_SetCurrentBetAggregate(gameId, 0);
     Pkr_SetAllPlayerBet(gameId, 0);
 
     new _dealerPosition = Pkr_GetDealerPosition(gameId);

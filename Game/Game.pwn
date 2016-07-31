@@ -54,6 +54,7 @@ Pkr_InitialiseGame(const gameId) {
     g_rgPokerGames[gameId][BIG_BLIND_POSITION] = -1;
     g_rgPokerGames[gameId][GAME_STATUS] = POKER_GAME_STATUS: LOBBY;
     Pkr_SetCurrentBet(gameId, 0);
+    Pkr_SetCurrentBetAggregate(gameId, 0);
     Pkr_SetCurrentPlayerPosition(gameId, -1);
 
     for(new _j = 0; _j < MAX_POKER_PLAYERS; ++_j) {
