@@ -73,6 +73,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
             }
 
+            SetPVarInt(playerid, POKER_PLAYER_RAISE_AMOUNT_VAR, inputAmount);
             Pkr_GameShowRaiseConfirmDialog(playerid);
             return;
         }
@@ -86,7 +87,12 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return;
             }
 
-            SendClientMessageToAll(COLOR_RED, "Raise Confirm...");
+            new inputAmount = GetPVarInt(playerid, POKER_PLAYER_RAISE_AMOUNT_VAR);
+            new _gameId = Pkr_GetPlayerGame(playerid);
+            new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
+
+            Pkr_SetPlayerStatusRaised(_gameId, _slot, inputAmount);
+            Pkr_SetNextPlayerPlaying(_gameId);
             return;
         }
 
