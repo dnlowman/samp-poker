@@ -285,7 +285,6 @@ static stock PkrSys_AssignBlinds(const gameId)
     Pkr_SetPlayerStatusSmallBlind(gameId, _smallBlindPosition);
     Pkr_AddToPlayerPotContribution(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
     Pkr_AddToPlayerBet(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
-    Pkr_AddToCurrentBetAggregate(gameId, Pkr_GetSmallBlind(gameId));
     Pkr_SetPlayerChips(gameId, _smallBlindPosition, Pkr_GetPlayerChips(gameId, _smallBlindPosition) - Pkr_GetSmallBlind(gameId));
     Pkr_AddToPot(gameId, Pkr_GetSmallBlind(gameId));
 

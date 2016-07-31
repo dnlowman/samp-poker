@@ -44,21 +44,36 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return;
             }
 
-            if((Pkr_GetSmallBlindPosition(_gameId) == _slot && inputAmount < Pkr_GetCurrentBet(_gameId) - Pkr_GetSmallBlind(_gameId)) || (inputAmount < Pkr_GetCurrentBet(_gameId) && Pkr_GetSmallBlindPosition(_gameId) != _slot))
+            if(Pkr_GetSmallBlindPosition(_gameId) == _slot)
             {
-                Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: LAST_BET);
-                return;
-            }
+                if(inputAmount < Pkr_GetCurrentBet(_gameId) - Pkr_GetSmallBlind(_gameId))
+                {
+                    Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: LAST_BET);
+                    return;
+                }
 
-            if(inputAmount > Pkr_GetPlayerChips(_gameId, _slot))
+                if(inputAmount + (Pkr_GetCurrentBetAggregate(_gameId) - Pkr_GetSmallBlind(_gameId)) > Pkr_GetPlayerChips(_gameId, _slot))
+                {
+                    Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NO_MONEY);
+                    return;
+                }
+            }
+            else
             {
-                Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NO_MONEY);
-                return;
+                if(inputAmount < Pkr_GetCurrentBet(_gameId))
+                {
+                    Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: LAST_BET);
+                    return;
+                }
+
+                if(inputAmount + Pkr_GetCurrentBetAggregate(_gameId) > Pkr_GetPlayerChips(_gameId, _slot))
+                {
+                    Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NO_MONEY);
+                    return;
+                }
             }
 
             Pkr_GameShowRaiseConfirmDialog(playerid);
-
-            SendClientMessageToAll(COLOR_RED, "Raise...");
             return;
         }
 
