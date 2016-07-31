@@ -99,14 +99,11 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new _gameId = Pkr_GetPlayerGame(playerid);
             new _playerSlot = Pkr_GetCurrentPlayerPosition(_gameId);
-            new _callAmount = Pkr_GetCurrentBet(_gameId);
-
-            if(Pkr_GetSmallBlindPosition(_gameId) == _playerSlot)
-                _callAmount = _callAmount >> 1;
+            new _callAmount = Pkr_GetCurrentBet(_gameId) - Pkr_GetPlayerBetContribution(_gameId, _playerSlot);
 
             Pkr_SetPlayerStatusCalled(_gameId, _playerSlot, _callAmount);
             Pkr_AddToPot(_gameId, _callAmount);
-            Pkr_SetPlayerChips(_gameId, _playerSlot, Pkr_GetPlayerChips(_gameId, _playerSlot) - _callAmount);
+            Pkr_MinusPlayerChips(_gameId, _playerSlot, _callAmount);
             Pkr_SetNextPlayerPlaying(_gameId);
             return;
         }

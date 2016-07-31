@@ -94,10 +94,7 @@ stock Pkr_GameShowCallConfirmDialog(const playerid, const gameId)
 {
     new _playerSlot = Pkr_GetCurrentPlayerPosition(gameId);
     new _format[2048];
-    new _currentBet = Pkr_GetCurrentBet(gameId);
-
-    if(Pkr_GetSmallBlindPosition(gameId) == _playerSlot)
-        _currentBet = _currentBet >> 1;
+    new _currentBet = Pkr_GetCurrentBet(gameId) - Pkr_GetPlayerBetContribution(gameId, _playerSlot);
 
     format(_format, sizeof(_format), "Thank you {FF9900}%s{A9C4E4},\n\nBefore you call we would like to confirm the\namount of chips you wish to call.\n\n", Pkr_GetClientName(playerid));
     format(_format, sizeof(_format), "%sCash before this confirmation: {00AD43}$%s{A9C4E4}.\nCash after this confirmation: {00AD43}$%s{A9C4E4}.\nTotal to call: {00AD43}$%s{A9C4E4}.\n\n", _format, Pkr_FormatNumber(Pkr_GetPlayerChips(gameId, _playerSlot)), Pkr_FormatNumber(Pkr_GetPlayerChips(gameId, _playerSlot) - _currentBet), Pkr_FormatNumber(_currentBet));
