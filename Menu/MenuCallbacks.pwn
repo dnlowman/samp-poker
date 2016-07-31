@@ -24,6 +24,19 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
     {
         PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
         Pkr_SetPlayerStatusAllIn(_gameId, _playerSlot);
+
+        new _playerChips = Pkr_GetPlayerChips(_gameId, _playerSlot);
+
+        if(Pkr_GetCurrentBet(_gameId) < _playerChips - Pkr_GetPlayerBetContribution(_gameId, _playerSlot))
+        {
+            Pkr_SetLastAggressivePlayer(_gameId, _playerSlot);
+            Pkr_AddToCurrentBet(_gameId, _playerChips);
+        }
+
+        Pkr_AddToPot(_gameId, _playerChips);
+        Pkr_MinusPlayerChips(_gameId, _playerSlot, _playerChips);
+        Pkr_AddToPlayerBetContribution(_gameId, _playerSlot, _playerChips);
+
         Pkr_SetNextPlayerPlaying(_gameId);
         return;
     }
