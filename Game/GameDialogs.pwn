@@ -43,7 +43,7 @@ stock Pkr_GameShowBetConfirmDialog(const playerid)
 
     format(_format, sizeof(_format), "Thank you {FF9900}%s{A9C4E4},\n\nBefore you bet we would like to confirm the\namount of chips you wish to bet with.\n\n", Pkr_GetClientName(playerid));
     format(_format, sizeof(_format), "%sYour chosen chips: {00AD43}$%s{A9C4E4}.\nCash before this confirmation: {00AD43}$%s{A9C4E4}.\nCash after this confirmation: {00AD43}$%s{A9C4E4}.\n\nTo go ahead and confirm this click on '{FF9900}Confirm{A9C4E4}'\nor if you wish to go back click on '{FF9900}Back{A9C4E4}'.", _format, Pkr_FormatNumber(_betAmount), Pkr_FormatNumber(Pkr_GetPlayerChips(_gameId, _slot)), Pkr_FormatNumber(_playerChips));
-    ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Raise", _format, "Confirm", "Back");
+    ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Bet Confirm", _format, "Confirm", "Back");
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: BET_CONFIRM);
     return;
 }
@@ -82,7 +82,7 @@ stock Pkr_GameShowRaiseConfirmDialog(const playerid)
 
     format(_format, sizeof(_format), "Thank you {FF9900}%s{A9C4E4},\n\nBefore you raise we would like to confirm the\namount of chips you wish to raise with.\n\n", Pkr_GetClientName(playerid));
     format(_format, sizeof(_format), "%sYour chosen chips: {00AD43}$%s{A9C4E4}.\nCash before this confirmation: {00AD43}$%s{A9C4E4}.\nCash after this confirmation: {00AD43}$%s{A9C4E4}.\n\nTo go ahead and confirm this click on '{FF9900}Confirm{A9C4E4}'\nor if you wish to go back click on '{FF9900}Back{A9C4E4}'.", _format, Pkr_FormatNumber(_raiseAmount), Pkr_FormatNumber(Pkr_GetPlayerChips(_gameId, _slot)), Pkr_FormatNumber(_playerChips));
-    ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Raise", _format, "Raise", "Back");
+    ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Raise Confirm", _format, "Raise", "Back");
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: RAISE_CONFIRM);
     return;
 }
