@@ -34,8 +34,9 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
         }
 
         Pkr_AddToPot(_gameId, _playerChips);
-        Pkr_MinusPlayerChips(_gameId, _playerSlot, _playerChips);
         Pkr_AddToPlayerBetContribution(_gameId, _playerSlot, _playerChips);
+        Pkr_AddToPlayerPotContribution(_gameId, _playerSlot, _playerChips);
+        Pkr_MinusPlayerChips(_gameId, _playerSlot, _playerChips);
 
         Pkr_SetNextPlayerPlaying(_gameId);
         return;
