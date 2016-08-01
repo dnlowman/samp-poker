@@ -372,8 +372,6 @@ stock Pkr_Evaluate(const gameId)
 				++count;
 			}
 		}
-
-        Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "All in evaluation...");
     }
 
     return;
@@ -462,9 +460,6 @@ static stock PkrSys_AssignBlinds(const gameId)
     Pkr_SetPlayerChips(gameId, _smallBlindPosition, Pkr_GetPlayerChips(gameId, _smallBlindPosition) - Pkr_GetSmallBlind(gameId));
     Pkr_AddToPot(gameId, Pkr_GetSmallBlind(gameId));
     Pkr_AddToPlayerBetContribution(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
-
-
-    Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s is the small blind $%d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, _smallBlindPosition)), Pkr_GetSmallBlind(gameId));
 
     Pkr_SetPlayerStatusBigBlind(gameId, _bigBlindPosition);
     Pkr_AddToPlayerPotContribution(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));

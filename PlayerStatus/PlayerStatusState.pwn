@@ -54,13 +54,12 @@ stock bool: Pkr_HasEveryonePlayed(const gameId)
         if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID &&
            (Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: RAISED ||
             Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: BET ||
-            Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: BIG_BLIND))
+            Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: BIG_BLIND) ||
+            (Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: ALL_IN && Pkr_GetPlayerBetContribution(gameId, _i) > 0))
         {
             ++_betCount;
         }
     }
-
-    Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "Total players who have bet: %d", _betCount);
 
     return _betCount == 0 && !Pkr_ActivePlayers(gameId) && Pkr_GetLastAggressivePlayer(gameId) != INVALID_PLAYER_ID;
 }

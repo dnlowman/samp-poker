@@ -55,11 +55,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             Pkr_AddToPlayerBetContribution(_gameId, _slot, _inputAmount);
             Pkr_SetLastAggressivePlayer(_gameId, _slot);
 
-            Pkr_SendFormattedGameMessage(_gameId, COLOR_RED, "Adding to the current bet: $%d amount: $%d", Pkr_GetCurrentBet(_gameId), _inputAmount);
-
             Pkr_AddToCurrentBet(_gameId, _inputAmount);
-
-            Pkr_SendFormattedGameMessage(_gameId, COLOR_RED, "The current bet is now: $%d", Pkr_GetCurrentBet(_gameId));
 
             Pkr_SetPlayerStatusBet(_gameId, _slot, _inputAmount);
             Pkr_SetNextPlayerPlaying(_gameId);
@@ -119,11 +115,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             Pkr_AddToPlayerBetContribution(_gameId, _slot, _totalCost);
             Pkr_SetLastAggressivePlayer(_gameId, _slot);
 
-            Pkr_SendFormattedGameMessage(_gameId, COLOR_RED, "Adding to the current bet: $%d amount: $%d", Pkr_GetCurrentBet(_gameId), _inputAmount);
-
             Pkr_AddToCurrentBet(_gameId, _inputAmount);
-
-            Pkr_SendFormattedGameMessage(_gameId, COLOR_RED, "The current bet is now: $%d", Pkr_GetCurrentBet(_gameId));
 
             Pkr_SetPlayerStatusRaised(_gameId, _slot, _inputAmount);
             Pkr_SetNextPlayerPlaying(_gameId);
