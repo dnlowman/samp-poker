@@ -272,8 +272,6 @@ stock Pkr_Evaluate(const gameId)
             contributions[i][0] = i;
             contributions[i][1] = Pkr_GetPlayerPotContribution(gameId, i);
             totalContributions += contributions[i][1];
-
-
         }
 
 
@@ -388,6 +386,7 @@ stock Pkr_SetGameToLobby(const gameId)
     Pkr_SetBigBlindPosition(gameId, -1);
     Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: LOBBY);
     Pkr_SetAllPlayerPotContribution(gameId, 0);
+    Pkr_ResetPlayerBetContributions(gameId);
     return;
 }
 
