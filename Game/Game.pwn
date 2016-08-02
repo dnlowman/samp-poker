@@ -56,6 +56,7 @@ Pkr_InitialiseGame(const gameId) {
     Pkr_SetCurrentBet(gameId, 0);
     Pkr_SetCurrentPlayerPosition(gameId, -1);
     Pkr_SetLastAggressivePlayer(gameId, INVALID_PLAYER_ID);
+    Pkr_SetLastBet(gameId, 0);
 
     for(new _j = 0; _j < MAX_POKER_PLAYERS; ++_j) {
         g_rgPokerGames[gameId][PLAYERS][_j] = INVALID_PLAYER_ID;

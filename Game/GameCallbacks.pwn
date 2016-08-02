@@ -55,6 +55,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             Pkr_AddToPlayerBetContribution(_gameId, _slot, _inputAmount);
             Pkr_AddToPlayerPotContribution(_gameId, _slot, _inputAmount);
             Pkr_SetLastAggressivePlayer(_gameId, _slot);
+            Pkr_SetLastBet(_gameId, _inputAmount);
 
             Pkr_AddToCurrentBet(_gameId, _inputAmount);
 
@@ -80,7 +81,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return;
             }
 
-            if(inputAmount < _amountToMeet)
+            if(inputAmount < Pkr_GetLastBet(_gameId))
             {
                 Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: LAST_BET);
                 return;
@@ -116,6 +117,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             Pkr_AddToPlayerBetContribution(_gameId, _slot, _totalCost);
             Pkr_AddToPlayerPotContribution(_gameId, _slot, _totalCost);
             Pkr_SetLastAggressivePlayer(_gameId, _slot);
+            Pkr_SetLastBet(_gameId, _inputAmount);
 
             Pkr_AddToCurrentBet(_gameId, _inputAmount);
 

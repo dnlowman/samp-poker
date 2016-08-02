@@ -164,6 +164,7 @@ stock Pkr_DealNextRound(const gameId)
 
     Pkr_SetCurrentBet(gameId, 0);
     Pkr_SetLastAggressivePlayer(gameId, INVALID_PLAYER_ID);
+    Pkr_SetLastBet(gameId, 0);
     Pkr_ResetPlayerBetContributions(gameId);
 
     new _dealerPosition = Pkr_GetDealerPosition(gameId);
@@ -398,6 +399,7 @@ stock Pkr_SetGameToLobby(const gameId)
     Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: LOBBY);
     Pkr_SetAllPlayerPotContribution(gameId, 0);
     Pkr_ResetPlayerBetContributions(gameId);
+    Pkr_SetLastBet(gameId, 0);
     Pkr_SendFormattedGameMessage(gameId, COLOR_GREY, "Use '/pkr start' to start the game.");
 
     new playerid = INVALID_PLAYER_ID;
@@ -493,6 +495,7 @@ static stock PkrSys_AssignBlinds(const gameId)
     Pkr_AddToPot(gameId, Pkr_GetBigBlind(gameId));
     Pkr_AddToPlayerBetContribution(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));
     Pkr_SetLastAggressivePlayer(gameId, _bigBlindPosition);
+    Pkr_SetLastBet(gameId, Pkr_GetBigBlind(gameId));
 
 
     Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s is the big blind $%d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, _bigBlindPosition)), Pkr_GetBigBlind(gameId));

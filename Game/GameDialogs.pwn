@@ -66,7 +66,7 @@ stock Pkr_GameShowRaiseDialog(const playerid, const gameId, const RAISE_DIALOG_E
             format(_format, 2048, "%s{D10047}Your raise must meet the last bet, please enter\na valid amount of chips you wish to raise.{A9C4E4}\n\n", _format);
     }
 
-    format(_format, 2048, "%sYour Chips: {00AD43}$%s{A9C4E4}.\nMinimum raise: {00AD43}$%s{A9C4E4}.\n", _format, Pkr_FormatNumber(Pkr_GetPlayerChips(gameId, _slot)), Pkr_FormatNumber(Pkr_GetCurrentBet(gameId) - Pkr_GetPlayerBetContribution(gameId, _slot)));
+    format(_format, 2048, "%sYour Chips: {00AD43}$%s{A9C4E4}.\nMinimum raise: {00AD43}$%s{A9C4E4}.\n", _format, Pkr_FormatNumber(Pkr_GetPlayerChips(gameId, _slot)), Pkr_FormatNumber(Pkr_GetLastBet(gameId)));
     format(_format, 2048, "%sEnter the amount of chips you wish to\nraise below and click on '{FF9900}Raise{A9C4E4}' to \nproceed, if you have changed your mind\nclick on '{FF9900}Cancel{A9C4E4}'.", _format);
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: RAISE);
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Raise", _format, "Raise", "Cancel");
