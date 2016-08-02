@@ -15,7 +15,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
             new inputAmount = strval(inputtext);
 
-            if(!Pkr_IsNumeric(inputtext))
+            if(!Pkr_IsNumeric(inputtext) || strlen(inputtext) > 9)
             {
                 Pkr_GameShowBetDialog(playerid, BET_DIALOG_ERROR: NAN);
                 return;
@@ -74,7 +74,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new _amountToMeet = Pkr_GetCurrentBet(_gameId) - Pkr_GetPlayerBetContribution(_gameId, _slot);
             new _totalCost = _amountToMeet + inputAmount;
 
-            if(!Pkr_IsNumeric(inputtext))
+            if(!Pkr_IsNumeric(inputtext) || strlen(inputtext) > 9)
             {
                 Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NAN);
                 return;

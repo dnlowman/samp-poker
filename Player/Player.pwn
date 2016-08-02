@@ -62,6 +62,8 @@ Pkr_UnassignPlayerSlotFromGame(const gameId, const playerSlot)
 
     Pkr_DestroyPlayerPrivateCardTDs(gameId, playerSlot);
     Pkr_SetReadyTextDrawEmpty(gameId, playerSlot);
+    Pkr_SetPlayerChipsTextDraw(gameId, playerSlot, "_");
+    Pkr_SetPlayerStatusTextDrawEmpty(gameId, playerSlot);
     Pkr_HidePlayerTextDraws(Pkr_GetPlayerId(gameId, playerSlot), gameId);
     Pkr_RemovePlayerVars(gameId, playerSlot);
     Pkr_Update3DTextLabel(gameId);

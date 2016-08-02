@@ -4,6 +4,9 @@
 #define Pkr_HidePlayerStatusTextDraw(%0,%1) \
             for(new i; i < MAX_POKER_PLAYERS; ++i) TextDrawHideForPlayer(%0, g_rgPokerGames[%1][PLAYER_STATUS_TEXTDRAWS][i])
 
+#define Pkr_SetPlayerStatusTextDrawEmpty(%0,%1) \
+            TextDrawSetString(g_rgPokerGames[%0][PLAYER_STATUS_TEXTDRAWS][%1], "_")
+
 Pkr_SetPlayerStatusTextDraw(const gameId, const slot, const text[])
 {
     new _status[128];

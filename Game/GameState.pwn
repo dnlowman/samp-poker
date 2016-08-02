@@ -399,6 +399,20 @@ stock Pkr_SetGameToLobby(const gameId)
     Pkr_SetAllPlayerPotContribution(gameId, 0);
     Pkr_ResetPlayerBetContributions(gameId);
     Pkr_SendFormattedGameMessage(gameId, COLOR_GREY, "Use '/pkr start' to start the game.");
+
+    new playerid = INVALID_PLAYER_ID;
+    for(new i; i < MAX_POKER_PLAYERS; ++i)
+    {
+        playerid = Pkr_GetPlayerId(gameId, i);
+        if(playerid != INVALID_PLAYER_ID)
+        {
+            if(Pkr_GetPlayerChips(gameId, i) < Pkr_GetBigBlind(gameId))
+            {
+                SendClientMessage(playerid, COLOR_RED, "You cannot meet the big blind, you have been removed from the game.");
+                Pkr_UnassignPlayerFromGame(playerid, gameId);
+            }
+        }
+    }
     return;
 }
 
