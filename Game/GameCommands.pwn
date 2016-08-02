@@ -13,7 +13,7 @@ PkrCMD_Create(const playerid) {
 PkrCMD_Start(const playerId)
 {
     new _gameId = Pkr_GetPlayerGame(playerId);
-    if(_gameId)
+    if(_gameId == -1)
     {
         SendClientMessage(playerId, COLOR_RED, "You're not playing poker.");
         return;
@@ -48,7 +48,7 @@ PkrCMD_Start(const playerId)
 PkrCMD_NextHand(const playerId)
 {
     new _gameId = Pkr_GetPlayerGame(playerId);
-    if(_gameId)
+    if(_gameId == -1)
     {
         SendClientMessage(playerId, COLOR_RED, "You're not playing poker.");
         return;
