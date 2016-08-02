@@ -372,6 +372,7 @@ stock Pkr_Evaluate(const gameId)
 		}
     }
 
+    Pkr_SendFormattedGameMessage(gameId, COLOR_GREY, "Use '/pkr nexthand' to return to the lobby and start a new hand.");
     return;
 }
 
@@ -387,6 +388,7 @@ stock Pkr_SetGameToLobby(const gameId)
     Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: LOBBY);
     Pkr_SetAllPlayerPotContribution(gameId, 0);
     Pkr_ResetPlayerBetContributions(gameId);
+    Pkr_SendFormattedGameMessage(gameId, COLOR_GREY, "Use '/pkr start' to start the game.");
     return;
 }
 

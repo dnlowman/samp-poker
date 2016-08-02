@@ -8,7 +8,7 @@
             TextDrawSetString(g_rgPokerGames[%0][POKER_BLINDS_TEXTDRAW], %1)
 
 Pkr_CreateBlindTextDraw(const gameId) {
-    g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW] = TextDrawCreate(317.000000, 244.000000, "BLINDS: ~y~NOT SET ~w~/ ~y~NOT SET");
+    g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW] = TextDrawCreate(317.000000, 244.000000, "BLINDS: ~y~$100 ~w~/ ~y~$200");
     TextDrawAlignment(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 2);
     TextDrawBackgroundColor(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 255);
     TextDrawFont(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 2);
@@ -18,7 +18,7 @@ Pkr_CreateBlindTextDraw(const gameId) {
     TextDrawSetProportional(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 1);
     TextDrawSetShadow(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 1);
     TextDrawSetSelectable(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 0);
-    
+
     return;
 }
 
