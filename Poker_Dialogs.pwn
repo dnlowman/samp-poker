@@ -120,7 +120,6 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
             new _playerid = g_rgPokerGames[game][E_POKER_GAME_PLAYERS_ON][_activePlayer];
 
             new _amount = g_rgPokerGames[game][E_POKER_GAME_LAST_RAISE] - GetPVarInt(_playerid, "PokerRaiseContribution");
-            printf("Call Confirm: Last Raise: %d This players contribution: %d", g_rgPokerGames[game][E_POKER_GAME_LAST_RAISE], GetPVarInt(_playerid, "PokerRaiseContribution"));
 			format(_format, sizeof(_format), "Thank you {FF9900}%s{A9C4E4},\n\nBefore you call we would like to confirm the\namount of chips you wish to call.\n\n", Pkr_GetClientName(playerid));
 			if(_amount >= g_rgPokerGames[game][PLAYER_CHIPS][_slot])
 				format(_format, sizeof(_format), "Due to the previous bet being greater than or equal to\nthe amount of chips you have, you're required to go all in.");

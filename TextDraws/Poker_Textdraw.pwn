@@ -753,10 +753,7 @@ Pkr_UpdatePlayerChips(slot, game, amount, remove = 0)
 	if(!Pkr_IsValidGame(game) || !Pkr_IsValidSlot(slot)) return 0;
 	if(!remove)
 	{
-        printf("Updating players chips for slot: %d game: %d amount: %d", slot, game, amount);
-        printf("Before update: %d", gPokerGameInfo[game][E_POKER_GAME_PLAYER_CAMOUNT][slot]);
         gPokerGameInfo[game][E_POKER_GAME_PLAYER_CAMOUNT][slot] += amount;
-        printf("Updated now to: %d", gPokerGameInfo[game][E_POKER_GAME_PLAYER_CAMOUNT][slot]);
 		new _str[24];
 		format(_str, sizeof(_str), "CHIPS: ~g~$%s", Pkr_FormatNumber(gPokerGameInfo[game][E_POKER_GAME_PLAYER_CAMOUNT][slot]));
 		TextDrawSetString(gPokerGameInfo[game][E_POKER_GAME_PLAYERS_CHIPS][slot], _str);

@@ -1,13 +1,9 @@
 Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
 {
-    printf("Called...");
-
     new _gameId = Pkr_GetPlayerGame(playerid);
 
     if(_gameId == -1)
         return;
-
-    printf("Valid game id...");
 
     #if defined POKER_DEBUG
         new _playerSlot = Pkr_GetCurrentPlayerPosition(_gameId);
@@ -15,12 +11,8 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
         new _playerSlot = Pkr_GetPlayerSlot(playerid, _gameId);
     #endif
 
-    printf("player slot is %d", _playerSlot);
-
     if(_playerSlot == -1)
         return;
-
-    printf("Called... now...");
 
     if(Pkr_GetGameStatus(_gameId) == POKER_GAME_STATUS: LOBBY || Pkr_GetGameStatus(_gameId) == POKER_GAME_STATUS: EVALUATION)
     {
