@@ -44,7 +44,7 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
 
     if(clickedid == g_rgPokerGames[_gameId][MENU_TEXTDRAWS][1]) // BET OR RAISE
     {
-        if(Pkr_GetCurrentBet(_gameId) > Pkr_GetPlayerChips(_gameId, _playerSlot))
+        if(Pkr_GetCurrentBet(_gameId) >= Pkr_GetPlayerChips(_gameId, _playerSlot))
         {
             SendClientMessage(playerid, COLOR_RED, "You cannot afford to raise, you have to go all in or fold.");
             return;
