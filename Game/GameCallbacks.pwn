@@ -134,6 +134,8 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             Pkr_SetPlayerStatusCalled(_gameId, _playerSlot, _callAmount);
             Pkr_AddToPot(_gameId, _callAmount);
             Pkr_MinusPlayerChips(_gameId, _playerSlot, _callAmount);
+            Pkr_AddToPlayerBetContribution(_gameId, _playerSlot, _callAmount);
+            Pkr_AddToPlayerPotContribution(_gameId, _playerSlot, _callAmount);
             Pkr_SetNextPlayerPlaying(_gameId);
             return;
         }

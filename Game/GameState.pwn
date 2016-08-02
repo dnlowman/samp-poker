@@ -265,15 +265,20 @@ stock Pkr_Evaluate(const gameId)
 
 
         // 2d array of player slots and their contributions
+        printf("Pot is %d", Pkr_GetPotAmount(gameId));
+
         new contributions[MAX_POKER_PLAYERS][2];
         new totalContributions;
         for(new i; i < MAX_POKER_PLAYERS; ++i)
         {
             contributions[i][0] = i;
             contributions[i][1] = Pkr_GetPlayerPotContribution(gameId, i);
+            printf("Contribution for player %d is $%d", i, contributions[i][1]);
             totalContributions += contributions[i][1];
         }
 
+        printf("Total is now $%d", totalContributions);
+        printf("Ordering...");
 
         for(new i, _b, tmp; i < MAX_POKER_PLAYERS; ++i)
         {
@@ -290,6 +295,11 @@ stock Pkr_Evaluate(const gameId)
                     contributions[_b][1] = tmp;
                 }
             }
+        }
+
+        for(new i; i < MAX_POKER_PLAYERS; ++i)
+        {
+            printf("Contribution for player %d is $%d", i, contributions[i][1]);
         }
 
 
