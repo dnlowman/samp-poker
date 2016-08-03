@@ -363,7 +363,8 @@ stock Pkr_Evaluate(const gameId)
 							_split = _pot / _wincount;
 						}
 						else _split = _pot / _wincount;
-						for(new i = 0; i < _wincount; ++i) Pkr_SetPlayerChips(gameId, _winners[i], _split);
+						for(new i = 0; i < _wincount; ++i)
+                            Pkr_AddPlayerChips(gameId, _winners[i], _split);
 					}
 					format(_sz, sizeof(_sz), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", _sz, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
 					Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
@@ -374,7 +375,7 @@ stock Pkr_Evaluate(const gameId)
                     // check winner, repeat...
 					format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}is the winner of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(_pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
 					Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
-					Pkr_SetPlayerChips(gameId, _winners[0], _pot);
+                    Pkr_AddPlayerChips(gameId, _winners[0], _pot);
 					Pkr_SubFromPot(gameId, _pot);
 				}
 				contributions[_b][1] = 0;

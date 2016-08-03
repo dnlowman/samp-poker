@@ -18,7 +18,11 @@ PkrCMD_AddBot(const playerid, const params[]) {
         return;
     }
 
-    Pkr_AssignPlayerToGame(_bot, _gameId, 50000);
+    static amount = 50000;
+
+    Pkr_AssignPlayerToGame(_bot, _gameId, amount);
+
+    amount += 10000;
 
     new _message[128];
     format(_message, sizeof(_message), "Assigned bot: %d to game: %d.", _bot, _gameId);

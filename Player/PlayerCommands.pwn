@@ -13,6 +13,18 @@ PkrCMD_Join(const playerid)
         return;
     }
 
+    if(Pkr_GetGameStatus(_game) != POKER_GAME_STATUS: LOBBY)
+    {
+        SendClientMessage(playerid, COLOR_RED, "This game is already in play.");
+        return;
+    }
+
+    if(Pkr_GetAmountOfPlayersOnGame(_game) == 6)
+    {
+        SendClientMessage(playerid, COLOR_RED, "This game is full.");
+        return;
+    }
+
     Pkr_PlayerShowDialog(playerid, _game);
 
     return;
