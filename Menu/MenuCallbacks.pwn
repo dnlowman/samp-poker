@@ -11,6 +11,8 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
         new _playerSlot = Pkr_GetPlayerSlot(playerid, _gameId);
     #endif
 
+    Pkr_SendFormattedGameMessage(_gameId, COLOR_RED, "Player Slot is %d", _playerSlot);
+
     if(_playerSlot == -1)
         return;
 
