@@ -346,10 +346,10 @@ stock Pkr_Evaluate(const gameId)
 
 
                     strdel(_sz, 0, sizeof(_sz));
-					Pkr_SubFromPot(gameId, -_pot);
+					Pkr_SubFromPot(gameId, _pot);
 					for(new i = 0; i < _wincount; ++i)
 					{
-                        Pkr_SetPlayerChips(_winners[i], gameId, contributions[_b][1]);
+                        Pkr_AddPlayerChips(_winners[i], gameId, contributions[_b][1]);
 					    _pot -= contributions[_b][1];
 						format(_sz, sizeof(_sz), "%s %s", _sz, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[i]]));
 					}
