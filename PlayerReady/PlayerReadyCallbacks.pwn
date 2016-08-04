@@ -17,6 +17,9 @@ bool: Pkr_PlayerReadyTextDrawClick(const playerid, const Text: clickedid)
             }
         }
 
+        if(_slot == -1)
+            return false;
+
         if(Pkr_GetPlayerId(_game, _slot) == INVALID_PLAYER_ID)
             return true;
     #else
