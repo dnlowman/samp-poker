@@ -36,7 +36,7 @@ public OnPlayerSelectDynamicObject(playerid, objectid, modelid, Float:x, Float:y
 public OnPlayerEditDynamicObject(playerid, objectid, response, Float: x, Float: y, Float: z, Float: rx, Float: ry, Float: rz)
 {
     #if defined TM_OnPlayerEditDynamicObject
-        TM_OnPlayerEditDynamicObject(playerid, objectid, response, x, y, z, rx, ry, rz);
+        TM_OnPlayerEditDyObj(playerid, objectid, response, x, y, z, rx, ry, rz);
     #endif
     new Float:oldX, Float:oldY, Float:oldZ, Float:oldRotX, Float:oldRotY, Float:oldRotZ;
     GetDynamicObjectPos(objectid, oldX, oldY, oldZ);
