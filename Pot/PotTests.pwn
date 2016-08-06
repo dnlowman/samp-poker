@@ -1,3 +1,5 @@
+static const gameId = 0;
+
 Pkr_InitialisePotTests()
 {
     new tests, fails, func[33];
@@ -8,7 +10,6 @@ Test:SetPotAmount()
 {
     // Given
     new amount = 100;
-    new gameId = 0;
 
     // When
     Pkr_SetPotAmount(gameId, amount);
@@ -17,11 +18,15 @@ Test:SetPotAmount()
     ASSERT(g_rgPokerGames[0][POT] == 100);
 }
 
+TestClose:SetPotAmount()
+{
+    Pkr_SetPotAmount(gameId, 0);
+}
+
 Test:GetPotAmount()
 {
     // Given
     new amount = 100;
-    new gameId = 0;
     Pkr_SetPotAmount(gameId, amount);
 
     // When
@@ -31,12 +36,16 @@ Test:GetPotAmount()
     ASSERT(result == 100);
 }
 
+TestClose:GetPotAmount()
+{
+    Pkr_SetPotAmount(gameId, 0);
+}
+
 Test:AddToPot()
 {
     // Given
     new initialAmount = 100;
     new addAmont = 200;
-    new gameId = 0;
     Pkr_SetPotAmount(gameId, initialAmount);
 
     // When
@@ -47,12 +56,16 @@ Test:AddToPot()
     ASSERT(result == addAmont + initialAmount);
 }
 
+TestClose:AddToPot()
+{
+    Pkr_SetPotAmount(gameId, 0);
+}
+
 Test:SubFromPot()
 {
     // Given
     new initialAmount = 400;
     new subAmount = 200;
-    new gameId = 0;
     Pkr_SetPotAmount(gameId, initialAmount);
 
     // When
@@ -61,4 +74,9 @@ Test:SubFromPot()
 
     // Then
     ASSERT(result == initialAmount - subAmount);
+}
+
+TestClose:SubFromPot()
+{
+    Pkr_SetPotAmount(gameId, 0);
 }
