@@ -46,6 +46,16 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
 
     if(clickedid == g_rgPokerGames[_gameId][MENU_TEXTDRAWS][1]) // BET OR RAISE
     {
+        new _foldedPlayersCount = Pkr_CountPlayerStatus(_gameId, POKER_PLAYER_STATUS: FOLDED);
+        new _allInPlayersCount = Pkr_CountPlayerStatus(_gameId, POKER_PLAYER_STATUS: ALL_IN);
+        new _playersOn = Pkr_GetAmountOfPlayersOnGame(_gameId);
+
+        if(_allInPlayersCount == _playersOn - _foldedPlayersCount - 1)
+        {
+            SendClientMessage(playerid, COLOR_RED, "You have to go all in.");
+            return;
+        }
+
         if(Pkr_GetCurrentBet(_gameId) >= Pkr_GetPlayerChips(_gameId, _playerSlot))
         {
             SendClientMessage(playerid, COLOR_RED, "You cannot afford to raise, you have to go all in or fold.");
