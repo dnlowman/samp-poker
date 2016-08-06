@@ -37,6 +37,7 @@ Special Thanks:
 
 #if defined RUN_TESTS
     #include <YSI\y_testing>
+    #include "Poker_Tests.pwn"
 #endif
 
 #include "Poker_Constants.pwn"

@@ -6,6 +6,10 @@ public OnFilterScriptInit()
         Pkr_OnFilterScriptInit();
     #endif
     Pkr_InitialisePoker();
+
+    #if defined RUN_TESTS
+        Pkr_InitialiseTests();
+    #endif
     return 1;
 }
 
