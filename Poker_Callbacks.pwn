@@ -6,6 +6,7 @@ public OnFilterScriptInit()
         Pkr_OnFilterScriptInit();
     #endif
     Pkr_InitialisePoker();
+    return 1;
 }
 
 #if defined _ALS_OnFilterScriptInit
@@ -31,6 +32,8 @@ public OnFilterScriptExit()
             Pkr_DestroyGame(_j);
         }
     }
+
+    return 1;
 }
 
 #if defined _ALS_OnFilterScriptExit
