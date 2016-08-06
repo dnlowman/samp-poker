@@ -66,7 +66,16 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
         return;
     }
 
-    if(_hasEveryoneChecked == _playersOn - (_foldedPlayersCount + _allInPlayersCount))
+    new closedCount = 0;
+    for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
+    {
+        if(Pkr_GetPlayerId(gameId, i) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, i) != POKER_PLAYER_STATUS: FOLDED && Pkr_GetPlayerStatus(gameId, i) != POKER_PLAYER_STATUS: ALL_IN && Pkr_GetPlayerClosedLastPlay(gameId, i) == true)
+        {
+            closedCount++;
+        }
+    }
+
+    if(_hasEveryoneChecked == _playersOn - _foldedPlayersCount - _allInPlayersCount && (closedCount == _playersOn - _foldedPlayersCount - _allInPlayersCount || Pkr_GetLastAggressivePlayer(gameId) == INVALID_PLAYER_ID))
     {
         Pkr_DealNextRound(gameId);
         return;
@@ -77,6 +86,52 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
         Pkr_DealNextRound(gameId);
         return;
     }
+
+    //
+
+    if(closedCount == _playersOn - _foldedPlayersCount - _allInPlayersCount)
+    {
+
+        if(_playersOn - _foldedPlayersCount - _allInPlayersCount == 1)
+        {
+            switch(Pkr_GetGameStatus(gameId))
+            {
+                case (POKER_GAME_STATUS: INITIAL_BETTING):
+                {
+                    Pkr_DealFlop(gameId);
+                    Pkr_DealTurn(gameId);
+                    Pkr_DealRiver(gameId);
+                    Pkr_Evaluate(gameId);
+                }
+
+
+                case (POKER_GAME_STATUS: FLOP):
+                {
+                    Pkr_DealTurn(gameId);
+                    Pkr_DealRiver(gameId);
+                    Pkr_Evaluate(gameId);
+                }
+
+                case (POKER_GAME_STATUS: TURN):
+                {
+                    Pkr_DealRiver(gameId);
+                    Pkr_Evaluate(gameId);
+                }
+
+                case (POKER_GAME_STATUS: RIVER):
+                {
+                    Pkr_Evaluate(gameId);
+                }
+            }
+
+            return;
+        }
+
+        Pkr_DealNextRound(gameId);
+        return;
+    }
+
+    //
 
     new _nextPlayer = Pkr_FindNextPlayer(gameId, Pkr_GetCurrentPlayerPosition(gameId));
 
@@ -166,6 +221,9 @@ stock Pkr_DealNextRound(const gameId)
     Pkr_SetLastAggressivePlayer(gameId, INVALID_PLAYER_ID);
     Pkr_SetLastBet(gameId, 0);
     Pkr_ResetPlayerBetContributions(gameId);
+
+    for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
+        Pkr_ResetPlayerClosedLastPlay(gameId, i);
 
     new _dealerPosition = Pkr_GetDealerPosition(gameId);
     Pkr_SetAllPlayersStatus(gameId, POKER_PLAYER_STATUS: WAITING);

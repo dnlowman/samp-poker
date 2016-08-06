@@ -11,8 +11,6 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
         new _playerSlot = Pkr_GetPlayerSlot(playerid, _gameId);
     #endif
 
-    Pkr_SendFormattedGameMessage(_gameId, COLOR_RED, "Player Slot is %d", _playerSlot);
-
     if(_playerSlot == -1)
         return;
 
@@ -33,6 +31,9 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
         {
             Pkr_SetLastAggressivePlayer(_gameId, _playerSlot);
             Pkr_AddToCurrentBet(_gameId, _playerChips);
+
+            for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
+                Pkr_ResetPlayerClosedLastPlay(_gameId, i);
         }
 
         Pkr_AddToPot(_gameId, _playerChips);
