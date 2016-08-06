@@ -9,7 +9,6 @@ stock Pkr_SetPotTextDraw(const gameId, const amount)
     new _szPotString[128];
     format(_szPotString, sizeof(_szPotString), "~w~ POT: ~g~$%d", amount);
     TextDrawSetString(g_rgPokerGames[gameId][POT_TEXTDRAW], _szPotString);
-
     return;
 }
 
@@ -31,6 +30,5 @@ Pkr_CreatePotTextDraw(const gameId) {
 Pkr_DestroyPotTextDraw(const gameId) {
     TextDrawDestroy(g_rgPokerGames[gameId][POT_TEXTDRAW]);
     g_rgPokerGames[gameId][POT_TEXTDRAW] = Text: INVALID_TEXT_DRAW;
-
     return;
 }

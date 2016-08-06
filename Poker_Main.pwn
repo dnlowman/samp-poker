@@ -35,11 +35,6 @@ Special Thanks:
 
 #define RUN_TESTS
 
-#if defined RUN_TESTS
-    #include <YSI\y_testing>
-    #include "Poker_Tests.pwn"
-#endif
-
 #include "Poker_Constants.pwn"
 #include "Poker_Header.inc"
 
@@ -66,6 +61,11 @@ Special Thanks:
 #include "Player\Player.pwn"
 #include "Bots\Bots.pwn"
 #include "Poker_Commands.pwn"
-#include "Poker_Callbacks.pwn"
 
+#if defined RUN_TESTS
+    #include <YSI\y_testing>
+    #include "Poker_Tests.pwn"
+#endif
+
+#include "Poker_Callbacks.pwn"
 #include "TableManager\Main.pwn"
