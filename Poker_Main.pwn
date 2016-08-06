@@ -30,7 +30,14 @@ Special Thanks:
 #if defined POKER_SYSTEM
     #endinput
 #endif
+
 #define POKER_SYSTEM
+
+#define RUN_TESTS
+
+#if defined RUN_TESTS
+    #include <YSI\y_testing>
+#endif
 
 #include "Poker_Constants.pwn"
 #include "Poker_Header.inc"
