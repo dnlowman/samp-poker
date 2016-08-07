@@ -35,3 +35,75 @@ Test:SetBlindsTextDrawId()
     // Then
     ASSERT(result == textId);
 }
+
+TestClose:SetBlindsTextDrawId()
+{
+    Pkr_SetBlindsTextDrawId(gameId, Text: INVALID_TEXT_DRAW);
+}
+
+TestInit:ShowPlayerBlindTextDraw()
+{
+    textDrawShowForPlayerCalls = 0;
+}
+
+Test:ShowPlayerBlindTextDraw()
+{
+    // Given
+    const playerId = 2;
+
+    // When
+    Pkr_ShowPlayerBlindTextDraw(gameId, playerId);
+
+    // Then
+    ASSERT(textDrawShowForPlayerCalls == 1);
+}
+
+TestClose:ShowPlayerBlindTextDraw()
+{
+    textDrawShowForPlayerCalls = 0;
+}
+
+TestInit:HidePlayerBlindTextDraw()
+{
+    textDrawHideForPlayerCalls = 0;
+}
+
+Test:HidePlayerBlindTextDraw()
+{
+    // Given
+    const playerId = 2;
+
+    // When
+    Pkr_HidePlayerBlindTextDraw(gameId, playerId);
+
+    // Then
+    ASSERT(textDrawHideForPlayerCalls == 1);
+}
+
+TestClose:HidePlayerBlindTextDraw()
+{
+    textDrawHideForPlayerCalls = 0;
+}
+
+TestInit:DestroyBlindTextDraw()
+{
+    textDrawDestroyCalls = 0;
+}
+
+Test:DestroyBlindTextDraw()
+{
+    // Given
+    Pkr_CreateBlindTextDraw(gameId);
+
+    // When
+    Pkr_DestroyBlindTextDraw(gameId);
+
+    // Then
+    ASSERT(textDrawDestroyCalls == 1);
+    ASSERT(Pkr_GetBlindsTextDrawId(gameId) == Text: INVALID_TEXT_DRAW);
+}
+
+TestClose:DestroyBlindTextDraw()
+{
+    textDrawDestroyCalls = 0;
+}

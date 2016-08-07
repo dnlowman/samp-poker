@@ -5,32 +5,33 @@
             g_rgPokerGames[%0][POKER_BLINDS_TEXTDRAW] = %1
 
 #define Pkr_ShowPlayerBlindTextDraw(%0,%1) \
-            TextDrawShowForPlayer(%0, g_rgPokerGames[%1][POKER_BLINDS_TEXTDRAW])
+            TextDrawShowForPlayer(%0, Pkr_GetBlindsTextDrawId(%1))
 
 #define Pkr_HidePlayerBlindTextDraw(%0,%1) \
-            TextDrawHideForPlayer(%0, g_rgPokerGames[%1][POKER_BLINDS_TEXTDRAW])
+            TextDrawHideForPlayer(%0, Pkr_GetBlindsTextDrawId(%1))
 
 #define Pkr_SetBlindTextDraw(%0,%1) \
-            TextDrawSetString(g_rgPokerGames[%0][POKER_BLINDS_TEXTDRAW], %1)
+            TextDrawSetString(Pkr_GetBlindsTextDrawId(%1), %1)
 
-Pkr_CreateBlindTextDraw(const gameId) {
-    g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW] = TextDrawCreate(317.000000, 244.000000, "BLINDS: ~y~$100 ~w~/ ~y~$200");
-    TextDrawAlignment(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 2);
-    TextDrawBackgroundColor(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 255);
-    TextDrawFont(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 2);
-    TextDrawLetterSize(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 0.210000, 1.300000);
-    TextDrawColor(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], -1);
-    TextDrawSetOutline(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 1);
-    TextDrawSetProportional(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 1);
-    TextDrawSetShadow(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 1);
-    TextDrawSetSelectable(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW], 0);
-
+Pkr_CreateBlindTextDraw(const gameId)
+{
+    Pkr_SetBlindsTextDrawId(gameId, TextDrawCreate(317.000000, 244.000000, "BLINDS: ~y~$100 ~w~/ ~y~$200"));
+    new Text: textId = Pkr_GetBlindsTextDrawId(gameId);
+    TextDrawAlignment(textId, 2);
+    TextDrawBackgroundColor(textId, 255);
+    TextDrawFont(textId, 2);
+    TextDrawLetterSize(textId, 0.210000, 1.300000);
+    TextDrawColor(textId, -1);
+    TextDrawSetOutline(textId, 1);
+    TextDrawSetProportional(textId, 1);
+    TextDrawSetShadow(textId, 1);
+    TextDrawSetSelectable(textId, 0);
     return;
 }
 
-Pkr_DestroyBlindTextDraw(const gameId) {
-    TextDrawDestroy(g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW]);
-    g_rgPokerGames[gameId][POKER_BLINDS_TEXTDRAW] = Text: INVALID_TEXT_DRAW;
-
+Pkr_DestroyBlindTextDraw(const gameId)
+{
+    TextDrawDestroy(Pkr_GetBlindsTextDrawId(gameId));
+    Pkr_SetBlindsTextDrawId(gameId, Text: INVALID_TEXT_DRAW);
     return;
 }
