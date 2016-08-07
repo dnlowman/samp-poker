@@ -1,18 +1,18 @@
 Pkr_RouteCommands(playerid, cmdtext[])
 {
-    new _cmd[16],
-        _params[112];
-    sscanf(cmdtext, "s[16]s[112]", _cmd, _params);
+    new command[16];
+    new parameters[112];
+    sscanf(cmdtext, "s[16]s[112]", command, parameters);
 
-    if(strcmp("create", _cmd) == 0) PkrCMD_Create(playerid);
-    else if(strcmp("addbot", _cmd) == 0) PkrCMD_AddBot(playerid, _params);
-    else if(strcmp("removebot", _cmd) == 0) PkrCMD_RemoveBot(playerid, _params);
-    else if(strcmp("join", _cmd) == 0) PkrCMD_Join(playerid);
-    else if(strcmp("leave", _cmd) == 0) PkrCMD_Leave(playerid);
+    if(strcmp("create", command) == 0) PkrCMD_Create(playerid);
+    else if(strcmp("addbot", command) == 0) PkrCMD_AddBot(playerid, parameters);
+    else if(strcmp("removebot", command) == 0) PkrCMD_RemoveBot(playerid, parameters);
+    else if(strcmp("join", command) == 0) PkrCMD_Join(playerid);
+    else if(strcmp("leave", command) == 0) PkrCMD_Leave(playerid);
 	//else if(strcmp("leave", cmdtext) == 0) pkrleave(playerid);
-	else if(strcmp("mouse", _cmd) == 0) PkrCMD_Mouse(playerid);
-    else if(strcmp("start", _cmd) == 0) PkrCMD_Start(playerid);
-	else if(strcmp("nexthand", _cmd) == 0) PkrCMD_NextHand(playerid);
+	else if(strcmp("mouse", command) == 0) PkrCMD_Mouse(playerid);
+    else if(strcmp("start", command) == 0) PkrCMD_Start(playerid);
+	else if(strcmp("nexthand", command) == 0) PkrCMD_NextHand(playerid);
 	//else if(strcmp("nexthand", cmdtext) == 0) pkrnexthand(playerid);
 	//else if(strcmp("spec", cmdtext) == 0) pkrspectate(playerid);
 	//else if(strcmp("cam", cmdtext) == 0) pkrcam(playerid);
