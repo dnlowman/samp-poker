@@ -9,7 +9,6 @@ Pkr_ShowPlayerTextDraws(const playerId, const gameId)
     Pkr_ShowPlayerBlindTextDraw(playerId, gameId);
     Pkr_ShowPlayerCardTextDraws(playerId, gameId);
     Pkr_ShowTableCardTextDraws(playerId, gameId);
-
     return;
 }
 
@@ -24,7 +23,6 @@ Pkr_HidePlayerTextDraws(const playerId, const gameId)
     Pkr_HidePlayerBlindTextDraw(playerId, gameId);
     Pkr_HidePlayerCardTextDraws(playerId, gameId);
     Pkr_HideTableCardTextDraws(playerId, gameId);
-
     return;
 }
 
@@ -41,7 +39,6 @@ Pkr_CreateGameTextDraws(const gameId)
     Pkr_CreateBlindTextDraw(gameId);
     Pkr_CreatePlayerCardTDs(gameId);
     Pkr_CreateTableCardTextDraws(gameId);
-
     return;
 }
 
@@ -58,6 +55,5 @@ Pkr_DestroyGameTextDraws(const gameId)
     Pkr_DestroyBlindTextDraw(gameId);
     Pkr_DestroyPlayerCardTDs(gameId);
     Pkr_DestroyTableCardTextDraws(gameId);
-
     return;
 }
