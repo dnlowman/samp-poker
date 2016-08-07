@@ -10,6 +10,7 @@ PkrCMD_AddBot(const playerid, const params[])
     }
 
     botId = Pkr_FindAvailableBot();
+
     if(botId == INVALID_PLAYER_ID)
     {
         SendClientMessage(playerid, COLOR_RED, "No bots available, either there are no bots connected or they are all assigned to poker games!");
@@ -58,9 +59,6 @@ PkrCMD_RemoveBot(const playerid, const params[])
     SendClientMessage(playerid, COLOR_GREEN, message);
     return;
 }
-
-#define Pkr_ForeachPlayerIdInPool(%0) \
-            for(new %0 = 0, poolSize = GetPlayerPoolSize(); %0 <= poolSize; ++%0)
 
 static Pkr_FindAvailableBot()
 {
