@@ -1,83 +1,23 @@
-stock Pkr_SetAllPlayersStatus(const gameId, const POKER_PLAYER_STATUS: playerState)
-{
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
-    {
-        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID)
-        {
-            switch(playerState)
-            {
-                case (POKER_PLAYER_STATUS: LOBBY):
-                    Pkr_SetPlayerStatusInLobby(gameId, _i);
+#define Pkr_GetPlayerStatus(%0,%1) \
+            g_rgPokerGames[%0][PLAYER_STATUS][%1]
 
-                case (POKER_PLAYER_STATUS: WAITING):
-                    Pkr_SetPlayerStatusWaiting(gameId, _i);
-            }
-        }
-    }
-}
+#define Pkr_SetPlayerStatus(%0,%1,%2) \
+            g_rgPokerGames[%0][PLAYER_STATUS][%1] = %2
 
-stock Pkr_CountPlayerStatus(const gameId, const POKER_PLAYER_STATUS: playerState)
-{
-    new _count = 0;
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
-    {
-        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, _i) == playerState)
-            _count++;
-    }
-
-    return _count;
-}
-
-stock bool: Pkr_ActivePlayers(const gameId)
-{
-    new _count = 0;
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
-    {
-        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID &&
-           (Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: WAITING ||
-           Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: DEALER ||
-               Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: PLAYING ||
-            Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: SMALL_BLIND))
-        {
-            ++_count;
-        }
-    }
-
-    return _count > 0;
-}
-
-stock bool: Pkr_HasEveryonePlayed(const gameId)
-{
-    new _betCount = 0;
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
-    {
-        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID &&
-           (Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: RAISED ||
-            Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: BET ||
-            Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: BIG_BLIND) ||
-            (Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: ALL_IN && Pkr_GetPlayerBetContribution(gameId, _i) > 0))
-        {
-            ++_betCount;
-        }
-    }
-
-    return _betCount == 0 && !Pkr_ActivePlayers(gameId) && Pkr_GetLastAggressivePlayer(gameId) != INVALID_PLAYER_ID;
-}
-
-stock Pkr_SetPlayerStatusInLobby(const gameId, const slot) {
-    g_rgPokerGames[gameId][PLAYER_STATUS][slot] = POKER_PLAYER_STATUS: LOBBY;
-    Pkr_SetPlayerStatusTextDraw(gameId, slot, "LOBBY");
-
+stock Pkr_SetPlayerStatusInLobby(const gameId, const playerSlot) {
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: LOBBY);
+    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, "LOBBY");
     return;
 }
 
-stock Pkr_SetPlayerStatusWaiting(const gameId, const slot) {
-    if(Pkr_GetPlayerStatus(gameId, slot) == POKER_PLAYER_STATUS: FOLDED || Pkr_GetPlayerStatus(gameId, slot) == POKER_PLAYER_STATUS: ALL_IN)
+stock Pkr_SetPlayerStatusWaiting(const gameId, const playerSlot) {
+    new POKER_PLAYER_STATUS: playerStatus = Pkr_GetPlayerStatus(gameId, playerSlot);
+
+    if(playerStatus == POKER_PLAYER_STATUS: FOLDED || playerStatus == POKER_PLAYER_STATUS: ALL_IN)
         return;
 
-    g_rgPokerGames[gameId][PLAYER_STATUS][slot] = POKER_PLAYER_STATUS: WAITING;
-    Pkr_SetPlayerStatusTextDraw(gameId, slot, "WAITING");
-
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: WAITING);
+    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, "WAITING");
     return;
 }
 
@@ -168,6 +108,72 @@ stock Pkr_SetPlayerStatusEvaluated(const gameId, const playerSlot)
 {
     g_rgPokerGames[gameId][PLAYER_STATUS][playerSlot] = POKER_PLAYER_STATUS: EVALUATED;
     return;
+}
+
+stock Pkr_SetAllPlayersStatus(const gameId, const POKER_PLAYER_STATUS: playerState)
+{
+    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
+    {
+        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID)
+        {
+            switch(playerState)
+            {
+                case (POKER_PLAYER_STATUS: LOBBY):
+                    Pkr_SetPlayerStatusInLobby(gameId, _i);
+
+                case (POKER_PLAYER_STATUS: WAITING):
+                    Pkr_SetPlayerStatusWaiting(gameId, _i);
+            }
+        }
+    }
+}
+
+stock Pkr_CountPlayerStatus(const gameId, const POKER_PLAYER_STATUS: playerState)
+{
+    new _count = 0;
+    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
+    {
+        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, _i) == playerState)
+            _count++;
+    }
+
+    return _count;
+}
+
+stock bool: Pkr_ActivePlayers(const gameId)
+{
+    new _count = 0;
+    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
+    {
+        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID &&
+           (Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: WAITING ||
+           Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: DEALER ||
+               Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: PLAYING ||
+            Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: SMALL_BLIND))
+        {
+            ++_count;
+        }
+    }
+
+    return _count > 0;
+}
+
+stock bool: Pkr_HasEveryonePlayed(const gameId)
+{
+    new _betCount = 0;
+    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
+    {
+        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID &&
+           (Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: RAISED ||
+            Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: BET ||
+            Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: BIG_BLIND) ||
+            (Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: ALL_IN && Pkr_GetPlayerBetContribution(gameId, _i) > 0))
+        {
+            ++_betCount;
+        }
+    }
+
+    return _betCount == 0 && !Pkr_ActivePlayers(gameId) && Pkr_GetLastAggressivePlayer(gameId) != INVALID_PLAYER_ID;
 }
 
 stock Pkr_GetFirstPlayerWithStatus(const gameId, const POKER_PLAYER_STATUS: playerState)

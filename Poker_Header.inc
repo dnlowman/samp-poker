@@ -163,9 +163,6 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 #define Pkr_SetGameStatus(%0,%1) \
             g_rgPokerGames[%0][GAME_STATUS] = %1
 
-#define Pkr_GetPlayerStatus(%0,%1) \
-            g_rgPokerGames[%0][PLAYER_STATUS][%1]
-
 #define Pkr_GetPlayerId(%0,%1) \
             g_rgPokerGames[%0][PLAYERS][%1]
 
