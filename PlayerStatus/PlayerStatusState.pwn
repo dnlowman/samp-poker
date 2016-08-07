@@ -142,20 +142,13 @@ stock Pkr_CountPlayerStatus(const gameId, const POKER_PLAYER_STATUS: status)
 
 stock bool: Pkr_ActivePlayers(const gameId)
 {
-    new _count = 0;
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
+    new count = 0;
+    Pkr_ForeachPlayer(playerSlot)
     {
-        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID &&
-           (Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: WAITING ||
-           Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: DEALER ||
-               Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: PLAYING ||
-            Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: SMALL_BLIND))
-        {
-            ++_count;
-        }
+        if(Pkr_GetPlayerId(gameId, playerSlot) != INVALID_PLAYER_ID && (Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: WAITING || Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: DEALER || Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: PLAYING || Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: SMALL_BLIND))
+            ++count;
     }
-
-    return _count > 0;
+    return count > 0;
 }
 
 stock bool: Pkr_HasEveryonePlayed(const gameId)

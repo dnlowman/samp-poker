@@ -384,3 +384,42 @@ TestClose:CountPlayerStatus()
     Pkr_SetPlayerId(gameId, playerSlotOne, INVALID_PLAYER_ID);
     Pkr_SetPlayerId(gameId, playerSlotTwo, INVALID_PLAYER_ID);
 }
+
+Test:ActivePlayers()
+{
+    // Given
+    new playerSlotOne = 2;
+    new playerSlotTwo = 4;
+    new playerSlotThree = 4;
+    new playerSlotFour = 4;
+    Pkr_SetPlayerStatus(gameId, playerSlotOne, POKER_PLAYER_STATUS: WAITING);
+    Pkr_SetPlayerStatus(gameId, playerSlotTwo, POKER_PLAYER_STATUS: DEALER);
+    Pkr_SetPlayerStatus(gameId, playerSlotThree, POKER_PLAYER_STATUS: PLAYING);
+    Pkr_SetPlayerStatus(gameId, playerSlotFour, POKER_PLAYER_STATUS: SMALL_BLIND);
+    Pkr_SetPlayerId(gameId, playerSlotOne, 112);
+    Pkr_SetPlayerId(gameId, playerSlotTwo, 321);
+    Pkr_SetPlayerId(gameId, playerSlotThree, 1234);
+    Pkr_SetPlayerId(gameId, playerSlotFour, 442);
+
+    // When
+    new bool: result = Pkr_ActivePlayers(gameId);
+
+    // Then
+    ASSERT(result == true);
+}
+
+TestClose:ActivePlayers()
+{
+    new playerSlotOne = 2;
+    new playerSlotTwo = 4;
+    new playerSlotThree = 4;
+    new playerSlotFour = 4;
+    Pkr_SetPlayerStatus(gameId, playerSlotOne, POKER_PLAYER_STATUS: EMPTY);
+    Pkr_SetPlayerStatus(gameId, playerSlotTwo, POKER_PLAYER_STATUS: EMPTY);
+    Pkr_SetPlayerStatus(gameId, playerSlotThree, POKER_PLAYER_STATUS: EMPTY);
+    Pkr_SetPlayerStatus(gameId, playerSlotFour, POKER_PLAYER_STATUS: EMPTY);
+    Pkr_SetPlayerId(gameId, playerSlotOne, INVALID_PLAYER_ID);
+    Pkr_SetPlayerId(gameId, playerSlotTwo, INVALID_PLAYER_ID);
+    Pkr_SetPlayerId(gameId, playerSlotThree, INVALID_PLAYER_ID);
+    Pkr_SetPlayerId(gameId, playerSlotFour, INVALID_PLAYER_ID);
+}
