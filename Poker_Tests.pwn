@@ -1,10 +1,12 @@
 #if defined RUN_TESTS
 
     #include "Pot\PotTests.pwn"
+    #include "3DTextLabels\3DTextLabelsTests.pwn"
 
     Pkr_InitialiseTests()
     {
         Pkr_InitialisePotTests();
+        Pkr_Initialise3DTextLabelsTests();
     }
 
 #else
