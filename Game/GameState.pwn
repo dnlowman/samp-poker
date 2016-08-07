@@ -226,7 +226,7 @@ stock Pkr_DealNextRound(const gameId)
         Pkr_ResetPlayerClosedLastPlay(gameId, i);
 
     new _dealerPosition = Pkr_GetDealerPosition(gameId);
-    Pkr_SetAllPlayersStatus(gameId, POKER_PLAYER_STATUS: WAITING);
+    Pkr_SetAllPlayerStatusWaiting(gameId);
     Pkr_SetPlayerStatusDealer(gameId, _dealerPosition);
     new _nextPlayer = Pkr_FindNextPlayer(gameId, _dealerPosition);
     Pkr_SetPlayerPlaying(gameId, _nextPlayer);
@@ -450,7 +450,7 @@ stock Pkr_SetGameToLobby(const gameId)
 {
     PkrClearTableCards(gameId);
     Pkr_ClearAllPlayerCards(gameId);
-    Pkr_SetAllPlayersStatus(gameId, POKER_PLAYER_STATUS: LOBBY);
+    Pkr_SetAllPlayerStatusInLobby(gameId);
     Pkr_SetAllPlayersNotReady(gameId);
     Pkr_ShowAllPlayersReadyTextDraw(gameId);
     Pkr_SetSmallBlindPosition(gameId, -1);

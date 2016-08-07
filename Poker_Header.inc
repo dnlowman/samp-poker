@@ -103,6 +103,12 @@ enum POKER_GAME {
 };
 new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
+#define Pkr_ForeachPlayer(%0) \
+            for(new %0 = 0; %0 < MAX_POKER_PLAYERS; ++%0)
+
+#define Pkr_ForeachPlayerIdInPool(%0) \
+            for(new %0 = 0, poolSize = GetPlayerPoolSize(); %0 <= poolSize; ++%0)
+
 #define Pkr_SetPlayerClosedLastPlay(%0,%1) \
             g_rgPokerGames[%0][PLAYER_CLOSED_LAST_PLAY][%1] = true
 
@@ -165,6 +171,9 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
 #define Pkr_GetPlayerId(%0,%1) \
             g_rgPokerGames[%0][PLAYERS][%1]
+
+#define Pkr_SetPlayerId(%0,%1,%2) \
+            g_rgPokerGames[%0][PLAYERS][%1] = %2
 
 #define Pkr_GetSmallBlindPosition(%0) \
             g_rgPokerGames[%0][SMALL_BLIND_POSITION]

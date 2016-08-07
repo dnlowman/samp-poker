@@ -105,34 +105,39 @@ stock Pkr_SetPlayerStatusEvaluated(const gameId, const playerSlot)
     return;
 }
 
-stock Pkr_SetAllPlayersStatus(const gameId, const POKER_PLAYER_STATUS: playerState)
+Pkr_SetAllPlayerStatusInLobby(const gameId)
 {
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
+    Pkr_ForeachPlayer(playerSlot)
     {
-        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID)
-        {
-            switch(playerState)
-            {
-                case (POKER_PLAYER_STATUS: LOBBY):
-                    Pkr_SetPlayerStatusInLobby(gameId, _i);
+        if(Pkr_GetPlayerId(gameId, playerSlot) == INVALID_PLAYER_ID)
+            continue;
 
-                case (POKER_PLAYER_STATUS: WAITING):
-                    Pkr_SetPlayerStatusWaiting(gameId, _i);
-            }
-        }
+        Pkr_SetPlayerStatusInLobby(gameId, playerSlot);
     }
+    return;
 }
 
-stock Pkr_CountPlayerStatus(const gameId, const POKER_PLAYER_STATUS: playerState)
+Pkr_SetAllPlayerStatusWaiting(const gameId)
 {
-    new _count = 0;
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
+    Pkr_ForeachPlayer(playerSlot)
     {
-        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, _i) == playerState)
-            _count++;
-    }
+        if(Pkr_GetPlayerId(gameId, playerSlot) == INVALID_PLAYER_ID)
+            continue;
 
-    return _count;
+        Pkr_SetPlayerStatusWaiting(gameId, playerSlot);
+    }
+    return;
+}
+
+stock Pkr_CountPlayerStatus(const gameId, const POKER_PLAYER_STATUS: status)
+{
+    new count = 0;
+    Pkr_ForeachPlayer(playerSlot)
+    {
+        if(Pkr_GetPlayerId(gameId, playerSlot) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, playerSlot) == status)
+            count++;
+    }
+    return count;
 }
 
 stock bool: Pkr_ActivePlayers(const gameId)
