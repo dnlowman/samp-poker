@@ -21,75 +21,71 @@ stock Pkr_SetPlayerStatusWaiting(const gameId, const playerSlot) {
     return;
 }
 
-stock Pkr_SetPlayerStatusPlaying(const gameId, const slot) {
-    g_rgPokerGames[gameId][PLAYER_STATUS][slot] = POKER_PLAYER_STATUS: PLAYING;
-    Pkr_SetPlayerStatusTextDraw(gameId, slot, "PLAYING");
-
+stock Pkr_SetPlayerStatusPlaying(const gameId, const playerSlot) {
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: PLAYING);
+    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, "PLAYING");
     return;
 }
 
-stock Pkr_SetPlayerStatusChecked(const gameId, const slot) {
-    g_rgPokerGames[gameId][PLAYER_STATUS][slot] = POKER_PLAYER_STATUS: CHECKED;
-    Pkr_SetPlayerStatusTextDraw(gameId, slot, "CHECKED");
-
+stock Pkr_SetPlayerStatusChecked(const gameId, const playerSlot) {
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: CHECKED);
+    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, "CHECKED");
     return;
 }
 
-stock Pkr_SetPlayerStatusAllIn(const gameId, const slot) {
-    g_rgPokerGames[gameId][PLAYER_STATUS][slot] = POKER_PLAYER_STATUS: ALL_IN;
-    Pkr_SetPlayerStatusTextDraw(gameId, slot, "ALL IN");
+stock Pkr_SetPlayerStatusAllIn(const gameId, const playerSlot) {
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: ALL_IN);
+    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, "ALL IN");
     return;
 }
 
-stock Pkr_SetPlayerStatusCalled(const gameId, const slot, const amount) {
-    g_rgPokerGames[gameId][PLAYER_STATUS][slot] = POKER_PLAYER_STATUS: CALLED;
-    new _format[128];
-    format(_format, sizeof(_format), "CALLED: ~r~$%d", amount);
-    Pkr_SetPlayerStatusTextDraw(gameId, slot, _format);
+stock Pkr_SetPlayerStatusCalled(const gameId, const playerSlot, const amount) {
+    new text[128];
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: CALLED);
+    format(text, sizeof(text), "CALLED: ~r~$%d", amount);
+    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, text);
     return;
 }
 
-stock Pkr_SetPlayerStatusBet(const gameId, const slot, const amount)
+stock Pkr_SetPlayerStatusBet(const gameId, const playerSlot, const amount)
 {
-    g_rgPokerGames[gameId][PLAYER_STATUS][slot] = POKER_PLAYER_STATUS: BET;
-    new _format[128];
-    format(_format, sizeof(_format), "BET: ~r~$%d", amount);
-    Pkr_SetPlayerStatusTextDraw(gameId, slot, _format);
+    new text[128];
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: BET);
+    format(text, sizeof(text), "BET: ~r~$%d", amount);
+    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, text);
     return;
 }
 
-stock Pkr_SetPlayerStatusRaised(const gameId, const slot, const amount)
+stock Pkr_SetPlayerStatusRaised(const gameId, const playerSlot, const amount)
 {
-    g_rgPokerGames[gameId][PLAYER_STATUS][slot] = POKER_PLAYER_STATUS: RAISED;
-    new _format[128];
-    format(_format, sizeof(_format), "RAISED: ~r~$%d", amount);
-    Pkr_SetPlayerStatusTextDraw(gameId, slot, _format);
+    new text[128];
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: RAISED);
+    format(text, sizeof(text), "RAISED: ~r~$%d", amount);
+    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, text);
     return;
 }
 
-stock Pkr_SetPlayerStatusFolded(const gameId, const slot) {
-    g_rgPokerGames[gameId][PLAYER_STATUS][slot] = POKER_PLAYER_STATUS: FOLDED;
-    Pkr_SetPlayerStatusTextDraw(gameId, slot, "FOLDED");
+stock Pkr_SetPlayerStatusFolded(const gameId, const playerSlot) {
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: FOLDED);
+    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, "FOLDED");
     return;
 }
 
 stock Pkr_SetPlayerStatusSmallBlind(const gameId, const playerSlot)
 {
-    g_rgPokerGames[gameId][PLAYER_STATUS][playerSlot] = POKER_PLAYER_STATUS: SMALL_BLIND;
-    new _format[128];
-    format(_format, sizeof(_format), "SMALL BLIND: ~r~$%d", Pkr_GetSmallBlind(gameId));
-    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, _format);
-
+    new text[128];
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: SMALL_BLIND);
+    format(text, sizeof(text), "SMALL BLIND: ~r~$%d", Pkr_GetSmallBlind(gameId));
+    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, text);
     return;
 }
 
 stock Pkr_SetPlayerStatusBigBlind(const gameId, const playerSlot)
 {
-    g_rgPokerGames[gameId][PLAYER_STATUS][playerSlot] = POKER_PLAYER_STATUS: BIG_BLIND;
-    new _format[128];
-    format(_format, sizeof(_format), "BIG BLIND: ~r~$%d", Pkr_GetBigBlind(gameId));
-    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, _format);
-
+    new text[128];
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: BIG_BLIND);
+    format(text, sizeof(text), "BIG BLIND: ~r~$%d", Pkr_GetBigBlind(gameId));
+    Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, text);
     return;
 }
 
@@ -98,15 +94,14 @@ stock Pkr_SetPlayerStatusDealer(const gameId, const playerSlot)
     if(Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: FOLDED || Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: ALL_IN)
         return;
 
-    g_rgPokerGames[gameId][PLAYER_STATUS][playerSlot] = POKER_PLAYER_STATUS: DEALER;
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: DEALER);
     Pkr_SetPlayerStatusTextDraw(gameId, playerSlot, "DEALER");
-
     return;
 }
 
 stock Pkr_SetPlayerStatusEvaluated(const gameId, const playerSlot)
 {
-    g_rgPokerGames[gameId][PLAYER_STATUS][playerSlot] = POKER_PLAYER_STATUS: EVALUATED;
+    Pkr_SetPlayerStatus(gameId, playerSlot, POKER_PLAYER_STATUS: EVALUATED);
     return;
 }
 
