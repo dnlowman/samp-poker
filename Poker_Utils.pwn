@@ -2,6 +2,9 @@
     #define BYTES_PER_CELL (cellbits / 8)
 #endif
 
+#define Pkr_ForeachPlayer(%0) \
+            for(new %0 = 0; %0 < MAX_POKER_PLAYERS; ++%0)
+
 #define Pkr_ForeachPlayerIdInPool(%0) \
             for(new %0 = 0, poolSize = GetPlayerPoolSize(); %0 <= poolSize; ++%0)
 
