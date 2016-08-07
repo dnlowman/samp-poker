@@ -1,11 +1,5 @@
-Pkr_FindAvailableBot() {
-    for(new i = 0, j = GetPlayerPoolSize(); i <= j; ++i)
-        if(!Pkr_IsPlayerOnAnyGame(i) && IsPlayerNPC(i))
-            return i;
-    return -1;
-}
-
-PkrCMD_AddBot(const playerid, const params[]) {
+PkrCMD_AddBot(const playerid, const params[])
+{
     new _gameId = 0;
     if(sscanf(params, "i", _gameId)) {
         SendClientMessage(playerid, COLOR_RED, "USAGE: /pkr addbot [gameId]");
@@ -30,7 +24,8 @@ PkrCMD_AddBot(const playerid, const params[]) {
     return;
 }
 
-PkrCMD_RemoveBot(const playerid, const params[]) {
+PkrCMD_RemoveBot(const playerid, const params[])
+{
     new _botId = 0;
     if(sscanf(params, "i", _botId)) {
         SendClientMessage(playerid, COLOR_RED, "USAGE: /pkr removebot [botId]");
@@ -55,4 +50,11 @@ PkrCMD_RemoveBot(const playerid, const params[]) {
     format(_message, sizeof(_message), "Unassigned bot: %d from game: %d.", _botId, _game);
     SendClientMessage(playerid, COLOR_GREEN, _message);
     return;
+}
+
+static Pkr_FindAvailableBot() {
+    for(new i = 0, j = GetPlayerPoolSize(); i <= j; ++i)
+        if(!Pkr_IsPlayerOnAnyGame(i) && IsPlayerNPC(i))
+            return i;
+    return -1;
 }
