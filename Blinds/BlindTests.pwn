@@ -22,3 +22,16 @@ Test:SetBlind()
     ASSERT(actualSmallBlind == expectedSmallBlind);
     ASSERT(actualBigBlind == expectedBigBlind);
 }
+
+Test:SetBlindsTextDrawId()
+{
+    // Given
+    const Text: textId = Text: 1234;
+
+    // When
+    Pkr_SetBlindsTextDrawId(gameId, textId);
+    new Text: result = Pkr_GetBlindsTextDrawId(gameId);
+
+    // Then
+    ASSERT(result == textId);
+}

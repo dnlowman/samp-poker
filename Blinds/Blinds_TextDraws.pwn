@@ -1,3 +1,9 @@
+#define Pkr_GetBlindsTextDrawId(%0) \
+            g_rgPokerGames[%0][POKER_BLINDS_TEXTDRAW]
+
+#define Pkr_SetBlindsTextDrawId(%0,%1) \
+            g_rgPokerGames[%0][POKER_BLINDS_TEXTDRAW] = %1
+
 #define Pkr_ShowPlayerBlindTextDraw(%0,%1) \
             TextDrawShowForPlayer(%0, g_rgPokerGames[%1][POKER_BLINDS_TEXTDRAW])
 
