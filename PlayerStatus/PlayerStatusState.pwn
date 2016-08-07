@@ -129,7 +129,7 @@ Pkr_SetAllPlayerStatusWaiting(const gameId)
     return;
 }
 
-stock Pkr_CountPlayerStatus(const gameId, const POKER_PLAYER_STATUS: status)
+Pkr_CountPlayerStatus(const gameId, const POKER_PLAYER_STATUS: status)
 {
     new count = 0;
     Pkr_ForeachPlayer(playerSlot)
@@ -140,7 +140,7 @@ stock Pkr_CountPlayerStatus(const gameId, const POKER_PLAYER_STATUS: status)
     return count;
 }
 
-stock bool: Pkr_ActivePlayers(const gameId)
+bool: Pkr_ActivePlayers(const gameId)
 {
     new count = 0;
     Pkr_ForeachPlayer(playerSlot)
@@ -151,6 +151,7 @@ stock bool: Pkr_ActivePlayers(const gameId)
     return count > 0;
 }
 
+// TODO: Try and simplify this logic and remove calculating the contribution
 stock bool: Pkr_HasEveryonePlayed(const gameId)
 {
     new _betCount = 0;
