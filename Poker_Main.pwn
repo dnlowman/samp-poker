@@ -35,6 +35,10 @@ Special Thanks:
 
 #define RUN_TESTS
 
+#if defined RUN_TESTS
+    #include "Poker_TestSpies.pwn"
+#endif
+
 #include "Poker_Constants.pwn"
 #include "Poker_Header.inc"
 

@@ -1,10 +1,19 @@
-new Text: g_rgPokerBackground[MAX_POKER_BACKGROUND_TEXTDRAWS] = { Text: INVALID_TEXT_DRAW, ... };
+#define Pkr_ForeachBackground(%0) \
+            for(new %0 = 0; %0 < MAX_POKER_BACKGROUND_TEXTDRAWS; ++%0)
+
+#define Pkr_GetBackgroundTextDrawId(%0) \
+            g_rgPokerBackground[%0]
+
+#define Pkr_SetBackgroundTextDrawId(%0,%1) \
+            g_rgPokerBackground[%0] = %1
 
 #define Pkr_ShowPlayerBackgroundTextDraws(%0) \
-            for(new _i = 0; _i < MAX_POKER_BACKGROUND_TEXTDRAWS; ++_i) TextDrawShowForPlayer(%0, g_rgPokerBackground[_i])
+            Pkr_ForeachBackground(background) TextDrawShowForPlayer(%0, g_rgPokerBackground[background])
 
 #define Pkr_HidePlayerBackgroundTextDraws(%0) \
-            for(new _i = 0; _i < MAX_POKER_BACKGROUND_TEXTDRAWS; ++_i) TextDrawHideForPlayer(%0, g_rgPokerBackground[_i])
+            Pkr_ForeachBackground(background) TextDrawHideForPlayer(%0, g_rgPokerBackground[background])
+
+new Text: g_rgPokerBackground[MAX_POKER_BACKGROUND_TEXTDRAWS] = { Text: INVALID_TEXT_DRAW, ... };
 
 Pkr_CreateBackgroundTextDraws()
 {
@@ -102,10 +111,13 @@ Pkr_CreateBackgroundTextDraws()
     return;
 }
 
-Pkr_DestroyBackgroundTextDraws() {
-    for(new _i = 0; _i < MAX_POKER_BACKGROUND_TEXTDRAWS; ++_i)
+Pkr_DestroyBackgroundTextDraws()
+{
+    Pkr_ForeachBackground(background)
     {
-        TextDrawDestroy(g_rgPokerBackground[_i]);
-        g_rgPokerBackground[_i] = Text:INVALID_TEXT_DRAW;
+        TextDrawDestroy(Pkr_GetBackgroundTextDrawId(background));
+        Pkr_SetBackgroundTextDrawId(background, Text: INVALID_TEXT_DRAW);
     }
+
+    return;
 }
