@@ -2,7 +2,7 @@ Pkr_RouteCommands(playerid, cmdtext[])
 {
     new _cmd[16],
         _params[112];
-    sscanf(cmdtext, "ss", _cmd, _params);
+    sscanf(cmdtext, "s[16]S[112]", _cmd, _params);
 
     if(strcmp("create", _cmd) == 0) PkrCMD_Create(playerid);
     else if(strcmp("addbot", _cmd) == 0) PkrCMD_AddBot(playerid, _params);
