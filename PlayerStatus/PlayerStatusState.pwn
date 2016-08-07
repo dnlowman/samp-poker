@@ -152,38 +152,31 @@ bool: Pkr_ActivePlayers(const gameId)
 }
 
 // TODO: Try and simplify this logic and remove calculating the contribution
-stock bool: Pkr_HasEveryonePlayed(const gameId)
+bool: Pkr_HasEveryonePlayed(const gameId)
 {
-    new _betCount = 0;
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
+    new count = 0;
+    Pkr_ForeachPlayer(playerSlot)
     {
-        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID &&
-           (Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: RAISED ||
-            Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: BET ||
-            Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: BIG_BLIND) ||
-            (Pkr_GetPlayerStatus(gameId, _i) == POKER_PLAYER_STATUS: ALL_IN && Pkr_GetPlayerBetContribution(gameId, _i) > 0))
+        if(Pkr_GetPlayerId(gameId, playerSlot) != INVALID_PLAYER_ID &&
+           (Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: RAISED ||
+            Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: BET ||
+            Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: BIG_BLIND) ||
+            (Pkr_GetPlayerStatus(gameId, playerSlot) == POKER_PLAYER_STATUS: ALL_IN && Pkr_GetPlayerBetContribution(gameId, playerSlot) > 0))
         {
-            ++_betCount;
+            ++count;
         }
     }
 
-    return _betCount == 0 && !Pkr_ActivePlayers(gameId) && Pkr_GetLastAggressivePlayer(gameId) != INVALID_PLAYER_ID;
+    return count == 0 && !Pkr_ActivePlayers(gameId) && Pkr_GetLastAggressivePlayer(gameId) != INVALID_PLAYER_ID;
 }
 
-stock Pkr_GetFirstPlayerWithStatus(const gameId, const POKER_PLAYER_STATUS: playerState)
+// TODO: Try and simplify this search it might not be needed
+Pkr_GetFirstPlayerWithoutStatus(const gameId, const POKER_PLAYER_STATUS: playerState)
 {
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
-        if(Pkr_GetPlayerStatus(gameId, _i) == playerState)
-            return _i;
-
-    return -1;
-}
-
-stock Pkr_GetFirstPlayerWithoutStatus(const gameId, const POKER_PLAYER_STATUS: playerState)
-{
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
-        if(Pkr_GetPlayerStatus(gameId, _i) != playerState)
-            return _i;
-
+    Pkr_ForeachPlayer(playerSlot)
+    {
+        if(Pkr_GetPlayerStatus(gameId, playerSlot) != playerState)
+            return playerSlot;
+    }
     return -1;
 }
