@@ -1,5 +1,16 @@
+#define MAX_POKER_READY_TEXTDRAWS (6)
+
+#define Pkr_GetPlayerReadyTextDrawId(%0,%1) \
+            g_rgPokerGames[%0][READY_TEXTDRAWS][%1]
+
+#define Pkr_SetPlayerReadyTextDrawId(%0,%1,%2) \
+            Pkr_GetPlayerReadyTextDrawId(%0,%1) = %2
+
+#define Pkr_ForeachReadyTextDraw(%0) \
+            for(new %0 = 0; %0 < MAX_POKER_READY_TEXTDRAWS; ++%0)
+
 #define Pkr_ShowAllPlayersReadyTextDraw(%0) \
-            for(new _j = 0; _j < MAX_POKER_PLAYERS; ++_j) if(Pkr_GetPlayerId(%0, _j) != INVALID_PLAYER_ID) Pkr_ShowPlayerReadyTextDraw(Pkr_GetPlayerId(%0, _j), %0)
+            Pkr_ForeachPlayer(playerSlot) if(Pkr_GetPlayerId(%0, playerSlot) != INVALID_PLAYER_ID) Pkr_ShowPlayerReadyTextDraw(Pkr_GetPlayerId(%0, playerSlot), %0)
 
 #define Pkr_ShowPlayerReadyTextDraw(%0,%1) \
             for(new _i; _i < 6; ++_i) TextDrawShowForPlayer(%0, g_rgPokerGames[%1][READY_TEXTDRAWS][_i])
@@ -89,17 +100,15 @@ Pkr_CreateReadyTextDraws(const gameId)
     TextDrawSetShadow(g_rgPokerGames[gameId][READY_TEXTDRAWS][5], 0);
     TextDrawTextSize(g_rgPokerGames[gameId][READY_TEXTDRAWS][5], 15, 84);
     TextDrawSetSelectable(g_rgPokerGames[gameId][READY_TEXTDRAWS][5], 1);
-
     return;
 }
 
 Pkr_DestroyReadyTextDraws(const gameId)
 {
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
+    Pkr_ForeachPlayer(playerSlot)
     {
-        TextDrawDestroy(g_rgPokerGames[gameId][READY_TEXTDRAWS][_i]);
-        g_rgPokerGames[gameId][READY_TEXTDRAWS][_i] = Text: INVALID_TEXT_DRAW;
+        TextDrawDestroy(g_rgPokerGames[gameId][READY_TEXTDRAWS][playerSlot]);
+        g_rgPokerGames[gameId][READY_TEXTDRAWS][playerSlot] = Text: INVALID_TEXT_DRAW;
     }
-
     return;
 }
