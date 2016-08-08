@@ -2,31 +2,31 @@
             GetPVarInt(%0, POKER_PLAYER_READY_VAR)
 
 #define Pkr_SetAllPlayersNotReady(%0) \
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i) if(Pkr_GetPlayerId(%0, _i) != INVALID_PLAYER_ID) Pkr_SetPlayerNotReady(%0, _i)
+    Pkr_ForeachPlayer(playerSlot) if(Pkr_GetPlayerId(%0, playerSlot) != INVALID_PLAYER_ID) Pkr_SetPlayerNotReady(%0, playerSlot)
 
-Pkr_SetPlayerReady(const gameId, const player) {
-    SetPVarInt(g_rgPokerGames[gameId][PLAYERS][player], POKER_PLAYER_READY_VAR, 1);
-    Pkr_SetReadyTextDrawReady(gameId, player);
-
+Pkr_SetPlayerReady(const gameId, const playerSlot)
+{
+    SetPVarInt(Pkr_GetPlayerId(gameId, playerSlot), POKER_PLAYER_READY_VAR, 1);
+    Pkr_SetReadyTextDrawReady(gameId, playerSlot);
     return;
 }
 
-Pkr_SetPlayerNotReady(const gameId, const player) {
-    DeletePVar(g_rgPokerGames[gameId][PLAYERS][player], POKER_PLAYER_READY_VAR);
-    Pkr_SetReadyTextDrawNotReady(gameId, player);
-
+Pkr_SetPlayerNotReady(const gameId, const playerSlot)
+{
+    DeletePVar(Pkr_GetPlayerId(gameId, playerSlot), POKER_PLAYER_READY_VAR);
+    Pkr_SetReadyTextDrawNotReady(gameId, playerSlot);
     return;
 }
 
 Pkr_GetPlayerReadyCount(const gameId)
 {
-    new _count = 0;
-    for(new _i = 0, _playerId = 0; _i < MAX_POKER_PLAYERS; ++_i)
+    new count = 0;
+    new playerId = INVALID_PLAYER_ID;
+    Pkr_ForeachPlayer(playerSlot)
     {
-        _playerId = Pkr_GetPlayerId(gameId, _i);
-        if(g_rgPokerGames[gameId][PLAYERS][_i] != INVALID_PLAYER_ID && Pkr_GetPlayerReady(_playerId) == 1)
-            _count++;
+        playerId = Pkr_GetPlayerId(gameId, playerSlot);
+        if(playerId != INVALID_PLAYER_ID && Pkr_GetPlayerReady(playerId) == 1)
+            count++;
     }
-
-    return _count;
+    return count;
 }

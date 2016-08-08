@@ -4,9 +4,10 @@ Pkr_InitialisePlayerReadyTests()
     Testing_Run(tests, fails, func);
 }
 
-Test:Example()
+Test:PlayerReadyPVar()
 {
     // Given
+    
 
     // When
 
