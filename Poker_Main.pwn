@@ -33,7 +33,7 @@ Special Thanks:
 
 #define POKER_SYSTEM
 
-//#define RUN_TESTS -- Uncomment this line if you want to run the Unit Tests (Requires y_testing)
+#define RUN_TESTS //-- Uncomment this line if you want to run the Unit Tests (Requires y_testing)
 
 #if defined RUN_TESTS
     #include "Poker_TestSpies.pwn"
