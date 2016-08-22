@@ -57,6 +57,10 @@ Special Thanks:
 #include "PlayerCard\PlayerCardState.pwn"
 #include "TableCards\TableCardsMain.pwn"
 
+#if defined POKER_DEBUG
+    #include "Stats\StatsMain.pwn"
+#endif
+
 /* Start of TextDraws */
 #include "TextDraws\Poker_TextDraws.pwn"
 /* End of TextDraws */
