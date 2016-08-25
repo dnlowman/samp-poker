@@ -6,6 +6,13 @@
 
 stock Pkr_SetNextPlayerPlaying(const gameId)
 {
+    new haveAllPlayersFolded = HaveAllPlayersFolded(gameId);
+
+    if(haveAllPlayersFolded)
+    {
+        SendClientMessageToAll(COLOR_RED, "Everyone has folded...");
+    }
+
     new _nextPlayer = Pkr_FindNextPlayer(gameId, Pkr_GetCurrentPlayerPosition(gameId));
     Pkr_SetPlayerPlaying(gameId, _nextPlayer);
     return;
@@ -508,9 +515,19 @@ stock Pkr_FindWinner(const gameId, winners[MAX_POKER_PLAYERS])
 	return _value;
 }
 
-bool: HaveAllPlayersFolded()
+bool: HaveAllPlayersFolded(const gameId)
 {
-    return true;
+    new amountOfFoldedPlayers = 0;
+    new amountOfPlayersOnGame = Pkr_GetAmountOfPlayersOnGame(gameId);
+    new amountOfPlayerAllIn = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
+
+    Pkr_ForeachPlayer(player)
+    {
+        if(Pkr_GetPlayerStatus(gameId, player) == POKER_PLAYER_STATUS: FOLDED)
+            ++amountOfFoldedPlayers;
+    }
+
+    return (amountOfFoldedPlayers == amountOfPlayersOnGame - amountOfPlayerAllIn) || (amountOfFoldedPlayers == (amountOfPlayersOnGame - 1 - amountOfPlayerAllIn));
 }
 
 /*
