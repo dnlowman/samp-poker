@@ -6,141 +6,7 @@
 
 stock Pkr_SetNextPlayerPlaying(const gameId)
 {
-    new _hasEveryoneFolded = Pkr_HasEveryoneFolded(gameId);
-    new _playersOn = Pkr_GetAmountOfPlayersOnGame(gameId);
-
-    if(_hasEveryoneFolded == _playersOn - 1)
-    {
-        new _winner = Pkr_GetFirstPlayerWithoutStatus(gameId, FOLDED);
-
-        if(_winner != -1)
-        {
-            new _message[128];
-            format(_message, sizeof(_message), "{CC6600}%s {FF9900}wins the pot due to everyone folding.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winner]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)));
-            Pkr_SendGameMessage(gameId, COLOR_ORANGE, _message);
-
-            Pkr_SetPlayerChips(gameId, _winner, Pkr_GetPotAmount(gameId) + Pkr_GetPlayerChips(gameId, _winner));
-            Pkr_SetPotAmount(gameId, 0);
-        }
-
-        Pkr_SetGameToLobby(gameId);
-        return;
-    }
-
-    new _hasEveryoneChecked = Pkr_HasEveryoneChecked(gameId);
-    new _foldedPlayersCount = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
-    new _allInPlayersCount = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
-
-    if(_allInPlayersCount == _playersOn - _foldedPlayersCount)
-    {
-        switch(Pkr_GetGameStatus(gameId))
-        {
-            case (POKER_GAME_STATUS: INITIAL_BETTING):
-            {
-                Pkr_DealFlop(gameId);
-                Pkr_DealTurn(gameId);
-                Pkr_DealRiver(gameId);
-                Pkr_Evaluate(gameId);
-            }
-
-
-            case (POKER_GAME_STATUS: FLOP):
-            {
-                Pkr_DealTurn(gameId);
-                Pkr_DealRiver(gameId);
-                Pkr_Evaluate(gameId);
-            }
-
-            case (POKER_GAME_STATUS: TURN):
-            {
-                Pkr_DealRiver(gameId);
-                Pkr_Evaluate(gameId);
-            }
-
-            case (POKER_GAME_STATUS: RIVER):
-            {
-                Pkr_Evaluate(gameId);
-            }
-        }
-
-        return;
-    }
-
-    new closedCount = 0;
-    for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
-    {
-        if(Pkr_GetPlayerId(gameId, i) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, i) != POKER_PLAYER_STATUS: FOLDED && Pkr_GetPlayerStatus(gameId, i) != POKER_PLAYER_STATUS: ALL_IN && Pkr_GetPlayerClosedLastPlay(gameId, i) == true)
-        {
-            closedCount++;
-        }
-    }
-
-    if(_hasEveryoneChecked == _playersOn - _foldedPlayersCount - _allInPlayersCount && (closedCount == _playersOn - _foldedPlayersCount - _allInPlayersCount || Pkr_GetLastAggressivePlayer(gameId) == INVALID_PLAYER_ID))
-    {
-        Pkr_DealNextRound(gameId);
-        return;
-    }
-
-    if(Pkr_HasEveryonePlayed(gameId) == true)
-    {
-        Pkr_DealNextRound(gameId);
-        return;
-    }
-
-    //
-
-    if(closedCount == _playersOn - _foldedPlayersCount - _allInPlayersCount)
-    {
-
-        if(_playersOn - _foldedPlayersCount - _allInPlayersCount == 1)
-        {
-            switch(Pkr_GetGameStatus(gameId))
-            {
-                case (POKER_GAME_STATUS: INITIAL_BETTING):
-                {
-                    Pkr_DealFlop(gameId);
-                    Pkr_DealTurn(gameId);
-                    Pkr_DealRiver(gameId);
-                    Pkr_Evaluate(gameId);
-                }
-
-
-                case (POKER_GAME_STATUS: FLOP):
-                {
-                    Pkr_DealTurn(gameId);
-                    Pkr_DealRiver(gameId);
-                    Pkr_Evaluate(gameId);
-                }
-
-                case (POKER_GAME_STATUS: TURN):
-                {
-                    Pkr_DealRiver(gameId);
-                    Pkr_Evaluate(gameId);
-                }
-
-                case (POKER_GAME_STATUS: RIVER):
-                {
-                    Pkr_Evaluate(gameId);
-                }
-            }
-
-            return;
-        }
-
-        Pkr_DealNextRound(gameId);
-        return;
-    }
-
-    //
-
     new _nextPlayer = Pkr_FindNextPlayer(gameId, Pkr_GetCurrentPlayerPosition(gameId));
-
-    if(Pkr_GetLastAggressivePlayer(gameId) == _nextPlayer && Pkr_GetPlayerStatus(gameId, _nextPlayer) != POKER_PLAYER_STATUS: BIG_BLIND)
-    {
-        Pkr_DealNextRound(gameId);
-        return;
-    }
-
     Pkr_SetPlayerPlaying(gameId, _nextPlayer);
     return;
 }
@@ -641,3 +507,153 @@ stock Pkr_FindWinner(const gameId, winners[MAX_POKER_PLAYERS])
 
 	return _value;
 }
+
+bool: HaveAllPlayersFolded()
+{
+    return true;
+}
+
+/*
+
+stock Pkr_SetNextPlayerPlaying(const gameId)
+{
+    new _hasEveryoneFolded = Pkr_HasEveryoneFolded(gameId);
+    new _playersOn = Pkr_GetAmountOfPlayersOnGame(gameId);
+
+    if(_hasEveryoneFolded == _playersOn - 1)
+    {
+        new _winner = Pkr_GetFirstPlayerWithoutStatus(gameId, FOLDED);
+
+        if(_winner != -1)
+        {
+            new _message[128];
+            format(_message, sizeof(_message), "{CC6600}%s {FF9900}wins the pot due to everyone folding.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winner]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)));
+            Pkr_SendGameMessage(gameId, COLOR_ORANGE, _message);
+
+            Pkr_SetPlayerChips(gameId, _winner, Pkr_GetPotAmount(gameId) + Pkr_GetPlayerChips(gameId, _winner));
+            Pkr_SetPotAmount(gameId, 0);
+        }
+
+        Pkr_SetGameToLobby(gameId);
+        return;
+    }
+
+    new _hasEveryoneChecked = Pkr_HasEveryoneChecked(gameId);
+    new _foldedPlayersCount = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
+    new _allInPlayersCount = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
+
+    if(_allInPlayersCount == _playersOn - _foldedPlayersCount)
+    {
+        switch(Pkr_GetGameStatus(gameId))
+        {
+            case (POKER_GAME_STATUS: INITIAL_BETTING):
+            {
+                Pkr_DealFlop(gameId);
+                Pkr_DealTurn(gameId);
+                Pkr_DealRiver(gameId);
+                Pkr_Evaluate(gameId);
+            }
+
+
+            case (POKER_GAME_STATUS: FLOP):
+            {
+                Pkr_DealTurn(gameId);
+                Pkr_DealRiver(gameId);
+                Pkr_Evaluate(gameId);
+            }
+
+            case (POKER_GAME_STATUS: TURN):
+            {
+                Pkr_DealRiver(gameId);
+                Pkr_Evaluate(gameId);
+            }
+
+            case (POKER_GAME_STATUS: RIVER):
+            {
+                Pkr_Evaluate(gameId);
+            }
+        }
+
+        return;
+    }
+
+    new closedCount = 0;
+    for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
+    {
+        if(Pkr_GetPlayerId(gameId, i) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, i) != POKER_PLAYER_STATUS: FOLDED && Pkr_GetPlayerStatus(gameId, i) != POKER_PLAYER_STATUS: ALL_IN && Pkr_GetPlayerClosedLastPlay(gameId, i) == true)
+        {
+            closedCount++;
+        }
+    }
+
+    if(_hasEveryoneChecked == _playersOn - _foldedPlayersCount - _allInPlayersCount && (closedCount == _playersOn - _foldedPlayersCount - _allInPlayersCount || Pkr_GetLastAggressivePlayer(gameId) == INVALID_PLAYER_ID))
+    {
+        Pkr_DealNextRound(gameId);
+        return;
+    }
+
+    if(Pkr_HasEveryonePlayed(gameId) == true)
+    {
+        Pkr_DealNextRound(gameId);
+        return;
+    }
+
+    //
+
+    if(closedCount == _playersOn - _foldedPlayersCount - _allInPlayersCount)
+    {
+
+        if(_playersOn - _foldedPlayersCount - _allInPlayersCount == 1)
+        {
+            switch(Pkr_GetGameStatus(gameId))
+            {
+                case (POKER_GAME_STATUS: INITIAL_BETTING):
+                {
+                    Pkr_DealFlop(gameId);
+                    Pkr_DealTurn(gameId);
+                    Pkr_DealRiver(gameId);
+                    Pkr_Evaluate(gameId);
+                }
+
+
+                case (POKER_GAME_STATUS: FLOP):
+                {
+                    Pkr_DealTurn(gameId);
+                    Pkr_DealRiver(gameId);
+                    Pkr_Evaluate(gameId);
+                }
+
+                case (POKER_GAME_STATUS: TURN):
+                {
+                    Pkr_DealRiver(gameId);
+                    Pkr_Evaluate(gameId);
+                }
+
+                case (POKER_GAME_STATUS: RIVER):
+                {
+                    Pkr_Evaluate(gameId);
+                }
+            }
+
+            return;
+        }
+
+        Pkr_DealNextRound(gameId);
+        return;
+    }
+
+    //
+
+    new _nextPlayer = Pkr_FindNextPlayer(gameId, Pkr_GetCurrentPlayerPosition(gameId));
+
+    if(Pkr_GetLastAggressivePlayer(gameId) == _nextPlayer && Pkr_GetPlayerStatus(gameId, _nextPlayer) != POKER_PLAYER_STATUS: BIG_BLIND)
+    {
+        Pkr_DealNextRound(gameId);
+        return;
+    }
+
+    Pkr_SetPlayerPlaying(gameId, _nextPlayer);
+    return;
+}
+
+*/
