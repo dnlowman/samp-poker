@@ -1,19 +1,43 @@
-#define Pkr_HasEveryoneFolded(%0) \
-            Pkr_CountPlayerStatus(%0, POKER_PLAYER_STATUS: FOLDED)
-
-#define Pkr_HasEveryoneChecked(%0) \
-            Pkr_CountPlayerStatus(%0, POKER_PLAYER_STATUS: CHECKED)
-
 stock Pkr_SetNextPlayerPlaying(const gameId)
 {
-    new haveAllPlayersFolded = HaveAllPlayersFolded(gameId);
+    /*
+        When the betting round has completed one full circle around the table,
+        if no player has taken an aggressive action (that is, if no player has bet),
+        then the betting round is over, and the poker hand continues according to the rules of the variant being played.
+
+        If one or more players have taken an aggressive action, then the betting round continues clockwise
+        around the table until the most recent aggressive action has been closed. This is achieved either by all
+        ctive players other than the most recent aggressor folding, or by all active players other than the most
+        recent aggressor calling the aggressor's bet or raise.
+
+        Ideas:
+            CURRENT_AGGRESSOR
+            AMOUNT_OF_NON_AGGRESSIVE_PLAYS
+
+            IF AMOUNT_OF_NON_AGGRESSIVE_PLAYS = (ACTIVE_PLAYERS - AGRESSOR) THEN ROUND OVER
+    */
+
+    new activePlayer = Pkr_GetCurrentPlayerPosition(gameId);
+    new activePlayerId = Pkr_GetPlayerId(gameId, activePlayer);
+    new bool: haveAllPlayersFolded = HaveAllPlayersFolded(gameId);
+    new bool: haveAllPlayersChecked = HaveAllPlayersChecked(gameId);
 
     if(haveAllPlayersFolded)
     {
-        SendClientMessageToAll(COLOR_RED, "Everyone has folded...");
+        // TODO: review case where everyone folds but one with other players ALL_IN
+        Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players folding.", Pkr_GetClientName(activePlayerId));
+        Pkr_SetGameToLobby(gameId);
+        return;
     }
 
-    new _nextPlayer = Pkr_FindNextPlayer(gameId, Pkr_GetCurrentPlayerPosition(gameId));
+    if(haveAllPlayersChecked)
+    {
+        Pkr_DealNextRound(gameId);
+        return;
+    }
+
+
+    new _nextPlayer = Pkr_FindNextPlayer(gameId, activePlayer);
     Pkr_SetPlayerPlaying(gameId, _nextPlayer);
     return;
 }
@@ -517,17 +541,19 @@ stock Pkr_FindWinner(const gameId, winners[MAX_POKER_PLAYERS])
 
 bool: HaveAllPlayersFolded(const gameId)
 {
-    new amountOfFoldedPlayers = 0;
     new amountOfPlayersOnGame = Pkr_GetAmountOfPlayersOnGame(gameId);
     new amountOfPlayerAllIn = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
-
-    Pkr_ForeachPlayer(player)
-    {
-        if(Pkr_GetPlayerStatus(gameId, player) == POKER_PLAYER_STATUS: FOLDED)
-            ++amountOfFoldedPlayers;
-    }
-
+    new amountOfFoldedPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
     return (amountOfFoldedPlayers == amountOfPlayersOnGame - amountOfPlayerAllIn) || (amountOfFoldedPlayers == (amountOfPlayersOnGame - 1 - amountOfPlayerAllIn));
+}
+
+bool: HaveAllPlayersChecked(const gameId)
+{
+    new amountOfPlayersOnGame = Pkr_GetAmountOfPlayersOnGame(gameId);
+    new amountOfPlayersFolded = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
+    new amountOfPlayersAllIn = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
+    new amountOfCheckedPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: CHECKED);
+    return amountOfCheckedPlayers == amountOfPlayersOnGame - amountOfPlayersFolded - amountOfPlayersAllIn;
 }
 
 /*
