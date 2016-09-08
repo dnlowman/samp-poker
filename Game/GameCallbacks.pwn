@@ -50,21 +50,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return;
             }
 
-            Pkr_AddToPot(_gameId, _inputAmount);
-            Pkr_MinusPlayerChips(_gameId, _slot, _inputAmount);
-            Pkr_AddToPlayerBetContribution(_gameId, _slot, _inputAmount);
-            Pkr_AddToPlayerPotContribution(_gameId, _slot, _inputAmount);
-            Pkr_SetLastAggressivePlayer(_gameId, _slot);
-            Pkr_SetLastBet(_gameId, _inputAmount);
-
-            Pkr_AddToCurrentBet(_gameId, _inputAmount);
-
-            Pkr_SetPlayerStatusBet(_gameId, _slot, _inputAmount);
-
-            for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
-                Pkr_ResetPlayerClosedLastPlay(_gameId, i);
-
-            Pkr_SetNextPlayerPlaying(_gameId);
+            Pkr_PlayerConfirmBet(_gameId, _slot, _inputAmount);
             return;
         }
 
@@ -116,21 +102,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return;
             }
 
-            Pkr_AddToPot(_gameId, _totalCost);
-            Pkr_MinusPlayerChips(_gameId, _slot, _totalCost);
-            Pkr_AddToPlayerBetContribution(_gameId, _slot, _totalCost);
-            Pkr_AddToPlayerPotContribution(_gameId, _slot, _totalCost);
-            Pkr_SetLastAggressivePlayer(_gameId, _slot);
-            Pkr_SetLastBet(_gameId, _inputAmount);
-
-            Pkr_AddToCurrentBet(_gameId, _inputAmount);
-
-            Pkr_SetPlayerStatusRaised(_gameId, _slot, _inputAmount);
-
-            for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
-                Pkr_ResetPlayerClosedLastPlay(_gameId, i);
-
-            Pkr_SetNextPlayerPlaying(_gameId);
+            Pkr_PlayerConfirmRaise(_gameId, _slot, _inputAmount, _amountToMeet);
             return;
         }
 
@@ -143,13 +115,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new _playerSlot = Pkr_GetCurrentPlayerPosition(_gameId);
             new _callAmount = Pkr_GetCurrentBet(_gameId) - Pkr_GetPlayerBetContribution(_gameId, _playerSlot);
 
-            Pkr_SetPlayerStatusCalled(_gameId, _playerSlot, _callAmount);
-            Pkr_AddToPot(_gameId, _callAmount);
-            Pkr_MinusPlayerChips(_gameId, _playerSlot, _callAmount);
-            Pkr_AddToPlayerBetContribution(_gameId, _playerSlot, _callAmount);
-            Pkr_AddToPlayerPotContribution(_gameId, _playerSlot, _callAmount);
-            Pkr_SetPlayerClosedLastPlay(_gameId, _playerSlot);
-            Pkr_SetNextPlayerPlaying(_gameId);
+            Pkr_PlayerConfirmCall(_gameId, _playerSlot, _callAmount);
             return;
         }
 
@@ -161,8 +127,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new _gameId = Pkr_GetPlayerGame(playerid);
             new _playerSlot = Pkr_GetCurrentPlayerPosition(_gameId);
 
-            Pkr_SetPlayerStatusChecked(_gameId, _playerSlot);
-            Pkr_SetNextPlayerPlaying(_gameId);
+            Pkr_PlayerCheckConfirm(_gameId, _playerSlot);
             return;
         }
     }
