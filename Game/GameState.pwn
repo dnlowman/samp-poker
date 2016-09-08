@@ -21,6 +21,11 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
     new activePlayerId = Pkr_GetPlayerId(gameId, activePlayer);
     new bool: haveAllPlayersFolded = HaveAllPlayersFolded(gameId);
     new bool: haveAllPlayersChecked = HaveAllPlayersChecked(gameId);
+    new plays = Pkr_GetAmountOfPlays(gameId);
+    new amountOfPlayers = Pkr_GetAmountOfPlayersOnGame(gameId);
+    new amountOfFoldedPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
+    new amountOfAllInPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
+    new activePlayers = amountOfPlayers - amountOfFoldedPlayers - amountOfAllInPlayers;
 
     if(haveAllPlayersFolded)
     {
@@ -36,6 +41,11 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
         return;
     }
 
+    if(plays == activePlayers)
+    {
+        Pkr_DealNextRound(gameId);
+        return;
+    }
 
     new _nextPlayer = Pkr_FindNextPlayer(gameId, activePlayer);
     Pkr_SetPlayerPlaying(gameId, _nextPlayer);
@@ -118,6 +128,7 @@ stock Pkr_DealNextRound(const gameId)
     Pkr_SetLastAggressivePlayer(gameId, INVALID_PLAYER_ID);
     Pkr_SetLastBet(gameId, 0);
     Pkr_ResetPlayerBetContributions(gameId);
+    Pkr_SetAmountOfPlays(gameId, 0);
 
     for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
         Pkr_ResetPlayerClosedLastPlay(gameId, i);
@@ -356,6 +367,7 @@ stock Pkr_SetGameToLobby(const gameId)
     Pkr_SetAllPlayerPotContribution(gameId, 0);
     Pkr_ResetPlayerBetContributions(gameId);
     Pkr_SetLastBet(gameId, 0);
+    Pkr_SetAmountOfPlays(gameId, 0);
     Pkr_SendFormattedGameMessage(gameId, COLOR_GREY, "Use '/pkr start' to start the game.");
 
     new playerid = INVALID_PLAYER_ID;
