@@ -9,12 +9,6 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
         around the table until the most recent aggressive action has been closed. This is achieved either by all
         ctive players other than the most recent aggressor folding, or by all active players other than the most
         recent aggressor calling the aggressor's bet or raise.
-
-        Ideas:
-            CURRENT_AGGRESSOR
-            AMOUNT_OF_NON_AGGRESSIVE_PLAYS
-
-            IF AMOUNT_OF_NON_AGGRESSIVE_PLAYS = (ACTIVE_PLAYERS - AGRESSOR) THEN ROUND OVER
     */
 
     new activePlayer = Pkr_GetCurrentPlayerPosition(gameId);
@@ -27,10 +21,26 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
     new amountOfAllInPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
     new activePlayers = amountOfPlayers - amountOfFoldedPlayers - amountOfAllInPlayers;
 
-    if(haveAllPlayersFolded)
+    if(amountOfPlayers == amountOfAllInPlayers)
     {
-        // TODO: review case where everyone folds but one with other players ALL_IN
-        Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players folding.", Pkr_GetClientName(activePlayerId));
+        Pkr_DealRemainingRounds(gameId);
+        return;
+    }
+
+    if(haveAllPlayersFolded && (plays == activePlayers || plays == 0))
+    {
+        if(amountOfAllInPlayers > 0)
+        {
+            Pkr_DealRemainingRounds(gameId);
+            return;
+        }
+
+        new nonFoldedPlayer = Pkr_GetFirstPlayerWithoutStatus(gameId, FOLDED);
+        new nonFoldedPlayerId = Pkr_GetPlayerId(gameId, nonFoldedPlayer);
+
+        Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId));
+        Pkr_AddPlayerChips(gameId, nonFoldedPlayer, Pkr_GetPotAmount(gameId));
+        Pkr_SetPotAmount(gameId, 0);
         Pkr_SetGameToLobby(gameId);
         return;
     }
@@ -43,6 +53,12 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
 
     if(plays == activePlayers)
     {
+        if(activePlayers == 1)
+        {
+            Pkr_DealRemainingRounds(gameId);
+            return;
+        }
+
         Pkr_DealNextRound(gameId);
         return;
     }
@@ -163,6 +179,41 @@ stock Pkr_DealRiver(const gameId)
 {
     Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: RIVER);
     Pkr_DealTableCard(gameId);
+
+    return;
+}
+
+Pkr_DealRemainingRounds(const gameId)
+{
+    switch(Pkr_GetGameStatus(gameId))
+    {
+        case (POKER_GAME_STATUS: INITIAL_BETTING):
+        {
+            Pkr_DealFlop(gameId);
+            Pkr_DealTurn(gameId);
+            Pkr_DealRiver(gameId);
+            Pkr_Evaluate(gameId);
+        }
+
+
+        case (POKER_GAME_STATUS: FLOP):
+        {
+            Pkr_DealTurn(gameId);
+            Pkr_DealRiver(gameId);
+            Pkr_Evaluate(gameId);
+        }
+
+        case (POKER_GAME_STATUS: TURN):
+        {
+            Pkr_DealRiver(gameId);
+            Pkr_Evaluate(gameId);
+        }
+
+        case (POKER_GAME_STATUS: RIVER):
+        {
+            Pkr_Evaluate(gameId);
+        }
+    }
 
     return;
 }
@@ -556,7 +607,7 @@ bool: HaveAllPlayersFolded(const gameId)
     new amountOfPlayersOnGame = Pkr_GetAmountOfPlayersOnGame(gameId);
     new amountOfPlayerAllIn = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
     new amountOfFoldedPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
-    return (amountOfFoldedPlayers == amountOfPlayersOnGame - amountOfPlayerAllIn) || (amountOfFoldedPlayers == (amountOfPlayersOnGame - 1 - amountOfPlayerAllIn));
+    return (amountOfFoldedPlayers == amountOfPlayersOnGame - amountOfPlayerAllIn) || (amountOfFoldedPlayers == (amountOfPlayersOnGame - 1 - amountOfPlayerAllIn)) && amountOfFoldedPlayers > 1;
 }
 
 bool: HaveAllPlayersChecked(const gameId)
@@ -565,7 +616,7 @@ bool: HaveAllPlayersChecked(const gameId)
     new amountOfPlayersFolded = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
     new amountOfPlayersAllIn = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
     new amountOfCheckedPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: CHECKED);
-    return amountOfCheckedPlayers == amountOfPlayersOnGame - amountOfPlayersFolded - amountOfPlayersAllIn;
+    return amountOfCheckedPlayers == amountOfPlayersOnGame - amountOfPlayersFolded - amountOfPlayersAllIn && amountOfCheckedPlayers > 1;
 }
 
 /*

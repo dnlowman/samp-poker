@@ -30,6 +30,7 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
         if(Pkr_GetCurrentBet(_gameId) < _playerChips - Pkr_GetPlayerBetContribution(_gameId, _playerSlot))
         {
             Pkr_SetLastAggressivePlayer(_gameId, _playerSlot);
+            Pkr_SetAmountOfPlays(_gameId, 0);
             Pkr_AddToCurrentBet(_gameId, _playerChips);
 
             for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
