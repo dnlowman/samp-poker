@@ -105,6 +105,29 @@ Pkr_GetGameNearPlayer(const playerid) {
     return -1;
 }
 
+Pkr_GetTableNearPlayer(const playerid) {
+    new Float: positionX = 0.0,
+        Float: positionY = 0.0,
+        Float: positionZ = 0.0,
+        Float: distance = 0.0;
+
+    new objectId = INVALID_OBJECT_ID;
+
+    Pkr_ForeachTable(table) {
+        if(!TM_DoesIndexContainTable(table))
+            continue;
+
+        objectId = TM_GetTableObjectId(table);
+        GetDynamicObjectPos(objectId, positionX, positionY, positionZ);
+
+        distance = GetPlayerDistanceFromPoint(playerid, positionX, positionY, positionZ);
+        if(distance < 1.6)
+            return objectId;
+    }
+
+    return INVALID_OBJECT_ID;
+}
+
 Pkr_RemovePlayerVars(const gameId, const player) {
     DeletePVar(g_rgPokerGames[gameId][PLAYERS][player], POKER_PLAYER_READY_VAR);
     g_rgPokerGames[gameId][PLAYERS][player] = INVALID_PLAYER_ID;
