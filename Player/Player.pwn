@@ -40,7 +40,7 @@ bool: Pkr_AssignPlayerToGame(const playerid, const gameId, const chips) {
     return false;
 }
 
-bool: Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
+Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
     new _slot = Pkr_GetPlayerSlot(playerid, gameId);
     if(_slot == -1)
         return false;

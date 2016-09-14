@@ -140,7 +140,7 @@ Pkr_CountPlayerStatus(const gameId, const POKER_PLAYER_STATUS: status)
     return count;
 }
 
-bool: Pkr_ActivePlayers(const gameId)
+stock Pkr_ActivePlayers(const gameId)
 {
     new count = 0;
     Pkr_ForeachPlayer(playerSlot)
@@ -152,7 +152,7 @@ bool: Pkr_ActivePlayers(const gameId)
 }
 
 // TODO: Try and simplify this logic and remove calculating the contribution
-bool: Pkr_HasEveryonePlayed(const gameId)
+stock Pkr_HasEveryonePlayed(const gameId)
 {
     new count = 0;
     Pkr_ForeachPlayer(playerSlot)

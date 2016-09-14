@@ -94,7 +94,6 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
             new _inputAmount = GetPVarInt(playerid, POKER_PLAYER_RAISE_AMOUNT_VAR);
             new _amountToMeet = Pkr_GetCurrentBet(_gameId) - Pkr_GetPlayerBetContribution(_gameId, _slot);
-            new _totalCost = _amountToMeet + _inputAmount;
 
             if(!response)
             {

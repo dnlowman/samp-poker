@@ -12,9 +12,8 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
     */
 
     new activePlayer = Pkr_GetCurrentPlayerPosition(gameId);
-    new activePlayerId = Pkr_GetPlayerId(gameId, activePlayer);
-    new bool: haveAllPlayersFolded = HaveAllPlayersFolded(gameId);
-    new bool: haveAllPlayersChecked = HaveAllPlayersChecked(gameId);
+    new haveAllPlayersFolded = HaveAllPlayersFolded(gameId);
+    new haveAllPlayersChecked = HaveAllPlayersChecked(gameId);
     new plays = Pkr_GetAmountOfPlays(gameId);
     new amountOfPlayers = Pkr_GetAmountOfPlayersOnGame(gameId);
     new amountOfFoldedPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
@@ -602,7 +601,7 @@ stock Pkr_FindWinner(const gameId, winners[MAX_POKER_PLAYERS])
 	return _value;
 }
 
-bool: HaveAllPlayersFolded(const gameId)
+HaveAllPlayersFolded(const gameId)
 {
     new amountOfPlayersOnGame = Pkr_GetAmountOfPlayersOnGame(gameId);
     new amountOfPlayerAllIn = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
@@ -610,7 +609,7 @@ bool: HaveAllPlayersFolded(const gameId)
     return (amountOfFoldedPlayers == amountOfPlayersOnGame - amountOfPlayerAllIn) || (amountOfFoldedPlayers == (amountOfPlayersOnGame - 1 - amountOfPlayerAllIn)) && amountOfFoldedPlayers > 1;
 }
 
-bool: HaveAllPlayersChecked(const gameId)
+HaveAllPlayersChecked(const gameId)
 {
     new amountOfPlayersOnGame = Pkr_GetAmountOfPlayersOnGame(gameId);
     new amountOfPlayersFolded = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
