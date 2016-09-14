@@ -111,6 +111,9 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 #define Pkr_SetObjectId(%0,%1) \
             g_rgPokerGames[%0][OBJECT_ID] = %1
 
+#define Pkr_ForeachTable(%0) \
+            for(new %0 = 0; %0 < MAX_TM_POKER_TABLES; ++%0)
+
 #define Pkr_ForeachPlayer(%0) \
             for(new %0 = 0; %0 < MAX_POKER_PLAYERS; ++%0)
 
