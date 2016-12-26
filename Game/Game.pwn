@@ -1,6 +1,8 @@
 #define Pkr_IsValidGameId(%0) \
             (0 <= %0 < MAX_POKER_GAMES)
 
+
+
 Pkr_InitialisePoker() {
     for(new _i = 0; _i < MAX_POKER_GAMES; ++_i)
         Pkr_InitialiseGame(_i);
@@ -109,4 +111,16 @@ Pkr_DestroyGame(const gameId) {
     Pkr_DestroyGameTextDraws(gameId);
     Pkr_Destroy3DTextLabel(gameId);
     return;
+}
+
+Pkr_GetGameByObjectId(const objectId) {
+    if(objectId == INVALID_OBJECT_ID)
+        return -1;
+
+    Pkr_ForeachGame(gameId) {
+        if(Pkr_GetObjectId(gameId) == objectId)
+            return gameId;
+    }
+
+    return -1;
 }
