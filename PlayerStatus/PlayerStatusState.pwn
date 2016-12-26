@@ -140,7 +140,7 @@ Pkr_CountPlayerStatus(const gameId, const POKER_PLAYER_STATUS: status)
     return count;
 }
 
-stock Pkr_ActivePlayers(const gameId)
+stock bool: Pkr_ActivePlayers(const gameId)
 {
     new count = 0;
     Pkr_ForeachPlayer(playerSlot)
