@@ -95,7 +95,7 @@ Pkr_GetAvailablePlayerSlot(const gameId) {
     return -1;
 }
 
-Pkr_GetGameNearPlayer(const playerid) {
+stock Pkr_GetGameNearPlayer(const playerid) {
     for(new _i = 0, Float: _pos[3], Float: _distance; _i < MAX_POKER_GAMES; ++_i) {
         Pkr_GetPosition(_i, _pos[0], _pos[1], _pos[2]);
         _distance = GetPlayerDistanceFromPoint(playerid, _pos[0], _pos[1], _pos[2]);
