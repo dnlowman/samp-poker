@@ -6,6 +6,7 @@
     #include "Blinds\BlindTests.pwn"
     #include "PlayerStatus\PlayerStatusTests.pwn"
     #include "PlayerReady\PlayerReadyTests.pwn"
+    #include "Game\GameTests.pwn"
     #include "Game\GameStateTests.pwn"
 
     Pkr_InitialiseTests()
@@ -16,6 +17,7 @@
         Pkr_InitialiseBlindTests();
         Pkr_InitialisePlayerStatusTests();
         Pkr_InitialisePlayerReadyTests();
+        Pkr_InitialiseGameTests();
         Pkr_InitialiseGameStateTests();
         return;
     }
