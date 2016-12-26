@@ -1,3 +1,20 @@
+bool: HaveAllPlayersFolded(const gameId)
+{
+    new amountOfPlayersOnGame = Pkr_GetAmountOfPlayersOnGame(gameId);
+    new amountOfPlayerAllIn = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
+    new amountOfFoldedPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
+    return (amountOfFoldedPlayers == amountOfPlayersOnGame - amountOfPlayerAllIn) || (amountOfFoldedPlayers == (amountOfPlayersOnGame - 1 - amountOfPlayerAllIn)) && amountOfFoldedPlayers > 1;
+}
+
+bool: HaveAllPlayersChecked(const gameId)
+{
+    new amountOfPlayersOnGame = Pkr_GetAmountOfPlayersOnGame(gameId);
+    new amountOfPlayersFolded = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
+    new amountOfPlayersAllIn = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
+    new amountOfCheckedPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: CHECKED);
+    return amountOfCheckedPlayers == amountOfPlayersOnGame - amountOfPlayersFolded - amountOfPlayersAllIn && amountOfCheckedPlayers > 1;
+}
+
 stock Pkr_SetNextPlayerPlaying(const gameId)
 {
     /*
@@ -599,23 +616,6 @@ stock Pkr_FindWinner(const gameId, winners[MAX_POKER_PLAYERS])
 	}
 
 	return _value;
-}
-
-HaveAllPlayersFolded(const gameId)
-{
-    new amountOfPlayersOnGame = Pkr_GetAmountOfPlayersOnGame(gameId);
-    new amountOfPlayerAllIn = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
-    new amountOfFoldedPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
-    return (amountOfFoldedPlayers == amountOfPlayersOnGame - amountOfPlayerAllIn) || (amountOfFoldedPlayers == (amountOfPlayersOnGame - 1 - amountOfPlayerAllIn)) && amountOfFoldedPlayers > 1;
-}
-
-HaveAllPlayersChecked(const gameId)
-{
-    new amountOfPlayersOnGame = Pkr_GetAmountOfPlayersOnGame(gameId);
-    new amountOfPlayersFolded = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: FOLDED);
-    new amountOfPlayersAllIn = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
-    new amountOfCheckedPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: CHECKED);
-    return amountOfCheckedPlayers == amountOfPlayersOnGame - amountOfPlayersFolded - amountOfPlayersAllIn && amountOfCheckedPlayers > 1;
 }
 
 /*
