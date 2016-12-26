@@ -61,9 +61,7 @@ Special Thanks:
     #include "Stats\StatsMain.pwn"
 #endif
 
-/* Start of TextDraws */
 #include "TextDraws\Poker_TextDraws.pwn"
-/* End of TextDraws */
 
 #include "3DTextLabels\3DTextLabels.pwn"
 #include "Player\Player.pwn"
