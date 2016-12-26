@@ -105,7 +105,7 @@ Pkr_GetGameNearPlayer(const playerid) {
     return -1;
 }
 
-Pkr_GetTableNearPlayer(const playerid) {
+stock Pkr_GetTableNearPlayer(const playerid) {
     new Float: positionX = 0.0,
         Float: positionY = 0.0,
         Float: positionZ = 0.0,
