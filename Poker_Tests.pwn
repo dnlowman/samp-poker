@@ -8,6 +8,7 @@
     #include "PlayerReady\PlayerReadyTests.pwn"
     #include "Game\GameTests.pwn"
     #include "Game\GameStateTests.pwn"
+    #include "Player\PlayerCmdsTests.pwn"
 
     Pkr_InitialiseTests()
     {
@@ -19,6 +20,7 @@
         Pkr_InitialisePlayerReadyTests();
         Pkr_InitialiseGameTests();
         Pkr_InitialiseGameStateTests();
+        Pkr_InitialisePlayerCmdsTests();
         return;
     }
 
