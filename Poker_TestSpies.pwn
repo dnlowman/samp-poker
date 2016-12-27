@@ -48,3 +48,59 @@ stock Pkr_TextDrawHideForPlayer(playerid, Text: text)
     #define _ALS_TextDrawHideForPlayer
 #endif
 #define TextDrawHideForPlayer Pkr_TextDrawHideForPlayer
+
+
+/* -------------------------------------------------------------------------- */
+
+new sendClientMessageCalledWith[128];
+Pkr_SendClientMessage(const playerid, const color, const msg[])
+{
+    format(sendClientMessageCalledWith, sizeof(sendClientMessageCalledWith), "%s", msg);
+    // Call the old version, no need to check if it exists.
+    SendClientMessage(playerid, color, msg);
+    return 1;
+}
+// Has this been hooked already?
+#if defined _ALS_SendClientMessage
+    #undef SendClientMessage
+#else
+    #define _ALS_SendClientMessage
+#endif
+// Reroute future calls to our function.
+#define SendClientMessage Pkr_SendClientMessage
+
+/* -------------------------------------------------------------------------- */
+
+new pokerTableCheckReturns = INVALID_OBJECT_ID;
+
+stock stub_furn_pokerTableCheck(playerid, amount)
+{
+    #pragma unused playerid, amount
+    return pokerTableCheckReturns;
+}
+
+#if defined _ALS_furn_pokerTableCheck
+    #undef furn_pokerTableCheck
+#else
+    #define _ALS_furn_pokerTableCheck
+#endif
+
+#define furn_pokerTableCheck stub_furn_pokerTableCheck
+
+/* -------------------------------------------------------------------------- */
+
+new getPlayersCurrentPropReturns = -1;
+
+stock stub_GetPlayersCurrentProp(playerid)
+{
+    #pragma unused playerid
+    return getPlayersCurrentPropReturns;
+}
+
+#if defined _ALS_GetPlayersCurrentProperty
+    #undef GetPlayersCurrentProperty
+#else
+    #define _ALS_GetPlayersCurrentProperty
+#endif
+
+#define GetPlayersCurrentProperty stub_GetPlayersCurrentProp
