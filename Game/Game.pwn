@@ -123,13 +123,24 @@ Pkr_DestroyGame(const gameId) {
 }
 
 Pkr_GetGameByObjectId(const objectId) {
-    if(objectId == INVALID_OBJECT_ID)
+    new message[128];
+    format(message, sizeof(message), "Pkr_GetGameByObjectId invoked with objectid: %d", objectId);
+    SendClientMessageToAll(COLOR_RED, message);
+
+    if(objectId == INVALID_OBJECT_ID) {
+        SendClientMessageToAll(COLOR_RED, "Hmm looks like an invalid object id");
         return -1;
+    }
 
     Pkr_ForeachGame(gameId) {
-        if(Pkr_GetObjectId(gameId) == objectId)
+        if(Pkr_GetObjectId(gameId) == objectId) {
+            format(message, sizeof(message), "Found the game! gameid: %d objectid: %d", gameId, objectId);
+            SendClientMessageToAll(COLOR_RED, message);
             return gameId;
+        }
     }
+
+    SendClientMessageToAll(COLOR_RED, "Failed to find the game...");
 
     return -1;
 }
