@@ -106,6 +106,15 @@ Pkr_CreateGame(const Float: x, const Float: y, const Float: z) {
     return -1;
 }
 
+Pkr_CreateGameByObjectId(const objectId) {
+    new Float: x, Float: y, Float: z;
+    if(GetDynamicObjectPos(objectId, x, y, z) == 0)
+        return -1;
+    new gameId = Pkr_CreateGame(x, y, z);
+    Pkr_SetObjectId(gameId, objectId);
+    return gameId;
+}
+
 Pkr_DestroyGame(const gameId) {
     Pkr_InitialiseGame(gameId);
     Pkr_DestroyGameTextDraws(gameId);
