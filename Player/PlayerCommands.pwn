@@ -1,10 +1,25 @@
-PkrCMD_Join(const playerid)
-{
-    new _game = Pkr_GetGameNearPlayer(playerid);
+PkrCMD_Join(const playerid) {
+    new propertyId = GetPlayersCurrentProperty(playerid);
 
-    if(_game == -1)
-    {
+    if(propertyId == -1) {
+        SendClientMessage(playerid, COLOR_RED, "You have to be inside a property to play poker.");
+        return;
+    }
+
+    new objectId = furn_pokerTableCheck(propertyId, playerid);
+
+    if(objectId == INVALID_OBJECT_ID) {
         SendClientMessage(playerid, COLOR_RED, "You're not near any poker game.");
+        return;
+    }
+
+    // Get the game assigned to it
+    new gameId = Pkr_GetGameByObjectId(objectId);
+
+    // TODO: Create the game...
+    if(gameId == -1)
+    {
+        SendClientMessage(playerid, COLOR_RED, "We need to create a game...");
         return;
     }
 
@@ -13,19 +28,19 @@ PkrCMD_Join(const playerid)
         return;
     }
 
-    if(Pkr_GetGameStatus(_game) != POKER_GAME_STATUS: LOBBY)
+    if(Pkr_GetGameStatus(gameId) != POKER_GAME_STATUS: LOBBY)
     {
         SendClientMessage(playerid, COLOR_RED, "This game is already in play.");
         return;
     }
 
-    if(Pkr_GetAmountOfPlayersOnGame(_game) == 6)
+    if(Pkr_GetAmountOfPlayersOnGame(gameId) == 6)
     {
         SendClientMessage(playerid, COLOR_RED, "This game is full.");
         return;
     }
 
-    Pkr_PlayerShowDialog(playerid, _game);
+    Pkr_PlayerShowDialog(playerid, gameId);
 
     return;
 }
