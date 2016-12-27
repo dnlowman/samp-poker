@@ -22,14 +22,13 @@ PkrCMD_Join(const playerid) {
     new gameId = Pkr_GetGameByObjectId(objectId);
 
     // TODO: Create the game...
-    if(gameId == -1)
-    {
-        SendClientMessage(playerid, COLOR_RED, "We need to create a game...");
-        return;
+    if(gameId == -1) {
+        SendClientMessageToAll(COLOR_RED, "Looks like a game doesn't exist on that object, creating one!");
+        gameId = Pkr_CreateGameByObjectId(objectId);
     }
 
-    if(Pkr_GetPlayerGame(playerid) != -1) {
-        SendClientMessage(playerid, COLOR_RED, "You're already playing poker.");
+    if(gameId == -1) {
+        SendClientMessage(playerid, COLOR_RED, "Oops! Unable to create a game right now, try again later.");
         return;
     }
 
