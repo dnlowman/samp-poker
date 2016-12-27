@@ -45,6 +45,7 @@ PkrCMD_Stats(const playerid, const parameters[])
                                                                                        g_rgPokerGames[gameId][PLAYER_CARD_TWO_VALUE][3],
                                                                                        g_rgPokerGames[gameId][PLAYER_CARD_TWO_VALUE][4],
                                                                                        g_rgPokerGames[gameId][PLAYER_CARD_TWO_VALUE][5]);
+    format(info, sizeof(info), "%sOBJECT_ID\t%d\n", info, g_rgPokerGames[gameId][OBJECT_ID]);
     format(info, sizeof(info), "%sPOT\t%d\n", info, g_rgPokerGames[gameId][POT]);
     format(info, sizeof(info), "%sBLIND\t%d\n", info, g_rgPokerGames[gameId][BLIND]);
     format(info, sizeof(info), "%sDEALER\t%d\n", info, g_rgPokerGames[gameId][DEALER]);
