@@ -1,4 +1,9 @@
 PkrCMD_Join(const playerid) {
+    if(Pkr_GetPlayerGame(playerid) != -1) {
+        SendClientMessage(playerid, COLOR_RED, "You're already playing poker.");
+        return;
+    }
+
     new propertyId = GetPlayersCurrentProperty(playerid);
 
     if(propertyId == -1) {
