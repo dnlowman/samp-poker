@@ -105,6 +105,10 @@ enum POKER_GAME {
 };
 new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
+#if !defined isnull
+    #define isnull(%1) ((!(%1[0])) || (((%1[0]) == '\1') && (!(%1[1]))))
+#endif
+
 #define Pkr_GetObjectId(%0) \
             g_rgPokerGames[%0][OBJECT_ID]
 
