@@ -8,10 +8,15 @@ Pkr_PlayerDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case (POKER_DIALOGS: SIT):
         {
-            if(!response)
-                return;
-
             new _gameId = GetPVarInt(playerid, "Pkr_SitGameId");
+
+            if(!response) {
+                if(Pkr_GetAmountOfPlayersOnGame(_gameId) == 0) {
+                    SendClientMessage(playerid, COLOR_RED, "Looks like no one else is on that table! Destroying that game.");
+                    Pkr_DestroyGame(_gameId);
+                }
+                return;
+            }
 
             if(!Pkr_IsNumeric(inputtext))
             {
