@@ -56,6 +56,7 @@ PkrCMD_Stats(const playerid, const parameters[])
     format(info, sizeof(info), "%sCURRENT_BET\t%d\n", info, g_rgPokerGames[gameId][CURRENT_BET]);
     format(info, sizeof(info), "%sLAST_AGGRESSIVE_PLAYER\t%d\n", info, g_rgPokerGames[gameId][LAST_AGGRESSIVE_PLAYER]);
     format(info, sizeof(info), "%sLAST_BET\t%d\n", info, g_rgPokerGames[gameId][LAST_BET]);
+    Pkr_SetPokerDialog(playerid, POKER_DIALOGS: STATS);
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_TABLIST_HEADERS, caption, info, "OK", "");
     return;
 }
