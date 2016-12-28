@@ -12,8 +12,9 @@ PkrCMD_Join(const playerid) {
     }
 
     new objectId = furn_pokerTableCheck(propertyId, playerid);
+    new modelId = GetObjectModel(objectId);
 
-    if(objectId == 0) {
+    if(objectId == 0 || modelId != POKER_OBJECT_MODEL) {
         SendClientMessage(playerid, COLOR_RED, "You're not near any poker game.");
         return;
     }
