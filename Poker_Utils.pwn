@@ -32,10 +32,12 @@ stock Pkr_GetClientName(playerid) {
     return _name;
 }
 
-stock GetPlayerRealMoney(playerid) {
-    #pragma unused playerid
-    return 1000000;
-}
+#if !defined GetPlayerRealMoney
+    stock GetPlayerRealMoney(playerid) {
+        #pragma unused playerid
+        return 1000000;
+    }
+#endif
 
 stock Pkr_ReturnCardSpriteName(value)
 {
