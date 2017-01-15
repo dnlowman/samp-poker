@@ -4,6 +4,11 @@ Pkr_RouteCommands(playerid, cmdtext[])
     new parameters[112];
     sscanf(cmdtext, "s[16]s[112]", command, parameters);
 
+	if(strlen(command) == 0) {
+		SendClientMessage(playerid, COLOR_GREY, "USAGE: /pkr [command]");
+		return 1;
+	}
+
     if(strcmp("create", command) == 0) PkrCMD_Create(playerid);
     else if(strcmp("addbot", command) == 0) PkrCMD_AddBot(playerid, parameters);
     else if(strcmp("removebot", command) == 0) PkrCMD_RemoveBot(playerid, parameters);
