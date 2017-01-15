@@ -1,7 +1,7 @@
 native Eval5(hand[5]);
 native Eval7(hand[7]);
 
-//#define POKER_DEBUG
+#define POKER_DEBUG
 
 const MAX_POKER_GAMES = 20;
 const MAX_POKER_PLAYERS = 6;
