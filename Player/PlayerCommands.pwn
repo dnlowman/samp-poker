@@ -14,7 +14,9 @@ PkrCMD_Join(const playerid) {
     new objectId = furn_pokerTableCheck(propertyId, playerid);
     new modelId = Streamer_GetIntData(STREAMER_TYPE_OBJECT , objectId, E_STREAMER_MODEL_ID);
 
-    if(objectId == 0 || modelId != POKER_OBJECT_MODEL) {
+	//|| modelId != POKER_OBJECT_MODEL
+
+    if(objectId == 0) {
         SendClientMessage(playerid, COLOR_RED, "You're not near any poker game.");
         return;
     }
