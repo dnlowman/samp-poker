@@ -12,7 +12,7 @@ PkrCMD_Join(const playerid) {
     }
 
     new objectId = furn_pokerTableCheck(propertyId, playerid);
-    new modelId = Streamer_GetIntData(STREAMER_TYPE_OBJECT , objectId, E_STREAMER_MODEL_ID);
+    //new modelId = Streamer_GetIntData(STREAMER_TYPE_OBJECT , objectId, E_STREAMER_MODEL_ID);
 
 	//|| modelId != POKER_OBJECT_MODEL
 
@@ -26,7 +26,6 @@ PkrCMD_Join(const playerid) {
 
     // TODO: Create the game...
     if(gameId == -1) {
-        SendClientMessageToAll(COLOR_RED, "Looks like a game doesn't exist on that object, creating one!");
         gameId = Pkr_CreateGameByObjectId(objectId);
     }
 
@@ -35,20 +34,17 @@ PkrCMD_Join(const playerid) {
         return;
     }
 
-    if(Pkr_GetGameStatus(gameId) != POKER_GAME_STATUS: LOBBY)
-    {
+    if(Pkr_GetGameStatus(gameId) != POKER_GAME_STATUS: LOBBY) {
         SendClientMessage(playerid, COLOR_RED, "This game is already in play.");
         return;
     }
 
-    if(Pkr_GetAmountOfPlayersOnGame(gameId) == 6)
-    {
+    if(Pkr_GetAmountOfPlayersOnGame(gameId) == 6) {
         SendClientMessage(playerid, COLOR_RED, "This game is full.");
         return;
     }
 
     Pkr_PlayerShowDialog(playerid, gameId);
-
     return;
 }
 
