@@ -61,6 +61,7 @@ Pkr_UnassignPlayerSlotFromGame(const gameId, const playerSlot)
         return;
 
     Pkr_DestroyPlayerPrivateCardTDs(gameId, playerSlot);
+	Pkr_ClearPlayerCards(gameId, playerSlot);
     Pkr_SetReadyTextDrawEmpty(gameId, playerSlot);
     Pkr_SetPlayerChipsTextDraw(gameId, playerSlot, "_");
     Pkr_SetPlayerStatusTextDrawEmpty(gameId, playerSlot);
