@@ -84,6 +84,15 @@ Pkr_GetAmountOfPlayersOnGame(const gameId) {
     return -1;
 }
 
+Pkr_GetAmountOfJoiningPlayers(const gameId) {
+	new count = 0;
+	Pkr_ForeachPlayerIdInPool(playerid) {
+		if(GetPVarInt(playerid, "Pkr_SitGameId") == gameId)
+			++count;
+	}
+	return count;
+}
+
 Pkr_GetAvailablePlayerSlot(const gameId) {
     if(Pkr_GetIsAssigned(gameId) == false)
         return -1;
