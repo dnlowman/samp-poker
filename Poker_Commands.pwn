@@ -9,8 +9,7 @@ Pkr_RouteCommands(playerid, cmdtext[])
 		return 1;
 	}
 
-    if(strcmp("create", command) == 0) PkrCMD_Create(playerid);
-    else if(strcmp("addbot", command) == 0) PkrCMD_AddBot(playerid, parameters);
+    if(strcmp("addbot", command) == 0) PkrCMD_AddBot(playerid, parameters);
     else if(strcmp("removebot", command) == 0) PkrCMD_RemoveBot(playerid, parameters);
     else if(strcmp("join", command) == 0) PkrCMD_Join(playerid);
     else if(strcmp("leave", command) == 0) PkrCMD_Leave(playerid);
@@ -19,7 +18,6 @@ Pkr_RouteCommands(playerid, cmdtext[])
     else if(strcmp("start", command) == 0) PkrCMD_Start(playerid);
 	else if(strcmp("nexthand", command) == 0) PkrCMD_NextHand(playerid);
     else if(strcmp("stats", command) == 0) PkrCMD_Stats(playerid, parameters);
-	//else if(strcmp("nexthand", cmdtext) == 0) pkrnexthand(playerid);
 	//else if(strcmp("spec", cmdtext) == 0) pkrspectate(playerid);
 	//else if(strcmp("cam", cmdtext) == 0) pkrcam(playerid);
 	//else if(strcmp("camin", cmdtext) == 0) pkrzoomin(playerid);
