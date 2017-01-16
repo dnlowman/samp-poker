@@ -1,3 +1,31 @@
+PkrCMD_Destroy(const playerid, const parameters[]) {
+	new gameId = INVALID_POKER_GAME_ID;
+
+    if(sscanf(parameters, "i", gameId))
+    {
+        SendClientMessage(playerid, COLOR_GREY, "DEBUG USAGE: /pkr destroy [gameId]");
+        return;
+    }
+
+    if(!Pkr_IsValidGameId(gameId))
+    {
+        SendClientMessage(playerid, COLOR_RED, "ERROR: Invalid gameId.");
+        return;
+    }
+
+	if(!Pkr_GetIsAssigned(gameId)) {
+		SendClientMessage(playerid, COLOR_RED, "ERROR: That game does not exist.");
+		return;
+	}
+
+	Pkr_DestroyGame(gameId);
+
+    new message[128];
+    format(message, sizeof(message), "Destroyed the game with Game ID: %d", gameId);
+	SendClientMessage(playerid, COLOR_RED, message);
+	return;
+}
+
 PkrCMD_Start(const playerId)
 {
     new _gameId = Pkr_GetPlayerGame(playerId);

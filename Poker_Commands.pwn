@@ -18,6 +18,7 @@ Pkr_RouteCommands(playerid, cmdtext[])
     else if(strcmp("start", command) == 0) PkrCMD_Start(playerid);
 	else if(strcmp("nexthand", command) == 0) PkrCMD_NextHand(playerid);
     else if(strcmp("stats", command) == 0) PkrCMD_Stats(playerid, parameters);
+	else if(strcmp("destroy", command) == 0) PkrCMD_Destroy(playerid, parameters);
 	//else if(strcmp("spec", cmdtext) == 0) pkrspectate(playerid);
 	//else if(strcmp("cam", cmdtext) == 0) pkrcam(playerid);
 	//else if(strcmp("camin", cmdtext) == 0) pkrzoomin(playerid);
