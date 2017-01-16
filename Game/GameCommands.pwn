@@ -1,15 +1,3 @@
-PkrCMD_Create(const playerid) {
-    new Float: _pos[3];
-    GetPlayerPos(playerid, _pos[0], _pos[1], _pos[2]);
-    new _game = Pkr_CreateGame(_pos[0], _pos[1], _pos[2]);
-    if(_game != -1)
-        Pkr_Create3DTextLabel(_game);
-    new _message[128];
-    format(_message, sizeof(_message), "Created the game with ID: %d", _game);
-    SendClientMessage(playerid, -1, _message);
-    return;
-}
-
 PkrCMD_Start(const playerId)
 {
     new _gameId = Pkr_GetPlayerGame(playerId);
