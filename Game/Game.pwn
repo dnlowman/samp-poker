@@ -24,7 +24,7 @@ Pkr_GetGameCount() {
 #define Pkr_SetIsAssigned(%0,%1) \
         g_rgPokerGames[%0][IS_ASSIGNED] = %1
 
-bool: Pkr_GetPosition(const gameId, &Float: x, &Float: y, &Float: z) {
+stock bool: Pkr_GetPosition(const gameId, &Float: x, &Float: y, &Float: z) {
     if(Pkr_IsValidGameId(gameId)) {
         x = g_rgPokerGames[gameId][POSITION][PokerX];
         y = g_rgPokerGames[gameId][POSITION][PokerY];
@@ -118,29 +118,18 @@ Pkr_CreateGameByObjectId(const objectId) {
 Pkr_DestroyGame(const gameId) {
     Pkr_InitialiseGame(gameId);
     Pkr_DestroyGameTextDraws(gameId);
-    Pkr_Destroy3DTextLabel(gameId);
     return;
 }
 
 Pkr_GetGameByObjectId(const objectId) {
-    new message[128];
-    format(message, sizeof(message), "Pkr_GetGameByObjectId invoked with objectid: %d", objectId);
-    SendClientMessageToAll(COLOR_RED, message);
-
     if(objectId == INVALID_OBJECT_ID) {
-        SendClientMessageToAll(COLOR_RED, "Hmm looks like an invalid object id");
         return -1;
     }
 
     Pkr_ForeachGame(gameId) {
-        if(Pkr_GetObjectId(gameId) == objectId) {
-            format(message, sizeof(message), "Found the game! gameid: %d objectid: %d", gameId, objectId);
-            SendClientMessageToAll(COLOR_RED, message);
+        if(Pkr_GetObjectId(gameId) == objectId)
             return gameId;
-        }
     }
-
-    SendClientMessageToAll(COLOR_RED, "Failed to find the game...");
 
     return -1;
 }
