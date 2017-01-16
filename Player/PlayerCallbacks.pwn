@@ -15,6 +15,8 @@ Pkr_PlayerDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     SendClientMessage(playerid, COLOR_RED, "Looks like no one else is on that table! Destroying that game.");
                     Pkr_DestroyGame(_gameId);
                 }
+
+				DeletePVar(playerid, "Pkr_SitGameId");
                 return;
             }
 
@@ -56,6 +58,7 @@ Pkr_PlayerDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new _iSitCash = GetPVarInt(playerid, "Pkr_SitCash");
             Pkr_AssignPlayerToGame(playerid, _gameId, _iSitCash);
+			DeletePVar(playerid, "Pkr_SitGameId");
             return;
         }
     }
