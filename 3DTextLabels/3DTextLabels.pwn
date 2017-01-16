@@ -6,26 +6,6 @@ const PKR_3DTEXT_LABEL_TEXT_LENGTH = 128;
 #define Pkr_Get3DTextLabelId(%0) \
             g_rgPokerGames[%0][TEXT_LABEL]
 
-Pkr_Create3DTextLabel(const gameId)
-{
-    new Float: position[3];
-    new text[PKR_3DTEXT_LABEL_TEXT_LENGTH];
-    new Text3D: textId = Text3D: INVALID_3DTEXT_ID;
-    Pkr_GetPosition(gameId, position[0], position[1], position[2]);
-    Pkr_Generate3DLabelText(gameId, text, sizeof(text));
-    textId = CreateDynamic3DTextLabel(text, COLOR_WHITE, position[0], position[1], position[2], 2.0);
-    Pkr_Set3DTextLabelId(gameId, textId);
-    return;
-}
-
-Pkr_Destroy3DTextLabel(const gameId)
-{
-    new Text3D: textId = Pkr_Get3DTextLabelId(gameId);
-    DestroyDynamic3DTextLabel(textId);
-    Pkr_Set3DTextLabelId(gameId, Text3D: INVALID_3DTEXT_ID);
-    return;
-}
-
 Pkr_Update3DTextLabel(const gameId)
 {
     new text[128];
