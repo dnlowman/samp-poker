@@ -16,7 +16,7 @@ PkrCMD_Join(const playerid) {
 
 	//|| modelId != POKER_OBJECT_MODEL
 
-    if(objectId == 0) {
+    if(objectId == INVALID_OBJECT_ID) {
         SendClientMessage(playerid, COLOR_RED, "You're not near any poker game.");
         return;
     }
@@ -28,6 +28,8 @@ PkrCMD_Join(const playerid) {
     if(gameId == -1) {
         gameId = Pkr_CreateGameByObjectId(objectId);
     }
+
+	SendClientMessageToAll(COLOR_RED, "created...");
 
     if(gameId == -1) {
         SendClientMessage(playerid, COLOR_RED, "Oops! Unable to create a game right now, try again later.");
@@ -43,6 +45,8 @@ PkrCMD_Join(const playerid) {
         SendClientMessage(playerid, COLOR_RED, "This game is full.");
         return;
     }
+
+	SendClientMessageToAll(COLOR_RED, "showing dialog...");
 
     Pkr_PlayerShowDialog(playerid, gameId);
     return;
