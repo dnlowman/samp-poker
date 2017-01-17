@@ -21,15 +21,16 @@ stock Pkr_MinusPlayerChips(const gameId, const slot, const amount)
     Pkr_SetPlayerChipsTextDraw(gameId, slot, _chips);
 }
 
-stock Pkr_ReturnAverageChips(const gameId) {
+Float: Pkr_ReturnAverageChips(const gameId) {
     new _total = 0;
     new _playerCount = 0;
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i) {
-        if(g_rgPokerGames[gameId][PLAYERS][_i] != INVALID_PLAYER_ID) {
-            _total += g_rgPokerGames[gameId][PLAYER_CHIPS][_i];
+
+	Pkr_ForeachPlayer(playerSlot) {
+		if(Pkr_GetPlayerId(gameId, playerSlot) != INVALID_PLAYER_ID) {
+			_total += g_rgPokerGames[gameId][PLAYER_CHIPS][playerSlot];
             _playerCount++;
-        }
+		}
     }
 
-    return (_playerCount == 0) ? 0 : _total / _playerCount;
+    return _playerCount == 0 ? 0.0 : float(_total) / float(_playerCount);
 }
