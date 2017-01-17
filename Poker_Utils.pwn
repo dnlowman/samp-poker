@@ -38,16 +38,18 @@ stock Pkr_GetClientName(playerid) {
         return 1000000;
     }
 #endif
+new cardMap[13] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1 };
 
 stock Pkr_ReturnCardSpriteName(value)
 {
 	new
 		spriteName[16],
-		val = ((value >> 8) & 0xF) + 1;
-	if(value & 0x8000) format(spriteName, sizeof(spriteName), "LD_CARD:cd%ic", val);
-	else if(value & 0x4000) format(spriteName, sizeof(spriteName), "LD_CARD:cd%id",  val);
-	else if(value & 0x2000) format(spriteName, sizeof(spriteName), "LD_CARD:cd%ih", val);
-	else format(spriteName, sizeof(spriteName), "LD_CARD:cd%is", val);
+		val = ((value >> 8) & 0xF);
+
+	if(value & 0x8000) format(spriteName, sizeof(spriteName), "LD_CARD:cd%ic", cardMap[val]);
+	else if(value & 0x4000) format(spriteName, sizeof(spriteName), "LD_CARD:cd%id",  cardMap[val]);
+	else if(value & 0x2000) format(spriteName, sizeof(spriteName), "LD_CARD:cd%ih", cardMap[val]);
+	else format(spriteName, sizeof(spriteName), "LD_CARD:cd%is", cardMap[val]);
 	return spriteName;
 }
 
