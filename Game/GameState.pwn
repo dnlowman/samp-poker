@@ -37,17 +37,15 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
     new amountOfAllInPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
     new activePlayers = amountOfPlayers - amountOfFoldedPlayers - amountOfAllInPlayers;
 
-    if(amountOfPlayers == amountOfAllInPlayers)
-    {
-        Pkr_DealRemainingRounds(gameId);
+    if(amountOfPlayers == amountOfAllInPlayers) {
+		Pkr_DealRemainingRounds(gameId);
         return;
     }
 
-    if(haveAllPlayersFolded && (plays == activePlayers || plays == 0))
+    if(haveAllPlayersFolded && (activePlayers == 0 || amountOfPlayers == 2))
     {
-        if(amountOfAllInPlayers > 0)
-        {
-            Pkr_DealRemainingRounds(gameId);
+        if(amountOfAllInPlayers > 1) {
+			Pkr_DealRemainingRounds(gameId);
             return;
         }
 
@@ -61,17 +59,14 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
         return;
     }
 
-    if(haveAllPlayersChecked)
-    {
+    if(haveAllPlayersChecked) {
         Pkr_DealNextRound(gameId);
         return;
     }
 
-    if(plays == activePlayers)
-    {
-        if(activePlayers == 1)
-        {
-            Pkr_DealRemainingRounds(gameId);
+    if(plays == activePlayers) {
+        if(activePlayers == 1) {
+			Pkr_DealRemainingRounds(gameId);
             return;
         }
 
