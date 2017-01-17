@@ -22,7 +22,7 @@ Pkr_PlayerShowDialog(const playerid, const gameId, const SIT_DIALOG_ERROR: error
             format(_format, 2048, "%s{D10047}You cannot meet the blinds with that amount,\nplease enter a valid amount of chips you wish\nto sit with.{A9C4E4}\n\n", _format);
     }
 
-    format(_format, 2048, "%sYour cash: {00AD43}$%s{A9C4E4}.\nAverage Player Chips: {00AD43}$%.1f{A9C4E4}.\nBig Blind Amount: {00AD43}$%s{A9C4E4}.\nSmall Blind Amount: {00AD43}$%s{A9C4E4}.\nNumber of players: %i/6.", _format, Pkr_FormatNumber(GetPlayerRealMoney(playerid)), Pkr_ReturnAverageChips(gameId), Pkr_FormatNumber((g_rgPokerGames[gameId][BLIND] << 1)), Pkr_FormatNumber(g_rgPokerGames[gameId][BLIND]), Pkr_GetAmountOfPlayersOnGame(gameId));
+    format(_format, 2048, "%sYour cash: {00AD43}$%s{A9C4E4}.\nAverage Player Chips: {00AD43}$%.0f{A9C4E4}.\nBig Blind Amount: {00AD43}$%s{A9C4E4}.\nSmall Blind Amount: {00AD43}$%s{A9C4E4}.\nNumber of players: %i/6.", _format, Pkr_FormatNumber(GetPlayerRealMoney(playerid)), Float:Pkr_ReturnAverageChips(gameId), Pkr_FormatNumber((g_rgPokerGames[gameId][BLIND] << 1)), Pkr_FormatNumber(g_rgPokerGames[gameId][BLIND]), Pkr_GetAmountOfPlayersOnGame(gameId));
     format(_format, 2048, "%s\n\nEnter the amount of chips you wish to sit with\nbelow then click on '{FF9900}Sit{A9C4E4}' to proceed. If you\nwish to leave the table click on '{FF9900}Leave{A9C4E4}'.", _format);
     SetPVarInt(playerid, "Pkr_SitGameId", gameId);
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: SIT);
