@@ -165,10 +165,18 @@ stock Pkr_DealNextRound(const gameId)
     for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
         Pkr_ResetPlayerClosedLastPlay(gameId, i);
 
-    new _dealerPosition = Pkr_GetDealerPosition(gameId);
+    new dealerPosition = Pkr_GetDealerPosition(gameId);
     Pkr_SetAllPlayerStatusWaiting(gameId);
-    Pkr_SetPlayerStatusDealer(gameId, _dealerPosition);
-    new _nextPlayer = Pkr_FindNextPlayer(gameId, _dealerPosition);
+
+	new dealerPlayerId = Pkr_GetPlayerId(gameId, dealerPosition);
+	if(dealerPlayerId == INVALID_PLAYER_ID) {
+		dealerPosition = PkrSys_GetNextDealer(gameId);
+	    if(dealerPosition != -1)
+	    	Pkr_SetDealerPosition(gameId, dealerPosition);
+	}
+
+    Pkr_SetPlayerStatusDealer(gameId, dealerPosition);
+    new _nextPlayer = Pkr_FindNextPlayer(gameId, dealerPosition);
     Pkr_SetPlayerPlaying(gameId, _nextPlayer);
     return;
 }
