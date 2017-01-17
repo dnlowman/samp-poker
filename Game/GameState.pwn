@@ -169,13 +169,10 @@ stock Pkr_DealNextRound(const gameId)
     Pkr_SetAllPlayerStatusWaiting(gameId);
 
 	new dealerPlayerId = Pkr_GetPlayerId(gameId, dealerPosition);
-	if(dealerPlayerId == INVALID_PLAYER_ID) {
-		dealerPosition = PkrSys_GetNextDealer(gameId);
-	    if(dealerPosition != -1)
-	    	Pkr_SetDealerPosition(gameId, dealerPosition);
-	}
+	if(dealerPlayerId != INVALID_PLAYER_ID)
+		Pkr_SetPlayerStatusDealer(gameId, dealerPosition);
 
-    Pkr_SetPlayerStatusDealer(gameId, dealerPosition);
+
     new _nextPlayer = Pkr_FindNextPlayer(gameId, dealerPosition);
     Pkr_SetPlayerPlaying(gameId, _nextPlayer);
     return;
