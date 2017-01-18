@@ -17,9 +17,9 @@ Pkr_PlayerConfirmBet(const gameId, const player, const amount)
 Pkr_PlayerConfirmRaise(const gameId, const player, const amount, const meetAmount)
 {
     Pkr_AddToPot(gameId, meetAmount);
-    Pkr_MinusPlayerChips(gameId, player, meetAmount);
-    Pkr_AddToPlayerBetContribution(gameId, player, meetAmount);
-    Pkr_AddToPlayerPotContribution(gameId, player, meetAmount);
+    Pkr_MinusPlayerChips(gameId, player, meetAmount + amount);
+    Pkr_AddToPlayerBetContribution(gameId, player, meetAmount + amount);
+    Pkr_AddToPlayerPotContribution(gameId, player, meetAmount + amount);
     Pkr_SetLastAggressivePlayer(gameId, player);
     Pkr_SetLastBet(gameId, amount);
     Pkr_AddToCurrentBet(gameId, amount);
