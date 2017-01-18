@@ -72,7 +72,7 @@ stock Pkr_ShowPlayerCards(const gameId, const playerSlot)
 
 stock Pkr_ShowAllPlayerCards(const gameId) {
 	Pkr_ForeachPlayer(player) {
-		if(Pkr_GetPlayerId(gameId, player) != INVALID_PLAYER_ID)
+		if(Pkr_GetPlayerId(gameId, player) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, player) != POKER_PLAYER_STATUS: FOLDED)
 			Pkr_ShowPlayerCards(gameId, player);
 	}
 	return;
