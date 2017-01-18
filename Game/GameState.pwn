@@ -37,6 +37,17 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
     new amountOfAllInPlayers = Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN);
     new activePlayers = amountOfPlayers - amountOfFoldedPlayers - amountOfAllInPlayers;
 
+	if(amountOfFoldedPlayers == amountOfPlayers - 1) {
+		new nonFoldedPlayer = Pkr_GetFirstPlayerWithoutStatus(gameId, FOLDED);
+		new nonFoldedPlayerId = Pkr_GetPlayerId(gameId, nonFoldedPlayer);
+
+		Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId));
+		Pkr_AddPlayerChips(gameId, nonFoldedPlayer, Pkr_GetPotAmount(gameId));
+		Pkr_SetPotAmount(gameId, 0);
+		Pkr_SetGameToLobby(gameId);
+		return;
+	}
+
     if(amountOfPlayers == amountOfAllInPlayers) {
 		Pkr_DealRemainingRounds(gameId);
         return;
