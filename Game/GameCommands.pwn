@@ -42,6 +42,13 @@ PkrCMD_Start(const playerId)
         return;
     }
 
+	new POKER_GAME_STATUS: _status = Pkr_GetGameStatus(_gameId);
+	if(_status != POKER_GAME_STATUS: LOBBY)
+    {
+        SendClientMessage(playerId, COLOR_RED, "This command can only be used in the lobby.");
+        return;
+    }
+
     new _playerCount = Pkr_GetAmountOfPlayersOnGame(_gameId);
 
     if(_playerCount == 1)
