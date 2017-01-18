@@ -23,18 +23,18 @@ stock Pkr_DealPlayerCard(const gameId, const playerSlot)
     if(Pkr_GetPlayerCardOneValue(gameId, playerSlot) == -1)
     {
         Pkr_SetPlayerCardOneValue(gameId, playerSlot, _cardValue);
-        /*Pkr_SetPlayerCardOneTextDraw(gameId, playerSlot, "LD_CARD:cdback");
-        Pkr_SetPrivateCardOneTextDraw(_playerId, gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));*/
+        Pkr_SetPlayerCardOneTextDraw(gameId, playerSlot, "LD_CARD:cdback");
+        Pkr_SetPrivateCardOneTextDraw(_playerId, gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
 
-        Pkr_SetPlayerCardOneTextDraw(gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
+        /*Pkr_SetPlayerCardOneTextDraw(gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));*/
     }
     else if(Pkr_GetPlayerCardTwoValue(gameId, playerSlot) == -1)
     {
         Pkr_SetPlayerCardTwoValue(gameId, playerSlot, _cardValue);
-        /*Pkr_SetPlayerCardTwoTextDraw(gameId, playerSlot, "LD_CARD:cdback");
-        Pkr_SetPrivateCardTwoTextDraw(_playerId, gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));*/
+        Pkr_SetPlayerCardTwoTextDraw(gameId, playerSlot, "LD_CARD:cdback");
+        Pkr_SetPrivateCardTwoTextDraw(_playerId, gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
 
-        Pkr_SetPlayerCardTwoTextDraw(gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
+        /*Pkr_SetPlayerCardTwoTextDraw(gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));*/
     }
 
     return;
@@ -53,6 +53,29 @@ stock Pkr_ClearPlayerCards(const gameId, const playerSlot)
     Pkr_SetPrivateCardTwoTextDraw(_playerId, gameId, playerSlot, "_");
 
     return;
+}
+
+stock Pkr_ShowPlayerCards(const gameId, const playerSlot)
+{
+	new playerId = Pkr_GetPlayerId(gameId, playerSlot);
+	new cardOne = Pkr_GetPlayerCardOneValue(gameId, playerSlot);
+	new cardTwo = Pkr_GetPlayerCardTwoValue(gameId, playerSlot);
+
+
+    Pkr_SetPlayerCardOneTextDraw(gameId, playerSlot, Pkr_ReturnCardSpriteName(cardOne));
+    Pkr_SetPrivateCardOneTextDraw(playerId, gameId, playerSlot, "_");
+
+    Pkr_SetPlayerCardTwoTextDraw(gameId, playerSlot, Pkr_ReturnCardSpriteName(cardTwo));
+    Pkr_SetPrivateCardTwoTextDraw(playerId, gameId, playerSlot, "_");
+    return;
+}
+
+stock Pkr_ShowAllPlayerCards(const gameId) {
+	Pkr_ForeachPlayer(player) {
+		if(Pkr_GetPlayerId(gameId, player) != INVALID_PLAYER_ID)
+			Pkr_ShowPlayerCards(gameId, player);
+	}
+	return;
 }
 
 stock Pkr_ClearAllPlayerCards(const gameId)

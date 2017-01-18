@@ -248,6 +248,7 @@ Pkr_DealRemainingRounds(const gameId)
 stock Pkr_Evaluate(const gameId)
 {
     Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: EVALUATION);
+	Pkr_ShowAllPlayerCards(gameId);
 
     new _sz[128];
     new _winners[MAX_POKER_PLAYERS] = {INVALID_PLAYER_ID, ...};
