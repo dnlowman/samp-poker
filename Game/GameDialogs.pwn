@@ -10,6 +10,7 @@ enum BET_DIALOG_ERROR
 {
     NAN,
     NO_MONEY,
+	ZERO,
     NONE
 };
 
@@ -25,6 +26,8 @@ stock Pkr_GameShowBetDialog(const playerid, const BET_DIALOG_ERROR: error = BET_
             format(_format, 2048, "%s{D10047}You have entered an invalid number, please enter\na valid amount of chips you wish to bet.{A9C4E4}\n\n", _format);
         case (BET_DIALOG_ERROR: NO_MONEY):
             format(_format, 2048, "%s{D10047}You cannot afford to bet that much, please enter\na valid amount of chips you wish to bet.{A9C4E4}\n\n", _format);
+		case (BET_DIALOG_ERROR: ZERO):
+			format(_format, 2048, "%s{D10047}You cannot bet with $0, please enter\na valid amount of chips you wish to bet.{A9C4E4}\n\n", _format);
     }
 
     format(_format, 2048, "%sEnter the amount of chips you wish to\nbet below and click on '{FF9900}Bet{A9C4E4}' to \nproceed, if you have changed your mind\nclick on '{FF9900}Cancel{A9C4E4}'.", _format);

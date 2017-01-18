@@ -21,6 +21,11 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return;
             }
 
+			if(inputAmount == 0) {
+				Pkr_GameShowBetDialog(playerid, BET_DIALOG_ERROR: ZERO);
+				return;
+			}
+
             if(Pkr_GetPlayerChips(_gameId, _slot) < inputAmount)
             {
                 Pkr_GameShowBetDialog(playerid, BET_DIALOG_ERROR: NO_MONEY);
