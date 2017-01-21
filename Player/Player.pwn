@@ -68,6 +68,7 @@ Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
     else if(amountOfPlayersOnGame == 0)
         Pkr_DestroyGame(gameId);
 
+	CancelSelectTextDraw(playerid);
     return true;
 }
 
