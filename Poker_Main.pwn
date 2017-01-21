@@ -63,7 +63,6 @@ Special Thanks:
 
 #include "TextDraws\Poker_TextDraws.pwn"
 
-#include "3DTextLabels\3DTextLabels.pwn"
 #include "Player\Player.pwn"
 #include "Bots\Bots.pwn"
 #include "Poker_Commands.pwn"
