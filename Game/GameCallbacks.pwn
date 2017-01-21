@@ -146,6 +146,36 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			Pkr_SetNextPlayerPlaying(gameId);
 			return;
 		}
+
+		case (POKER_DIALOGS: ALL_IN_CONFIRM): {
+			if(!response)
+				return;
+
+			new gameId = Pkr_GetPlayerGame(playerid);
+			new playerSlot = Pkr_GetCurrentPlayerPosition(gameId);
+
+			Pkr_SetPlayerStatusAllIn(gameId, playerSlot);
+
+			new playerChips = Pkr_GetPlayerChips(gameId, playerSlot);
+
+			if(Pkr_GetCurrentBet(gameId) < playerChips - Pkr_GetPlayerBetContribution(gameId, playerSlot))
+			{
+				Pkr_SetLastAggressivePlayer(gameId, playerSlot);
+				Pkr_SetAmountOfPlays(gameId, 0);
+				Pkr_AddToCurrentBet(gameId, playerChips);
+
+			for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
+				Pkr_ResetPlayerClosedLastPlay(gameId, i);
+			}
+
+			Pkr_AddToPot(gameId, playerChips);
+			Pkr_AddToPlayerBetContribution(gameId, playerSlot, playerChips);
+			Pkr_AddToPlayerPotContribution(gameId, playerSlot, playerChips);
+			Pkr_MinusPlayerChips(gameId, playerSlot, playerChips);
+
+			Pkr_SetNextPlayerPlaying(gameId);
+			return;
+		}
     }
 
     return;

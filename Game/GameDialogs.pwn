@@ -124,3 +124,9 @@ stock Pkr_GameShowFoldDialog(const playerid) {
 	Pkr_SetPokerDialog(playerid, POKER_DIALOGS: FOLD_CONFIRM);
 	return;
 }
+
+stock Pkr_GameShowAllInDialog(const playerid) {
+	ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - All In", "Are you sure you wish to go all in?", "All In", "Cancel");
+	Pkr_SetPokerDialog(playerid, POKER_DIALOGS: ALL_IN_CONFIRM);
+	return;
+}

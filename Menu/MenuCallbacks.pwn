@@ -32,27 +32,8 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
 
     if(clickedid == g_rgPokerGames[_gameId][MENU_TEXTDRAWS][0]) // ALL IN
     {
-        PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
-        Pkr_SetPlayerStatusAllIn(_gameId, _currentPlayer);
-
-        new _playerChips = Pkr_GetPlayerChips(_gameId, _currentPlayer);
-
-        if(Pkr_GetCurrentBet(_gameId) < _playerChips - Pkr_GetPlayerBetContribution(_gameId, _currentPlayer))
-        {
-            Pkr_SetLastAggressivePlayer(_gameId, _currentPlayer);
-            Pkr_SetAmountOfPlays(_gameId, 0);
-            Pkr_AddToCurrentBet(_gameId, _playerChips);
-
-            for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
-                Pkr_ResetPlayerClosedLastPlay(_gameId, i);
-        }
-
-        Pkr_AddToPot(_gameId, _playerChips);
-        Pkr_AddToPlayerBetContribution(_gameId, _currentPlayer, _playerChips);
-        Pkr_AddToPlayerPotContribution(_gameId, _currentPlayer, _playerChips);
-        Pkr_MinusPlayerChips(_gameId, _currentPlayer, _playerChips);
-
-        Pkr_SetNextPlayerPlaying(_gameId);
+		Pkr_GameShowAllInDialog(playerid);
+		PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
         return;
     }
 
@@ -111,8 +92,8 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
     if(clickedid == g_rgPokerGames[_gameId][MENU_TEXTDRAWS][3])
     {
 		Pkr_GameShowFoldDialog(playerid);
-        PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
-        return;
+		PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
+		return;
     }
 
     return;
