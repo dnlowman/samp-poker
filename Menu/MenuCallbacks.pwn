@@ -14,10 +14,18 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
 	new _currentPlayer = Pkr_GetCurrentPlayerPosition(_gameId);
 	new _playerSlot = Pkr_GetPlayerSlot(playerid, _gameId);
 
-	if(_currentPlayer != _playerSlot) {
-		SendClientMessage(playerid, COLOR_RED, "You are not the current player.");
-        return;
-	}
+	#if defined POKER_DEBUG
+		new currentPlayersId = Pkr_GetPlayerId(_gameId, _currentPlayer);
+		if(_currentPlayer != _playerSlot && !IsPlayerNPC(currentPlayersId)) {
+			SendClientMessage(playerid, COLOR_RED, "You can only control the actions of NPC's.");
+	        return;
+		}
+	#elseif !defined POKER_DEBUG
+		if(_currentPlayer != _playerSlot) {
+			SendClientMessage(playerid, COLOR_RED, "You are not the current player.");
+	        return;
+		}
+	#endif
 
     if(_playerSlot == -1)
         return;
@@ -31,13 +39,13 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
     if(clickedid == g_rgPokerGames[_gameId][MENU_TEXTDRAWS][0]) // ALL IN
     {
         PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
-        Pkr_SetPlayerStatusAllIn(_gameId, _playerSlot);
+        Pkr_SetPlayerStatusAllIn(_gameId, _currentPlayer);
 
-        new _playerChips = Pkr_GetPlayerChips(_gameId, _playerSlot);
+        new _playerChips = Pkr_GetPlayerChips(_gameId, _currentPlayer);
 
-        if(Pkr_GetCurrentBet(_gameId) < _playerChips - Pkr_GetPlayerBetContribution(_gameId, _playerSlot))
+        if(Pkr_GetCurrentBet(_gameId) < _playerChips - Pkr_GetPlayerBetContribution(_gameId, _currentPlayer))
         {
-            Pkr_SetLastAggressivePlayer(_gameId, _playerSlot);
+            Pkr_SetLastAggressivePlayer(_gameId, _currentPlayer);
             Pkr_SetAmountOfPlays(_gameId, 0);
             Pkr_AddToCurrentBet(_gameId, _playerChips);
 
@@ -46,9 +54,9 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
         }
 
         Pkr_AddToPot(_gameId, _playerChips);
-        Pkr_AddToPlayerBetContribution(_gameId, _playerSlot, _playerChips);
-        Pkr_AddToPlayerPotContribution(_gameId, _playerSlot, _playerChips);
-        Pkr_MinusPlayerChips(_gameId, _playerSlot, _playerChips);
+        Pkr_AddToPlayerBetContribution(_gameId, _currentPlayer, _playerChips);
+        Pkr_AddToPlayerPotContribution(_gameId, _currentPlayer, _playerChips);
+        Pkr_MinusPlayerChips(_gameId, _currentPlayer, _playerChips);
 
         Pkr_SetNextPlayerPlaying(_gameId);
         return;
@@ -66,7 +74,7 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
             return;
         }
 
-        if(Pkr_GetCurrentBet(_gameId) >= Pkr_GetPlayerChips(_gameId, _playerSlot))
+        if(Pkr_GetCurrentBet(_gameId) >= Pkr_GetPlayerChips(_gameId, _currentPlayer))
         {
             SendClientMessage(playerid, COLOR_RED, "You cannot afford to raise, you have to go all in or fold.");
             return;
@@ -87,7 +95,7 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
 
     if(clickedid == g_rgPokerGames[_gameId][MENU_TEXTDRAWS][2]) // CHECK OR CALL
     {
-        if(Pkr_GetCurrentBet(_gameId) >= Pkr_GetPlayerChips(_gameId, _playerSlot))
+        if(Pkr_GetCurrentBet(_gameId) >= Pkr_GetPlayerChips(_gameId, _currentPlayer))
         {
             SendClientMessage(playerid, COLOR_RED, "You cannot afford to call, you have to go all in or fold.");
             return;
@@ -108,7 +116,7 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
 
     if(clickedid == g_rgPokerGames[_gameId][MENU_TEXTDRAWS][3])
     {
-        Pkr_SetPlayerStatusFolded(_gameId, _playerSlot);
+        Pkr_SetPlayerStatusFolded(_gameId, _currentPlayer);
         Pkr_SetNextPlayerPlaying(_gameId);
         PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
         return;
