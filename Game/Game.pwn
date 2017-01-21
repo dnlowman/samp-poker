@@ -74,7 +74,6 @@ Pkr_InitialiseGame(const gameId) {
         g_rgPokerGames[gameId][PLAYER_CARD_TWO_VALUE][_j] = -1;
         g_rgPokerGames[gameId][PLAYER_POT_CONTRIBUTIONS][_j] = 0;
         Pkr_SetPlayerBetContribution(gameId, _j, 0);
-        Pkr_ResetPlayerClosedLastPlay(gameId, _j);
     }
 
     for(new _i = 0; _i < MAX_TABLE_CARDS; ++_i)

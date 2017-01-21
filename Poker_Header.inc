@@ -102,7 +102,6 @@ enum POKER_GAME {
     PLAYER_BET_CONTRIBUTIONS[MAX_POKER_PLAYERS],
     LAST_AGGRESSIVE_PLAYER,
     AMOUNT_OF_PLAYS,
-    bool: PLAYER_CLOSED_LAST_PLAY[MAX_POKER_PLAYERS],
     LAST_BET
 };
 new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
@@ -128,15 +127,6 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
 #define Pkr_ForeachPlayerIdInPool(%0) \
             for(new %0 = 0, poolSize = GetPlayerPoolSize(); %0 <= poolSize; ++%0)
-
-#define Pkr_SetPlayerClosedLastPlay(%0,%1) \
-            g_rgPokerGames[%0][PLAYER_CLOSED_LAST_PLAY][%1] = true
-
-#define Pkr_GetPlayerClosedLastPlay(%0,%1) \
-            g_rgPokerGames[%0][PLAYER_CLOSED_LAST_PLAY][%1]
-
-#define Pkr_ResetPlayerClosedLastPlay(%0,%1) \
-            g_rgPokerGames[%0][PLAYER_CLOSED_LAST_PLAY][%1] = false
 
 #define Pkr_GetLastBet(%0) \
             g_rgPokerGames[%0][LAST_BET]

@@ -163,9 +163,6 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				Pkr_SetLastAggressivePlayer(gameId, playerSlot);
 				Pkr_SetAmountOfPlays(gameId, 0);
 				Pkr_AddToCurrentBet(gameId, playerChips);
-
-			for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
-				Pkr_ResetPlayerClosedLastPlay(gameId, i);
 			}
 
 			Pkr_AddToPot(gameId, playerChips);

@@ -168,9 +168,6 @@ stock Pkr_DealNextRound(const gameId)
     Pkr_ResetPlayerBetContributions(gameId);
     Pkr_SetAmountOfPlays(gameId, 0);
 
-    for(new i = 0; i < MAX_POKER_PLAYERS; ++i)
-        Pkr_ResetPlayerClosedLastPlay(gameId, i);
-
     new dealerPosition = Pkr_GetDealerPosition(gameId);
     Pkr_SetAllPlayerStatusWaiting(gameId);
 
