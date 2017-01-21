@@ -26,7 +26,6 @@ bool: Pkr_AssignPlayerToGame(const playerid, const gameId, const chips) {
             return false;
         }
         g_rgPokerGames[gameId][PLAYERS][_slot] = playerid;
-        Pkr_Update3DTextLabel(gameId);
         Pkr_ShowPlayerTextDraws(playerid, gameId);
         Pkr_SetPlayerNotReady(gameId, _slot);
         Pkr_SetPlayerChips(gameId, _slot, chips);
@@ -84,7 +83,6 @@ Pkr_UnassignPlayerSlotFromGame(const gameId, const playerSlot)
     Pkr_SetPlayerStatusTextDrawEmpty(gameId, playerSlot);
     Pkr_HidePlayerTextDraws(Pkr_GetPlayerId(gameId, playerSlot), gameId);
     Pkr_RemovePlayerVars(gameId, playerSlot);
-    Pkr_Update3DTextLabel(gameId);
 }
 
 #define Pkr_UnassignAllPlayers(%0) \
