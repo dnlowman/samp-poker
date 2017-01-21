@@ -23,18 +23,22 @@ stock Pkr_DealPlayerCard(const gameId, const playerSlot)
     if(Pkr_GetPlayerCardOneValue(gameId, playerSlot) == -1)
     {
         Pkr_SetPlayerCardOneValue(gameId, playerSlot, _cardValue);
-        Pkr_SetPlayerCardOneTextDraw(gameId, playerSlot, "LD_CARD:cdback");
-        Pkr_SetPrivateCardOneTextDraw(_playerId, gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
-
-        /*Pkr_SetPlayerCardOneTextDraw(gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));*/
-    }
+		#if defined PKR_DEBUG
+			Pkr_SetPlayerCardOneTextDraw(gameId, playerSlot, "LD_CARD:cdback");
+			Pkr_SetPrivateCardOneTextDraw(_playerId, gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
+		#else
+			Pkr_SetPlayerCardOneTextDraw(gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
+		#endif
+	}
     else if(Pkr_GetPlayerCardTwoValue(gameId, playerSlot) == -1)
     {
         Pkr_SetPlayerCardTwoValue(gameId, playerSlot, _cardValue);
-        Pkr_SetPlayerCardTwoTextDraw(gameId, playerSlot, "LD_CARD:cdback");
-        Pkr_SetPrivateCardTwoTextDraw(_playerId, gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
-
-        /*Pkr_SetPlayerCardTwoTextDraw(gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));*/
+		#if defined PKR_DEBUG
+			Pkr_SetPlayerCardTwoTextDraw(gameId, playerSlot, "LD_CARD:cdback");
+			Pkr_SetPrivateCardTwoTextDraw(_playerId, gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
+		#else
+			Pkr_SetPlayerCardTwoTextDraw(gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
+		#endif
     }
 
     return;
