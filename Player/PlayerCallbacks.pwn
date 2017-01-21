@@ -12,7 +12,6 @@ Pkr_PlayerDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             if(!response) {
                 if(Pkr_GetAmountOfPlayersOnGame(_gameId) == 0 && Pkr_GetAmountOfJoiningPlayers(_gameId) == 1) {
-                    SendClientMessage(playerid, COLOR_RED, "Looks like no one else is on that table! Destroying that game.");
                     Pkr_DestroyGame(_gameId);
                 }
 
