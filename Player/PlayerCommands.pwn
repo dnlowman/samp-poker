@@ -21,15 +21,11 @@ PkrCMD_Join(const playerid) {
         return;
     }
 
-    // Get the game assigned to it
     new gameId = Pkr_GetGameByObjectId(objectId);
 
-    // TODO: Create the game...
     if(gameId == -1) {
         gameId = Pkr_CreateGameByObjectId(objectId);
     }
-
-	SendClientMessageToAll(COLOR_RED, "created...");
 
     if(gameId == -1) {
         SendClientMessage(playerid, COLOR_RED, "Oops! Unable to create a game right now, try again later.");
@@ -45,8 +41,6 @@ PkrCMD_Join(const playerid) {
         SendClientMessage(playerid, COLOR_RED, "This game is full.");
         return;
     }
-
-	SendClientMessageToAll(COLOR_RED, "showing dialog...");
 
     Pkr_PlayerShowDialog(playerid, gameId);
     return;
