@@ -134,6 +134,18 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             Pkr_PlayerCheckConfirm(_gameId, _playerSlot);
             return;
         }
+
+		case (POKER_DIALOGS: FOLD_CONFIRM): {
+			if(!response)
+				return;
+
+			new gameId = Pkr_GetPlayerGame(playerid);
+			new playerSlot = Pkr_GetCurrentPlayerPosition(gameId);
+
+			Pkr_SetPlayerStatusFolded(gameId, playerSlot);
+			Pkr_SetNextPlayerPlaying(gameId);
+			return;
+		}
     }
 
     return;

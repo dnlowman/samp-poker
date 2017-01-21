@@ -12,12 +12,12 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
 		new currentPlayersId = Pkr_GetPlayerId(_gameId, _currentPlayer);
 		if(_currentPlayer != _playerSlot && !IsPlayerNPC(currentPlayersId)) {
 			SendClientMessage(playerid, COLOR_RED, "You can only control the actions of NPC's.");
-	        return;
+			return;
 		}
 	#elseif !defined POKER_DEBUG
 		if(_currentPlayer != _playerSlot) {
 			SendClientMessage(playerid, COLOR_RED, "You are not the current player.");
-	        return;
+			return;
 		}
 	#endif
 
@@ -110,8 +110,7 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
 
     if(clickedid == g_rgPokerGames[_gameId][MENU_TEXTDRAWS][3])
     {
-        Pkr_SetPlayerStatusFolded(_gameId, _currentPlayer);
-        Pkr_SetNextPlayerPlaying(_gameId);
+		Pkr_GameShowFoldDialog(playerid);
         PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
         return;
     }

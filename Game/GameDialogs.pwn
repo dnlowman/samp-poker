@@ -118,3 +118,9 @@ stock Pkr_GameShowCheckConfirmDialog(const playerid)
 
     return;
 }
+
+stock Pkr_GameShowFoldDialog(const playerid) {
+	ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Fold", "Are you sure you wish to fold?", "Fold", "Cancel");
+	Pkr_SetPokerDialog(playerid, POKER_DIALOGS: FOLD_CONFIRM);
+	return;
+}
