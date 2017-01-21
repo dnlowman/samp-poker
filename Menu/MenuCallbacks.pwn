@@ -5,12 +5,6 @@ Pkr_PlayerMenuTextDrawClick(const playerid, const Text: clickedid)
     if(_gameId == -1)
         return;
 
-    /*#if defined POKER_DEBUG
-        new _playerSlot = Pkr_GetCurrentPlayerPosition(_gameId);
-    #else
-        new _playerSlot = Pkr_GetPlayerSlot(playerid, _gameId);
-    #endif*/
-
 	new _currentPlayer = Pkr_GetCurrentPlayerPosition(_gameId);
 	new _playerSlot = Pkr_GetPlayerSlot(playerid, _gameId);
 
