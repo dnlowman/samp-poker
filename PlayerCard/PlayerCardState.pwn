@@ -23,7 +23,7 @@ stock Pkr_DealPlayerCard(const gameId, const playerSlot)
     if(Pkr_GetPlayerCardOneValue(gameId, playerSlot) == -1)
     {
         Pkr_SetPlayerCardOneValue(gameId, playerSlot, _cardValue);
-		#if defined POKER_DEBUG
+		#if !defined POKER_DEBUG
 			Pkr_SetPlayerCardOneTextDraw(gameId, playerSlot, "LD_CARD:cdback");
 			Pkr_SetPrivateCardOneTextDraw(_playerId, gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
 		#else
@@ -33,7 +33,7 @@ stock Pkr_DealPlayerCard(const gameId, const playerSlot)
     else if(Pkr_GetPlayerCardTwoValue(gameId, playerSlot) == -1)
     {
         Pkr_SetPlayerCardTwoValue(gameId, playerSlot, _cardValue);
-		#if defined POKER_DEBUG
+		#if !defined POKER_DEBUG
 			Pkr_SetPlayerCardTwoTextDraw(gameId, playerSlot, "LD_CARD:cdback");
 			Pkr_SetPrivateCardTwoTextDraw(_playerId, gameId, playerSlot, Pkr_ReturnCardSpriteName(_cardValue));
 		#else
