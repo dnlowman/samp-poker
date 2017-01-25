@@ -31,7 +31,7 @@ bool: Pkr_AssignPlayerToGame(const playerid, const gameId, const chips) {
         Pkr_SetPlayerChips(gameId, _slot, chips);
         Pkr_SetPlayerStatusInLobby(gameId, _slot);
         Pkr_CreatePlayerPrivateCardTDs(gameId, _slot);
-        SelectTextDraw(playerid, COLOR_ORANGE);
+        Pkr_ShowCursorForPlayerId(playerid);
 
         Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has joined the game. (Game ID: %d)", Pkr_GetClientName(playerid), gameId);
         return true;
@@ -67,7 +67,7 @@ Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
     else if(amountOfPlayersOnGame == 0)
         Pkr_DestroyGame(gameId);
 
-	CancelSelectTextDraw(playerid);
+	Pkr_HideCursorForPlayerId(playerid);
     return true;
 }
 

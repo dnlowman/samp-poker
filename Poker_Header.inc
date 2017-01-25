@@ -238,3 +238,9 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
 #define Pkr_IsOdd(%0) \
             (%0 % 2)
+
+#define Pkr_ShowCursorForPlayerId(%0) \
+		SelectTextDraw(%0, COLOR_ORANGE)
+
+#define Pkr_HideCursorForPlayerId(%0) \
+		CancelSelectTextDraw(playerid)

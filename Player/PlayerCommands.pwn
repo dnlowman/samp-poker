@@ -71,7 +71,7 @@ PkrCMD_Mouse(const playerid)
         return;
     }
 
-    SelectTextDraw(playerid, COLOR_ORANGE);
+    Pkr_ShowCursorForPlayerId(playerid);
     SendClientMessage(playerid, COLOR_ORANGE, "The mouse has been enabled.");
     return;
 }
