@@ -76,8 +76,12 @@ Pkr_UnassignPlayerSlotFromGame(const gameId, const playerSlot)
     if(g_rgPokerGames[gameId][PLAYERS][playerSlot] == INVALID_PLAYER_ID)
         return;
 
+	new POKER_GAME_STATUS: gameStatus = Pkr_GetGameStatus(gameId);
+
+	if(gameStatus == POKER_GAME_STATUS: LOBBY)
+		Pkr_ClearPlayerCards(gameId, playerSlot);
+
     Pkr_DestroyPlayerPrivateCardTDs(gameId, playerSlot);
-	Pkr_ClearPlayerCards(gameId, playerSlot);
     Pkr_SetReadyTextDrawEmpty(gameId, playerSlot);
     Pkr_SetPlayerChipsTextDraw(gameId, playerSlot, "_");
     Pkr_SetPlayerStatusTextDrawEmpty(gameId, playerSlot);

@@ -50,11 +50,13 @@ stock Pkr_ClearPlayerCards(const gameId, const playerSlot)
 
     Pkr_SetPlayerCardOneValue(gameId, playerSlot, -1);
     Pkr_SetPlayerCardOneTextDraw(gameId, playerSlot, "_");
-    Pkr_SetPrivateCardOneTextDraw(_playerId, gameId, playerSlot, "_");
-
-    Pkr_SetPlayerCardTwoValue(gameId, playerSlot, -1);
+	Pkr_SetPlayerCardTwoValue(gameId, playerSlot, -1);
     Pkr_SetPlayerCardTwoTextDraw(gameId, playerSlot, "_");
-    Pkr_SetPrivateCardTwoTextDraw(_playerId, gameId, playerSlot, "_");
+
+	if(_playerId != INVALID_PLAYER_ID) {
+		Pkr_SetPrivateCardOneTextDraw(_playerId, gameId, playerSlot, "_");
+		Pkr_SetPrivateCardTwoTextDraw(_playerId, gameId, playerSlot, "_");
+	}
 
     return;
 }
@@ -86,10 +88,7 @@ stock Pkr_ClearAllPlayerCards(const gameId)
 {
     for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
     {
-        if(g_rgPokerGames[gameId][PLAYERS][_i] != INVALID_PLAYER_ID)
-        {
-            Pkr_ClearPlayerCards(gameId, _i);
-        }
+        Pkr_ClearPlayerCards(gameId, _i);
     }
 
     return;
