@@ -16,6 +16,7 @@ Pkr_PlayerDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
 
 				DeletePVar(playerid, "Pkr_SitGameId");
+				Pkr_ShowCursorForPlayerId(playerid);
                 return;
             }
 

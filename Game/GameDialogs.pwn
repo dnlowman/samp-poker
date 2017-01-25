@@ -33,6 +33,7 @@ stock Pkr_GameShowBetDialog(const playerid, const BET_DIALOG_ERROR: error = BET_
     format(_format, 2048, "%sEnter the amount of chips you wish to\nbet below and click on '{FF9900}Bet{A9C4E4}' to \nproceed, if you have changed your mind\nclick on '{FF9900}Cancel{A9C4E4}'.", _format);
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: BET);
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Bet", _format, "Bet", "Cancel");
+	Pkr_HideCursorForPlayerId(playerid);
     return;
 }
 
@@ -48,7 +49,8 @@ stock Pkr_GameShowBetConfirmDialog(const playerid)
     format(_format, sizeof(_format), "Thank you {FF9900}%s{A9C4E4},\n\nBefore you bet we would like to confirm the\namount of chips you wish to bet with.\n\n", Pkr_GetClientName(playerid));
     format(_format, sizeof(_format), "%sYour chosen chips: {00AD43}$%s{A9C4E4}.\nCash before this confirmation: {00AD43}$%s{A9C4E4}.\nCash after this confirmation: {00AD43}$%s{A9C4E4}.\n\nTo go ahead and confirm this click on '{FF9900}Confirm{A9C4E4}'\nor if you wish to go back click on '{FF9900}Back{A9C4E4}'.", _format, Pkr_FormatNumber(_betAmount), Pkr_FormatNumber(Pkr_GetPlayerChips(_gameId, _slot)), Pkr_FormatNumber(_playerChips));
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Bet Confirm", _format, "Confirm", "Back");
-    Pkr_SetPokerDialog(playerid, POKER_DIALOGS: BET_CONFIRM);
+	Pkr_HideCursorForPlayerId(playerid);
+	Pkr_SetPokerDialog(playerid, POKER_DIALOGS: BET_CONFIRM);
     return;
 }
 
@@ -73,6 +75,7 @@ stock Pkr_GameShowRaiseDialog(const playerid, const gameId, const RAISE_DIALOG_E
     format(_format, 2048, "%sEnter the amount of chips you wish to\nraise below and click on '{FF9900}Raise{A9C4E4}' to \nproceed, if you have changed your mind\nclick on '{FF9900}Cancel{A9C4E4}'.", _format);
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: RAISE);
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Raise", _format, "Raise", "Cancel");
+	Pkr_HideCursorForPlayerId(playerid);
     return;
 }
 
@@ -91,6 +94,7 @@ stock Pkr_GameShowRaiseConfirmDialog(const playerid)
     format(_format, sizeof(_format), "%sYour chosen chips: {00AD43}$%s{A9C4E4}.\nCash before this confirmation: {00AD43}$%s{A9C4E4}.\nCash after this confirmation: {00AD43}$%s{A9C4E4}.\n\nTo go ahead and confirm this click on '{FF9900}Confirm{A9C4E4}'\nor if you wish to go back click on '{FF9900}Back{A9C4E4}'.", _format, Pkr_FormatNumber(_raiseAmount), Pkr_FormatNumber(Pkr_GetPlayerChips(_gameId, _slot)), Pkr_FormatNumber(_playerChips));
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Raise Confirm", _format, "Raise", "Back");
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: RAISE_CONFIRM);
+	Pkr_HideCursorForPlayerId(playerid);
     return;
 }
 
@@ -105,6 +109,7 @@ stock Pkr_GameShowCallConfirmDialog(const playerid, const gameId)
     format(_format, sizeof(_format), "%sTo go ahead and confirm this click on '{FF9900}Call{A9C4E4}'\nor if you wish to go back click on '{FF9900}Back{A9C4E4}'.", _format);
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Call", _format, "Call", "Back");
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: CALL_CONFIRM);
+	Pkr_HideCursorForPlayerId(playerid);
     return;
 }
 
@@ -115,18 +120,20 @@ stock Pkr_GameShowCheckConfirmDialog(const playerid)
     format(_format, sizeof(_format), "%sTo go ahead and confirm this click on '{FF9900}Check{A9C4E4}'\nor if you wish to cancel click on '{FF9900}Back{A9C4E4}'.", _format);
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Check", _format, "Check", "Back");
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: CHECK_CONFIRM);
-
+	Pkr_HideCursorForPlayerId(playerid);
     return;
 }
 
 stock Pkr_GameShowFoldDialog(const playerid) {
 	ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Fold", "Are you sure you wish to fold?", "Fold", "Cancel");
 	Pkr_SetPokerDialog(playerid, POKER_DIALOGS: FOLD_CONFIRM);
+	Pkr_HideCursorForPlayerId(playerid);
 	return;
 }
 
 stock Pkr_GameShowAllInDialog(const playerid) {
 	ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - All In", "Are you sure you wish to go all in?", "All In", "Cancel");
 	Pkr_SetPokerDialog(playerid, POKER_DIALOGS: ALL_IN_CONFIRM);
+	Pkr_HideCursorForPlayerId(playerid);
 	return;
 }

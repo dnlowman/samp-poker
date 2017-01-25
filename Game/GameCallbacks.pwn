@@ -8,8 +8,10 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         case (POKER_DIALOGS: BET):
         {
-            if(!response)
-                return;
+            if(!response) {
+				Pkr_ShowCursorForPlayerId(playerid);
+				return;
+			}
 
             new _gameId = Pkr_GetPlayerGame(playerid);
             new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
@@ -61,8 +63,10 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
         case (POKER_DIALOGS: RAISE):
         {
-            if(!response)
-                return;
+            if(!response) {
+				Pkr_ShowCursorForPlayerId(playerid);
+				return;
+			}
 
             new _gameId = Pkr_GetPlayerGame(playerid);
             new _slot = Pkr_GetCurrentPlayerPosition(_gameId);
@@ -119,8 +123,10 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
         case (POKER_DIALOGS: CALL_CONFIRM):
         {
-            if(!response)
-                return;
+            if(!response) {
+				Pkr_ShowCursorForPlayerId(playerid);
+				return;
+			}
 
             new _gameId = Pkr_GetPlayerGame(playerid);
             new _playerSlot = Pkr_GetCurrentPlayerPosition(_gameId);
@@ -132,8 +138,10 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
         case (POKER_DIALOGS: CHECK_CONFIRM):
         {
-            if(!response)
-                return;
+            if(!response) {
+				Pkr_ShowCursorForPlayerId(playerid);
+				return;
+			}
 
             new _gameId = Pkr_GetPlayerGame(playerid);
             new _playerSlot = Pkr_GetCurrentPlayerPosition(_gameId);
@@ -143,8 +151,10 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
 
 		case (POKER_DIALOGS: FOLD_CONFIRM): {
-			if(!response)
+			if(!response) {
+				Pkr_ShowCursorForPlayerId(playerid);
 				return;
+			}
 
 			new gameId = Pkr_GetPlayerGame(playerid);
 			new playerSlot = Pkr_GetCurrentPlayerPosition(gameId);
@@ -155,8 +165,10 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 
 		case (POKER_DIALOGS: ALL_IN_CONFIRM): {
-			if(!response)
+			if(!response) {
+				Pkr_ShowCursorForPlayerId(playerid);
 				return;
+			}
 
 			new gameId = Pkr_GetPlayerGame(playerid);
 			new playerSlot = Pkr_GetCurrentPlayerPosition(gameId);

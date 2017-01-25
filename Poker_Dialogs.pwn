@@ -25,6 +25,7 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
 			format(_format, 2048, "%s\n\nEnter the amount of chips you wish to sit with\nbelow then click on '{FF9900}Sit{A9C4E4}' to proceed. If you\nwish to leave the table click on '{FF9900}Leave{A9C4E4}'.", _format);
 			ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Sit", _format, "Sit", "Leave");
 			SetPVarInt(playerid, "PokerDialog", _: SIT);
+			Pkr_HideCursorForPlayerId(playerid);
 		}
 
 		case SIT_INVALID_NUMBER:
@@ -35,6 +36,7 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
 			format(_format, 2048, "%s\n\nEnter the amount of chips you wish to sit with\nbelow then click on '{FF9900}Sit{A9C4E4}' to proceed. If you\nwish to leave the table click on '{FF9900}Leave{A9C4E4}'.", _format);
 			ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Sit", _format, "Sit", "Leave");
 			SetPVarInt(playerid, "PokerDialog", _: SIT);
+			Pkr_HideCursorForPlayerId(playerid);
 		}
 
 		case SIT_INVALID_CASH:
@@ -45,6 +47,7 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
 			format(_format, 2048, "%s\n\nEnter the amount of chips you wish to sit with\nbelow then click on '{FF9900}Sit{A9C4E4}' to proceed. If you\nwish to leave the table click on '{FF9900}Leave{A9C4E4}'.", _format);
 			ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Sit", _format, "Sit", "Leave");
 			SetPVarInt(playerid, "PokerDialog", _: SIT);
+			Pkr_HideCursorForPlayerId(playerid);
 		}
 
 		case SIT_CONFIRM:
@@ -54,6 +57,7 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
 			format(_format, sizeof(_format), "%sYour chosen chips: {00AD43}$%s{A9C4E4}.\nCash before this confirmation: {00AD43}$%s{A9C4E4}.\nCash after this confirmation: {00AD43}$%s{A9C4E4}.\n\nTo go ahead and confirm this click on '{FF9900}Sit{A9C4E4}'\nor if you wish to go back click on '{FF9900}Back{A9C4E4}'.", _format, Pkr_FormatNumber(_sitcash), Pkr_FormatNumber(GetPlayerRealMoney(playerid)), Pkr_FormatNumber(GetPlayerRealMoney(playerid) - _sitcash));
 			ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker", _format, "Sit", "Back");
 			SetPVarInt(playerid, "PokerDialog", _: SIT_CONFIRM);
+			Pkr_HideCursorForPlayerId(playerid);
 		}
 
 		case SIT_BLINDS:
@@ -64,6 +68,7 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
 			format(_format, 2048, "%s\n\nEnter the amount of chips you wish to sit with\nbelow then click on '{FF9900}Sit{A9C4E4}' to proceed. If you\nwish to leave the table click on '{FF9900}Leave{A9C4E4}'.", _format);
 			ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Sit", _format, "Sit", "Leave");
 			SetPVarInt(playerid, "PokerDialog", _: SIT);
+			Pkr_HideCursorForPlayerId(playerid);
 		}
 
 		case RAISE:
@@ -73,6 +78,7 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
 			format(_format, 2048, "%sEnter the amount of chips you wish to\nraise below and click on '{FF9900}Raise{A9C4E4}' to \nproceed, if you have changed your mind\nclick on '{FF9900}Cancel{A9C4E4}'.", _format);
 			ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Raise", _format, "Raise", "Cancel");
 			SetPVarInt(playerid, "PokerDialog", _: RAISE);
+			Pkr_HideCursorForPlayerId(playerid);
 		}
 
 		case RAISE_INVALID_NUMBER:
@@ -83,6 +89,7 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
 			format(_format, 2048, "%sEnter the amount of chips you wish to\nraise below and click on '{FF9900}Raise{A9C4E4}' to \nproceed, if you have changed your mind\nclick on '{FF9900}Cancel{A9C4E4}'.", _format);
 			ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Raise", _format, "Raise", "Cancel");
 			SetPVarInt(playerid, "PokerDialog", _: RAISE);
+			Pkr_HideCursorForPlayerId(playerid);
 		}
 
 		case RIASE:
@@ -93,6 +100,7 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
 			format(_format, 2048, "%sEnter the amount of chips you wish to\nraise below and click on '{FF9900}Raise{A9C4E4}' to \nproceed, if you have changed your mind\nclick on '{FF9900}Cancel{A9C4E4}'.", _format);
 			ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Raise", _format, "Raise", "Cancel");
 			SetPVarInt(playerid, "PokerDialog", _: RAISE);
+			Pkr_HideCursorForPlayerId(playerid);
 		}
 
 		case E_POKER_DIALOG_RAISE_LASTB:
@@ -103,6 +111,7 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
 			format(_format, 2048, "%sEnter the amount of chips you wish to\nraise below and click on '{FF9900}Raise{A9C4E4}' to \nproceed, if you have changed your mind\nclick on '{FF9900}Cancel{A9C4E4}'.", _format);
 			ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Raise", _format, "Raise", "Cancel");
 			SetPVarInt(playerid, "PokerDialog", _: RAISE);
+			Pkr_HideCursorForPlayerId(playerid);
 		}
 
 		case E_POKER_DIALOG_RAISE_CONFIRM:
@@ -112,6 +121,7 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
 			format(_format, sizeof(_format), "%sYour chosen chips: {00AD43}$%s{A9C4E4}.\nCash before this confirmation: {00AD43}$%s{A9C4E4}.\nCash after this confirmation: {00AD43}$%s{A9C4E4}.\n\nTo go ahead and confirm this click on '{FF9900}Confirm{A9C4E4}'\nor if you wish to go back click on '{FF9900}Back{A9C4E4}'.", _format, Pkr_FormatNumber(_sitcash), Pkr_FormatNumber(GetPlayerRealMoney(playerid)), Pkr_FormatNumber(GetPlayerRealMoney(playerid) - _sitcash));
 			ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Raise", _format, "Raise", "Back");
 			SetPVarInt(playerid, "PokerDialog", _: RAISE_CONFIRM);
+			Pkr_HideCursorForPlayerId(playerid);
 		}
 
 		case E_POKER_DIALOG_CALL_CONFIRM:
@@ -128,6 +138,7 @@ Pkr_ShowPlayerDialog(playerid, POKER_DIALOG: dialog, game) {
 			format(_format, sizeof(_format), "%sTo go ahead and confirm this click on '{FF9900}Call{A9C4E4}'\nor if you wish to go back click on '{FF9900}Back{A9C4E4}'.", _format);
 			ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker - Call", _format, "Call", "Back");
 			SetPVarInt(playerid, "PokerDialog", _: CALL_CONFIRM);
+			Pkr_HideCursorForPlayerId(playerid);
 		}
 	}
 	return 1;

@@ -27,7 +27,7 @@ Pkr_PlayerShowDialog(const playerid, const gameId, const SIT_DIALOG_ERROR: error
     SetPVarInt(playerid, "Pkr_SitGameId", gameId);
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: SIT);
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_INPUT, "Texas Hold 'em Poker - Sit", _format, "Sit", "Leave");
-
+	Pkr_HideCursorForPlayerId(playerid);
     return;
 }
 
@@ -39,6 +39,6 @@ Pkr_PlayerShowConfirmDialog(const playerid)
     format(_format, sizeof(_format), "%sYour chosen chips: {00AD43}$%s{A9C4E4}.\nCash before this confirmation: {00AD43}$%s{A9C4E4}.\nCash after this confirmation: {00AD43}$%s{A9C4E4}.\n\nTo go ahead and confirm this click on '{FF9900}Sit{A9C4E4}'\nor if you wish to go back click on '{FF9900}Back{A9C4E4}'.", _format, Pkr_FormatNumber(_sitcash), Pkr_FormatNumber(GetPlayerRealMoney(playerid)), Pkr_FormatNumber(GetPlayerRealMoney(playerid) - _sitcash));
     ShowPlayerDialog(playerid, POKER_DIALOG_ID, DIALOG_STYLE_MSGBOX, "Texas Hold 'em Poker", _format, "Sit", "Back");
     Pkr_SetPokerDialog(playerid, POKER_DIALOGS: SIT_CONFIRM);
-
+	Pkr_HideCursorForPlayerId(playerid);
     return;
 }
