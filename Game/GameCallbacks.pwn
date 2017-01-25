@@ -34,7 +34,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             if(Pkr_GetPlayerChips(_gameId, _slot) == inputAmount)
             {
-                // all in
+				Pkr_GameShowAllInDialog(playerid);
                 return;
             }
 
@@ -69,6 +69,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new inputAmount = strval(inputtext);
             new _amountToMeet = Pkr_GetCurrentBet(_gameId) - Pkr_GetPlayerBetContribution(_gameId, _slot);
             new _totalCost = _amountToMeet + inputAmount;
+			new playerChips = Pkr_GetPlayerChips(_gameId, _slot);
 
             if(!Pkr_IsNumeric(inputtext) || strlen(inputtext) > 9)
             {
@@ -82,11 +83,17 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return;
             }
 
-            if(Pkr_GetPlayerChips(_gameId, _slot) < _totalCost)
+            if(playerChips < _totalCost)
             {
                 Pkr_GameShowRaiseDialog(playerid, _gameId, RAISE_DIALOG_ERROR: NO_MONEY);
                 return;
             }
+
+			if(_totalCost == playerChips)
+			{
+				Pkr_GameShowAllInDialog(playerid);
+				return;
+			}
 
             SetPVarInt(playerid, POKER_PLAYER_RAISE_AMOUNT_VAR, inputAmount);
             Pkr_GameShowRaiseConfirmDialog(playerid);
@@ -157,12 +164,15 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			Pkr_SetPlayerStatusAllIn(gameId, playerSlot);
 
 			new playerChips = Pkr_GetPlayerChips(gameId, playerSlot);
+			new currentBet = Pkr_GetCurrentBet(gameId);
+			new amountToMeet = playerChips - Pkr_GetPlayerBetContribution(gameId, playerSlot);
 
-			if(Pkr_GetCurrentBet(gameId) < playerChips - Pkr_GetPlayerBetContribution(gameId, playerSlot))
+			if(currentBet < amountToMeet)
 			{
 				Pkr_SetLastAggressivePlayer(gameId, playerSlot);
 				Pkr_SetAmountOfPlays(gameId, 0);
 				Pkr_AddToCurrentBet(gameId, playerChips);
+				Pkr_SetLastBet(gameId, playerChips);
 			}
 
 			Pkr_AddToPot(gameId, playerChips);
