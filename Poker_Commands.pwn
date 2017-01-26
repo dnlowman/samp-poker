@@ -30,12 +30,6 @@ CMD:pkr(playerid, cmdtext[])
 	return 1;
 }
 
-CMD:poker(playerid, cmdtext[])
-{
-	Pkr_RouteCommands(playerid, cmdtext);
-	return 1;
-}
-
 PkrCMD_DealPlayer(const playerid, const parameters[]) {
 	new gameId;
 	new slot;
