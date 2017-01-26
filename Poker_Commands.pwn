@@ -20,6 +20,7 @@ Pkr_RouteCommands(playerid, cmdtext[])
 	else if(strcmp("destroy", command) == 0) PkrCMD_Destroy(playerid, parameters);
 	else if(strcmp("dealplayer", command) == 0) PkrCMD_DealPlayer(playerid, parameters);
 	else if(strcmp("dealtable", command) == 0) PkrCMD_DealTable(playerid, parameters);
+	else if(strcmp("spec", command) == 0) PkrCMD_Spectate(playerid);
 	else if(strcmp("help", command) == 0) PkrCMD_Help(playerid);
 	return 1;
 }

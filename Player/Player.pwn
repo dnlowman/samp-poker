@@ -92,6 +92,14 @@ Pkr_UnassignPlayerSlotFromGame(const gameId, const playerSlot)
 #define Pkr_UnassignAllPlayers(%0) \
             for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i) Pkr_UnassignPlayerSlotFromGame(%0, _i)
 
+Pkr_UnassignAllSpectators(const gameId) {
+	Pkr_ForeachPlayerIdInPool(playerid) {
+		if(GetPVarType(playerid, POKER_SPECTATE_VAR_NAME) != PLAYER_VARTYPE_NONE && GetPVarInt(playerid, POKER_SPECTATE_VAR_NAME) == gameId)
+			Pkr_HidePlayerTextDraws(playerid, gameId);
+	}
+	return;
+}
+
 Pkr_GetAmountOfPlayersOnGame(const gameId) {
     if(Pkr_GetIsAssigned(gameId) == true) {
         new _count = 0;

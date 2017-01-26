@@ -33,6 +33,7 @@ public OnFilterScriptExit()
         if(Pkr_GetIsAssigned(_j))
         {
             Pkr_UnassignAllPlayers(_j);
+			Pkr_UnassignAllSpectators(_j);
             Pkr_DestroyGame(_j);
         }
     }
