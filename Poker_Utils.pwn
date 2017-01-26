@@ -106,9 +106,13 @@ stock Pkr_ReturnHandName(const rank)
 
 Pkr_SendGameMessage(const gameId, const color, const message[])
 {
-	for(new i; i < MAX_POKER_PLAYERS; ++i)
-        if(g_rgPokerGames[gameId][PLAYERS][i] != INVALID_PLAYER_ID)
-            SendClientMessage(g_rgPokerGames[gameId][PLAYERS][i], color, message);
+	Pkr_ForeachPlayer(player)
+		if(g_rgPokerGames[gameId][PLAYERS][player] != INVALID_PLAYER_ID)
+			SendClientMessage(g_rgPokerGames[gameId][PLAYERS][player], color, message);
+
+	Pkr_ForeachPlayerIdInPool(playerId)
+        if(GetPVarType(playerId, POKER_SPECTATE_VAR_NAME) != PLAYER_VARTYPE_NONE && GetPVarInt(playerId, POKER_SPECTATE_VAR_NAME) == gameId)
+			SendClientMessage(playerId, color, message);
 
     return;
 }
