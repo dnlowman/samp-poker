@@ -75,3 +75,13 @@ PkrCMD_Mouse(const playerid)
     SendClientMessage(playerid, COLOR_ORANGE, "The mouse has been enabled.");
     return;
 }
+
+PkrCMD_Help(const playerid) {
+	SendClientMessage(playerid, COLOR_ORANGE, "Poker System:");
+	SendClientMessage(playerid, COLOR_ORANGE, "/pkr join - Allows you to join a poker game.");
+	SendClientMessage(playerid, COLOR_ORANGE, "/pkr leave - Allows you to leave a poker game.");
+	SendClientMessage(playerid, COLOR_ORANGE, "/pkr start - Allows you to start an inactive game.");
+	SendClientMessage(playerid, COLOR_ORANGE, "/pkr nexthand - Allows you to reset the game back to the lobby.");
+	SendClientMessage(playerid, COLOR_ORANGE, "/pkr mouse - Allows you to use the cursor for the menu.");
+	return;
+}
