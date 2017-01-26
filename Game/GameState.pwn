@@ -105,6 +105,8 @@ stock Pkr_SetPlayerPlaying(const gameId, const playerSlot)
     else
         Pkr_SetMenuItemTwoStateCheck(gameId);
 
+	new playerid = Pkr_GetPlayerId(gameId, playerSlot);
+	PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
     Pkr_SetPlayerStatusPlaying(gameId, playerSlot);
     return;
 }
