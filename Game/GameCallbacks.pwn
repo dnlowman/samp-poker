@@ -4,6 +4,17 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
     new _pokerDialogId = Pkr_GetPokerDialog(playerid);
 
+	new gameId = Pkr_GetPlayerGame(playerid);
+
+	#if !defined POKER_DEBUG
+		new currentPlayerPosition = Pkr_GetCurrentPlayerPosition(gameId);
+		new playerPosition = Pkr_GetPlayerSlot(playerid, gameId);
+		if(playerPosition != currentPlayerPosition) {
+			SendClientMessage(playerid, COLOR_RED, "You're not the current player!");
+			return;
+		}
+	#endif
+
     switch(_pokerDialogId)
     {
         case (POKER_DIALOGS: BET):
@@ -161,7 +172,6 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return;
 			}
 
-			new gameId = Pkr_GetPlayerGame(playerid);
 			new playerSlot = Pkr_GetCurrentPlayerPosition(gameId);
 
 			Pkr_SetPlayerStatusFolded(gameId, playerSlot);
@@ -176,7 +186,6 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return;
 			}
 
-			new gameId = Pkr_GetPlayerGame(playerid);
 			new playerSlot = Pkr_GetCurrentPlayerPosition(gameId);
 
 			Pkr_SetPlayerStatusAllIn(gameId, playerSlot);
