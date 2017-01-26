@@ -447,6 +447,7 @@ stock Pkr_SetGameToLobby(const gameId)
     Pkr_ResetPlayerBetContributions(gameId);
     Pkr_SetLastBet(gameId, 0);
     Pkr_SetAmountOfPlays(gameId, 0);
+	Pkr_SetTimerTextDrawText(gameId, "_");
     Pkr_SendFormattedGameMessage(gameId, COLOR_GREY, "Use '/pkr start' to start the game.");
 
     new playerid = INVALID_PLAYER_ID;
