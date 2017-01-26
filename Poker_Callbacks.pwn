@@ -5,7 +5,9 @@ public OnFilterScriptInit()
     #if defined Pkr_OnFilterScriptInit
         Pkr_OnFilterScriptInit();
     #endif
-    Pkr_InitialisePoker();
+	Pkr_InitialisePoker();
+
+	SetTimer("Pkr_OnOneSecond", 1000, true);
 
     #if defined RUN_TESTS
         Pkr_InitialiseTests();

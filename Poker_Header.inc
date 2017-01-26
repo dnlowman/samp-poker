@@ -81,6 +81,7 @@ enum POKER_GAME {
     Text: PLAYER_GAME_CARD_TWO_TEXTDRAW[MAX_POKER_PLAYERS],
     Text: POKER_BLINDS_TEXTDRAW,
     Text: TABLE_CARDS_TEXTDRAWS[MAX_TABLE_CARDS],
+	Text: TIMER_TEXTDRAW,
     PlayerText: PLAYER_PRIV_CARD_ONE_TEXTDRAW[MAX_POKER_PLAYERS],
     PlayerText: PLAYER_PRIV_CARD_TWO_TEXTDRAW[MAX_POKER_PLAYERS],
     POKER_MENU_STATES: MENU_ITEM_ONE_STATE,
@@ -102,7 +103,8 @@ enum POKER_GAME {
     PLAYER_BET_CONTRIBUTIONS[MAX_POKER_PLAYERS],
     LAST_AGGRESSIVE_PLAYER,
     AMOUNT_OF_PLAYS,
-    LAST_BET
+    LAST_BET,
+	TIMER
 };
 new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
@@ -238,6 +240,18 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
 #define Pkr_IsOdd(%0) \
             (%0 % 2)
+
+#define Pkr_GetTimerTextdraw(%0) \
+			g_rgPokerGames[%0][TIMER_TEXTDRAW]
+
+#define Pkr_SetTimerTextdraw(%0,%1) \
+			g_rgPokerGames[%0][TIMER_TEXTDRAW] = %1
+
+#define Pkr_GetTimer(%0) \
+			g_rgPokerGames[%0][TIMER]
+
+#define Pkr_SetTimer(%0,%1) \
+			g_rgPokerGames[%0][TIMER] = %1
 
 #define Pkr_ShowCursorForPlayerId(%0) \
 		SelectTextDraw(%0, COLOR_ORANGE)

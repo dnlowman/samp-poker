@@ -92,7 +92,8 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
 
 stock Pkr_SetPlayerPlaying(const gameId, const playerSlot)
 {
-    Pkr_SetCurrentPlayerPosition(gameId, playerSlot);
+	Pkr_SetTimerValue(gameId, MAX_POKER_TIMER);
+	Pkr_SetCurrentPlayerPosition(gameId, playerSlot);
 
     if(Pkr_GetCurrentBet(gameId) > 0)
         Pkr_SetMenuItemOneStateRaise(gameId);

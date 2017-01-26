@@ -66,6 +66,7 @@ Special Thanks:
 #include "Player\Player.pwn"
 #include "Bots\Bots.pwn"
 #include "Poker_Commands.pwn"
+#include "Timer\Timer_Main.pwn"
 
 #if defined RUN_TESTS
     #include <YSI\y_testing>
