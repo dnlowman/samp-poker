@@ -58,6 +58,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
 
             Pkr_PlayerConfirmBet(_gameId, _slot, _inputAmount);
+			Pkr_ShowCursorForPlayerId(playerid);
             return;
         }
 
@@ -118,13 +119,15 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
 
             Pkr_PlayerConfirmRaise(_gameId, _slot, _inputAmount, _amountToMeet);
+			Pkr_ShowCursorForPlayerId(playerid);
             return;
         }
 
         case (POKER_DIALOGS: CALL_CONFIRM):
         {
-            if(!response) {
-				Pkr_ShowCursorForPlayerId(playerid);
+			Pkr_ShowCursorForPlayerId(playerid);
+
+			if(!response) {
 				return;
 			}
 
@@ -138,8 +141,9 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
         case (POKER_DIALOGS: CHECK_CONFIRM):
         {
-            if(!response) {
-				Pkr_ShowCursorForPlayerId(playerid);
+			Pkr_ShowCursorForPlayerId(playerid);
+
+			if(!response) {
 				return;
 			}
 
@@ -151,8 +155,9 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
 
 		case (POKER_DIALOGS: FOLD_CONFIRM): {
+			Pkr_ShowCursorForPlayerId(playerid);
+
 			if(!response) {
-				Pkr_ShowCursorForPlayerId(playerid);
 				return;
 			}
 
@@ -165,8 +170,9 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 
 		case (POKER_DIALOGS: ALL_IN_CONFIRM): {
+			Pkr_ShowCursorForPlayerId(playerid);
+
 			if(!response) {
-				Pkr_ShowCursorForPlayerId(playerid);
 				return;
 			}
 
@@ -191,7 +197,6 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			Pkr_AddToPlayerBetContribution(gameId, playerSlot, playerChips);
 			Pkr_AddToPlayerPotContribution(gameId, playerSlot, playerChips);
 			Pkr_MinusPlayerChips(gameId, playerSlot, playerChips);
-
 			Pkr_SetNextPlayerPlaying(gameId);
 			return;
 		}
