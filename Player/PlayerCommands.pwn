@@ -38,12 +38,12 @@ PkrCMD_Join(const playerid) {
     }
 
     if(Pkr_GetGameStatus(gameId) != POKER_GAME_STATUS: LOBBY) {
-        SendClientMessage(playerid, COLOR_RED, "This game is already in play.");
+        SendClientMessage(playerid, COLOR_RED, "This game is already in play - You can use /pkr spec to watch the game.");
         return;
     }
 
     if(Pkr_GetAmountOfPlayersOnGame(gameId) == 6) {
-        SendClientMessage(playerid, COLOR_RED, "This game is full.");
+        SendClientMessage(playerid, COLOR_RED, "This game is full. - You can use /pkr spec to watch the game");
         return;
     }
 
