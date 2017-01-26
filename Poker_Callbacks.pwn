@@ -61,6 +61,7 @@ public OnGameModeInit()
         Pkr_OnGameModeInit();
     #endif
     Pkr_InitialisePoker();
+	SetTimer("Pkr_OnOneSecond", 1000, true);
 }
 
 #if defined _ALS_OnGameModeInit
