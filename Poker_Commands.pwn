@@ -13,7 +13,6 @@ Pkr_RouteCommands(playerid, cmdtext[])
     else if(strcmp("removebot", command) == 0) PkrCMD_RemoveBot(playerid, parameters);
     else if(strcmp("join", command) == 0) PkrCMD_Join(playerid);
     else if(strcmp("leave", command) == 0) PkrCMD_Leave(playerid);
-	//else if(strcmp("leave", cmdtext) == 0) pkrleave(playerid);
 	else if(strcmp("mouse", command) == 0) PkrCMD_Mouse(playerid);
     else if(strcmp("start", command) == 0) PkrCMD_Start(playerid);
 	else if(strcmp("nexthand", command) == 0) PkrCMD_NextHand(playerid);
@@ -21,17 +20,6 @@ Pkr_RouteCommands(playerid, cmdtext[])
 	else if(strcmp("destroy", command) == 0) PkrCMD_Destroy(playerid, parameters);
 	else if(strcmp("dealplayer", command) == 0) PkrCMD_DealPlayer(playerid, parameters);
 	else if(strcmp("dealtable", command) == 0) PkrCMD_DealTable(playerid, parameters);
-	//else if(strcmp("spec", cmdtext) == 0) pkrspectate(playerid);
-	//else if(strcmp("cam", cmdtext) == 0) pkrcam(playerid);
-	//else if(strcmp("camin", cmdtext) == 0) pkrzoomin(playerid);
-	//else if(strcmp("camout", cmdtext) == 0) pkrzoomout(playerid);
-    //else if(strcmp("kick", cmdtext, .length = 4) == 0) pkrkick(playerid, cmdtext);
-    //else if(strcmp("stand", cmdtext) == 0) pkrstandup(playerid);
-	//else if(strcmp("sit", cmdtext) == 0) pkrsitdown(playerid);
-    //else if(strcmp("addbot", cmdtext) == 0) pkraddbot(playerid);
-    //else if(strcmp("allready", cmdtext) == 0) pkrallready(playerid);
-    //else if(strcmp("checknext", cmdtext) == 0) pkrchecknextplayer(playerid);
-	//else pkrhelp(playerid);
 	return 1;
 }
 
