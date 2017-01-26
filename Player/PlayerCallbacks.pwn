@@ -10,6 +10,12 @@ Pkr_PlayerDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             new _gameId = GetPVarInt(playerid, "Pkr_SitGameId");
 
+			new POKER_GAME_STATUS: status = Pkr_GetGameStatus(_gameId);
+			if(status != POKER_GAME_STATUS: LOBBY) {
+				SendClientMessage(playerid, COLOR_RED, "This game is now in play. You can use /pkr spec to spectate.");
+				return;
+			}
+
             if(!response) {
                 if(Pkr_GetAmountOfPlayersOnGame(_gameId) == 0 && Pkr_GetAmountOfJoiningPlayers(_gameId) == 1) {
                     Pkr_DestroyGame(_gameId);
@@ -49,6 +55,12 @@ Pkr_PlayerDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case (POKER_DIALOGS: SIT_CONFIRM):
         {
             new _gameId = GetPVarInt(playerid, "Pkr_SitGameId");
+
+			new POKER_GAME_STATUS: status = Pkr_GetGameStatus(_gameId);
+			if(status != POKER_GAME_STATUS: LOBBY) {
+				SendClientMessage(playerid, COLOR_RED, "This game is now in play. You can use /pkr spec to spectate.");
+				return;
+			}
 
             if(!response)
             {
