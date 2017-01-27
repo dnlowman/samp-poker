@@ -84,15 +84,18 @@ Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
         Pkr_DestroyGame(gameId);
 
 	Pkr_HideCursorForPlayerId(playerid);
-	SetCameraBehindPlayer(playerid);
 	TogglePlayerControllable(playerid, 1);
     return true;
 }
 
 Pkr_UnassignPlayerSlotFromGame(const gameId, const playerSlot)
 {
-    if(g_rgPokerGames[gameId][PLAYERS][playerSlot] == INVALID_PLAYER_ID)
+	new playerid = Pkr_GetPlayerId(gameId, playerSlot);
+
+	if(playerid == INVALID_PLAYER_ID)
         return;
+
+	SetCameraBehindPlayer(playerid);
 
 	new POKER_GAME_STATUS: gameStatus = Pkr_GetGameStatus(gameId);
 

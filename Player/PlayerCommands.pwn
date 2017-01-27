@@ -90,6 +90,8 @@ PkrCMD_Help(const playerid) {
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr mouse - Allows you to use the cursor for the menu.");
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr spec - Allows you to spectate and stop spectating a game.");
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr cam - Allows you to toggle the camera view on the table.");
+	SendClientMessage(playerid, COLOR_ORANGE, "/pkr stand - Allows you to stand from a table.");
+	SendClientMessage(playerid, COLOR_ORANGE, "/pkr sit - Allows you to sit at a table");
 	return;
 }
 
@@ -130,5 +132,33 @@ PkrCMD_Spectate(const playerid) {
 	DeletePVar(playerid, POKER_SPECTATE_VAR_NAME);
 	Pkr_HidePlayerTextDraws(playerid, gameId);
 	SendClientMessage(playerid, COLOR_GREEN, "You're no longer spectating this game.");
+	return;
+}
+
+PkrCMD_Sit(const playerid) {
+	new gameId = Pkr_GetPlayerGame(playerid);
+	if(gameId == -1) {
+		SendClientMessage(playerid, COLOR_RED, "You're not playing poker.");
+		return;
+	}
+
+	new objectId = Pkr_GetObjectId(gameId);
+
+	PkrSys_SetPlayerCamera(playerid, objectId);
+	Pkr_ShowPlayerTextDraws(playerid, gameId);
+	TogglePlayerControllable(playerid, 1);
+	return;
+}
+
+PkrCMD_Stand(const playerid) {
+	new gameId = Pkr_GetPlayerGame(playerid);
+	if(gameId == -1) {
+		SendClientMessage(playerid, COLOR_RED, "You're not playing poker.");
+		return;
+	}
+
+	SetCameraBehindPlayer(playerid);
+	Pkr_HidePlayerTextDraws(playerid, gameId);
+	TogglePlayerControllable(playerid, 0);
 	return;
 }
