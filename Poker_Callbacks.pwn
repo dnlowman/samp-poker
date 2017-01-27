@@ -126,3 +126,27 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 #if defined Pkr_OnDialogResponse
     forward Pkr_OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]);
 #endif
+
+public OnPlayerDeath(playerid, killerid, reason)
+{
+	#if defined Pkr_OnPlayerDeath
+        Pkr_OnPlayerDeath(playerid, killerid, reason);
+    #endif
+
+	if(!Pkr_IsPlayerOnAnyGame(playerid))
+		return;
+
+	new gameId = Pkr_GetPlayerGame(playerid);
+	Pkr_UnassignPlayerFromGame(playerid, gameId);
+	return;
+}
+
+#if defined _ALS_OnPlayerDeath
+    #undef OnPlayerDeath
+#else
+    #define _ALS_OnPlayerDeath
+#endif
+#define OnPlayerDeath Pkr_OnPlayerDeath
+#if defined Pkr_OnPlayerDeath
+    forward Pkr_OnPlayerDeath(playerid, killerid, reason);
+#endif
