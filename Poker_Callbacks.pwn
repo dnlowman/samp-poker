@@ -150,3 +150,33 @@ public OnPlayerDeath(playerid, killerid, reason)
 #if defined Pkr_OnPlayerDeath
     forward Pkr_OnPlayerDeath(playerid, killerid, reason);
 #endif
+
+public OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
+{
+	#if defined Pkr_OnPlayerTakeDamage
+        Pkr_OnPlayerTakeDamage(playerid, issuerid, amount, weaponid, bodypart);
+    #endif
+
+	new gameId = Pkr_GetPlayerGame(playerid);
+	if(gameId == -1)
+		return;
+
+	if(issuerid == INVALID_PLAYER_ID)
+		return;
+
+	SetCameraBehindPlayer(playerid);
+	Pkr_HidePlayerTextDraws(playerid, gameId);
+	TogglePlayerControllable(playerid, 0);
+	SendClientMessage(playerid, COLOR_GREEN, "You've taken damage, you can sit at the game again by using /pkr sit");
+    return;
+}
+
+#if defined _ALS_OnPlayerTakeDamage
+    #undef OnPlayerTakeDamage
+#else
+    #define _ALS_OnPlayerTakeDamage
+#endif
+#define OnPlayerTakeDamage Pkr_OnPlayerTakeDamage
+#if defined Pkr_OnPlayerTakeDamage
+    forward Pkr_OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart);
+#endif
