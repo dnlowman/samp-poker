@@ -42,8 +42,7 @@ bool: Pkr_AssignPlayerToGame(const playerid, const gameId, const chips) {
 
 		TogglePlayerControllable(playerid, 0);
 
-		new money = GetPlayerRealMoney(playerid) - chips;
-		SetupPlayerMoney(playerid, money);
+		SetupPlayerMoney(playerid, -chips);
 
         Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has joined the game. (Game ID: %d)", Pkr_GetClientName(playerid), gameId);
         return true;
@@ -61,8 +60,7 @@ Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
 		Pkr_SetNextPlayerPlaying(gameId);
 
 	new chips = Pkr_GetPlayerChips(gameId, _slot);
-	new money = GetPlayerRealMoney(playerid) + chips;
-	SetupPlayerMoney(playerid, money);
+	SetupPlayerMoney(playerid, chips);
 
     Pkr_UnassignPlayerSlotFromGame(gameId, _slot);
 

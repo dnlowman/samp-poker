@@ -16,7 +16,9 @@ Pkr_RouteCommands(playerid, cmdtext[])
 	else if(strcmp("mouse", command) == 0) PkrCMD_Mouse(playerid);
     else if(strcmp("start", command) == 0) PkrCMD_Start(playerid);
 	else if(strcmp("nexthand", command) == 0) PkrCMD_NextHand(playerid);
+	#if defined POKER_DEBUG
     else if(strcmp("stats", command) == 0) PkrCMD_Stats(playerid, parameters);
+	#endif
 	else if(strcmp("destroy", command) == 0) PkrCMD_Destroy(playerid, parameters);
 	else if(strcmp("dealplayer", command) == 0) PkrCMD_DealPlayer(playerid, parameters);
 	else if(strcmp("dealtable", command) == 0) PkrCMD_DealTable(playerid, parameters);
