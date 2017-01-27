@@ -33,6 +33,13 @@ bool: Pkr_AssignPlayerToGame(const playerid, const gameId, const chips) {
         Pkr_CreatePlayerPrivateCardTDs(gameId, _slot);
         Pkr_ShowCursorForPlayerId(playerid);
 
+		new propertyId = GetPlayersCurrentProperty(playerid);
+		new objectId = furn_pokerTableCheck(propertyId, playerid);
+		if(objectId >= 0) {
+			PkrSys_SetPlayerCamera(playerid, objectId);
+			SetPVarInt(playerid, POKER_CAMERA_VAR_NAME, 1);
+		}
+
         Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has joined the game. (Game ID: %d)", Pkr_GetClientName(playerid), gameId);
         return true;
     }
@@ -68,6 +75,7 @@ Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
         Pkr_DestroyGame(gameId);
 
 	Pkr_HideCursorForPlayerId(playerid);
+	SetCameraBehindPlayer(playerid);
     return true;
 }
 

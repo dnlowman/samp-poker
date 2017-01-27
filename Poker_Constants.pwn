@@ -14,6 +14,7 @@ const MAX_TABLE_CARDS = 5;
 const POKER_DEFAULT_BLIND = 100;
 const INVALID_POKER_GAME_ID = MAX_POKER_GAMES + 1;
 const MAX_POKER_TIMER = 10; // TODO: This can later be configurable...
+const Float:POKER_CAMERA_HEIGHT = 4.0;
 
 /* PVar Names */
 #define POKER_PLAYER_GAME_VAR "PlayerPokerGame"
@@ -21,3 +22,4 @@ const MAX_POKER_TIMER = 10; // TODO: This can later be configurable...
 #define POKER_PLAYER_RAISE_AMOUNT_VAR "PlayerPokerRaiseAmount"
 #define POKER_PLAYER_BET_AMOUNT_VAR "PlayerPokerBetAmount"
 #define POKER_SPECTATE_VAR_NAME "POKER_SPECTATE_VAR_NAME"
+#define POKER_CAMERA_VAR_NAME "POKER_CAMERA"

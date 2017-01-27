@@ -21,6 +21,7 @@ Pkr_RouteCommands(playerid, cmdtext[])
 	else if(strcmp("dealplayer", command) == 0) PkrCMD_DealPlayer(playerid, parameters);
 	else if(strcmp("dealtable", command) == 0) PkrCMD_DealTable(playerid, parameters);
 	else if(strcmp("spec", command) == 0) PkrCMD_Spectate(playerid);
+	else if(strcmp("cam", command) == 0) PkrCMD_Camera(playerid);
 	else if(strcmp("help", command) == 0) PkrCMD_Help(playerid);
 	return 1;
 }

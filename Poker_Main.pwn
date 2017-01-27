@@ -42,6 +42,7 @@ Special Thanks:
 #include "Poker_Constants.pwn"
 #include "Poker_Header.inc"
 
+#include "Camera\Camera.pwn"
 #include "Cards\Cards.pwn"
 #include "Blinds\BlindsState.pwn"
 #include "PlayerReady\PlayerReadyMain.pwn"

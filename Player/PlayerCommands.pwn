@@ -89,6 +89,7 @@ PkrCMD_Help(const playerid) {
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr nexthand - Allows you to reset the game back to the lobby.");
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr mouse - Allows you to use the cursor for the menu.");
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr spec - Allows you to spectate and stop spectating a game.");
+	SendClientMessage(playerid, COLOR_ORANGE, "/pkr cam - Allows you to toggle the camera view on the table.");
 	return;
 }
 
