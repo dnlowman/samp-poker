@@ -146,7 +146,8 @@ PkrCMD_Sit(const playerid) {
 
 	PkrSys_SetPlayerCamera(playerid, objectId);
 	Pkr_ShowPlayerTextDraws(playerid, gameId);
-	TogglePlayerControllable(playerid, 1);
+	Pkr_ShowCursorForPlayerId(playerid);
+	TogglePlayerControllable(playerid, 0);
 	return;
 }
 
@@ -159,6 +160,7 @@ PkrCMD_Stand(const playerid) {
 
 	SetCameraBehindPlayer(playerid);
 	Pkr_HidePlayerTextDraws(playerid, gameId);
-	TogglePlayerControllable(playerid, 0);
+	Pkr_HideCursorForPlayerId(playerid);
+	TogglePlayerControllable(playerid, 1);
 	return;
 }
