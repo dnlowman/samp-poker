@@ -40,6 +40,8 @@ bool: Pkr_AssignPlayerToGame(const playerid, const gameId, const chips) {
 			SetPVarInt(playerid, POKER_CAMERA_VAR_NAME, 1);
 		}
 
+		TogglePlayerControllable(playerid, 0);
+
 		new money = GetPlayerRealMoney(playerid) - chips;
 		SetupPlayerMoney(playerid, money);
 
@@ -83,6 +85,7 @@ Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
 
 	Pkr_HideCursorForPlayerId(playerid);
 	SetCameraBehindPlayer(playerid);
+	TogglePlayerControllable(playerid, 1);
     return true;
 }
 
