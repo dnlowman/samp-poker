@@ -9,9 +9,6 @@
 #define Pkr_ForeachReadyTextDraw(%0) \
             for(new %0 = 0; %0 < MAX_POKER_READY_TEXTDRAWS; ++%0)
 
-#define Pkr_ShowAllPlayersReadyTextDraw(%0) \
-            Pkr_ForeachPlayer(playerSlot) if(Pkr_GetPlayerId(%0, playerSlot) != INVALID_PLAYER_ID) Pkr_ShowPlayerReadyTextDraw(Pkr_GetPlayerId(%0, playerSlot), %0)
-
 #define Pkr_ShowPlayerReadyTextDraw(%0,%1) \
             for(new _i; _i < 6; ++_i) TextDrawShowForPlayer(%0, g_rgPokerGames[%1][READY_TEXTDRAWS][_i])
 
@@ -26,6 +23,15 @@
 
 #define Pkr_SetReadyTextDrawEmpty(%0,%1) \
             TextDrawSetString(g_rgPokerGames[%0][READY_TEXTDRAWS][%1], "~w~EMPTY SEAT")
+
+Pkr_ShowAllPlayersReadyTextDraw(const gameId) {
+	Pkr_ForeachPlayer(playerSlot) {
+		new playerId = Pkr_GetPlayerId(gameId, playerSlot);
+		if(playerId != INVALID_PLAYER_ID && GetPVarType(playerId, POKER_SIT_VAR_NAME) != PLAYER_VARTYPE_NONE)
+			Pkr_ShowPlayerReadyTextDraw(playerId, gameId);
+	}
+	return;
+}
 
 Pkr_CreateReadyTextDraws(const gameId)
 {

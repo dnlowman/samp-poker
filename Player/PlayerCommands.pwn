@@ -142,12 +142,28 @@ PkrCMD_Sit(const playerid) {
 		return;
 	}
 
-	new objectId = Pkr_GetObjectId(gameId);
+	if(GetPVarType(playerid, POKER_SIT_VAR_NAME) != PLAYER_VARTYPE_NONE) {
+		SendClientMessage(playerid, COLOR_RED, "You're already sitting.");
+		return;
+	}
 
+	new propertyId = GetPlayersCurrentProperty(playerid);
+	new tableObjectId = furn_pokerTableCheck(propertyId, playerid);
+	if(tableObjectId < 0) {
+		SendClientMessage(playerid, COLOR_RED, "You need to be next to the table to sit at it!");
+		return;
+	}
+
+	new POKER_GAME_STATUS: status = Pkr_GetGameStatus(gameId);
+	if(status == POKER_GAME_STATUS: LOBBY)
+		Pkr_ShowPlayerReadyTextDraw(playerid, gameId);
+
+	new objectId = Pkr_GetObjectId(gameId);
 	PkrSys_SetPlayerCamera(playerid, objectId);
 	Pkr_ShowPlayerTextDraws(playerid, gameId);
 	Pkr_ShowCursorForPlayerId(playerid);
 	TogglePlayerControllable(playerid, 0);
+	SetPVarInt(playerid, POKER_SIT_VAR_NAME, 1);
 	return;
 }
 
@@ -158,9 +174,15 @@ PkrCMD_Stand(const playerid) {
 		return;
 	}
 
+	if(GetPVarType(playerid, POKER_SIT_VAR_NAME) == PLAYER_VARTYPE_NONE) {
+		SendClientMessage(playerid, COLOR_RED, "You're already standing.");
+		return;
+	}
+
 	SetCameraBehindPlayer(playerid);
 	Pkr_HidePlayerTextDraws(playerid, gameId);
 	Pkr_HideCursorForPlayerId(playerid);
 	TogglePlayerControllable(playerid, 1);
+	DeletePVar(playerid, POKER_SIT_VAR_NAME);
 	return;
 }

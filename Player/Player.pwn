@@ -41,9 +41,8 @@ bool: Pkr_AssignPlayerToGame(const playerid, const gameId, const chips) {
 		}
 
 		TogglePlayerControllable(playerid, 0);
-
 		SetupPlayerMoney(playerid, -chips);
-
+		SetPVarInt(playerid, POKER_SIT_VAR_NAME, 1);
         Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has joined the game. (Game ID: %d)", Pkr_GetClientName(playerid), gameId);
         return true;
     }
@@ -94,6 +93,7 @@ Pkr_UnassignPlayerSlotFromGame(const gameId, const playerSlot)
         return;
 
 	SetCameraBehindPlayer(playerid);
+	DeletePVar(playerid, POKER_SIT_VAR_NAME);
 
 	new POKER_GAME_STATUS: gameStatus = Pkr_GetGameStatus(gameId);
 
