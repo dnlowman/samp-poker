@@ -13,6 +13,7 @@ const POKER_OBJECT_MODEL = 19474;
 const MAX_TABLE_CARDS = 5;
 const POKER_DEFAULT_BLIND = 100;
 const INVALID_POKER_GAME_ID = MAX_POKER_GAMES + 1;
+const INVALID_POKER_GAME_ID = -1;
 const MAX_POKER_TIMER = 20; // TODO: This can later be configurable...
 const Float:POKER_CAMERA_HEIGHT = 4.0;
 
