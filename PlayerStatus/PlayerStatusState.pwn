@@ -175,7 +175,7 @@ Pkr_GetFirstPlayerWithoutStatus(const gameId, const POKER_PLAYER_STATUS: playerS
 {
     Pkr_ForeachPlayer(playerSlot)
     {
-        if(Pkr_GetPlayerStatus(gameId, playerSlot) != playerState)
+        if(Pkr_GetPlayerId(gameId, playerSlot) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, playerSlot) != playerState)
             return playerSlot;
     }
     return -1;
