@@ -2,3 +2,4 @@
 #include "PlayerChipsState.pwn"
 #include "PlayerChipsCommands.pwn"
 #include "PlayerChipsDialogs.pwn"
+#include "PlayerChipsCallbacks.pwn"

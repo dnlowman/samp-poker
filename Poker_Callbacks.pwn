@@ -113,7 +113,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
     Pkr_PlayerDialogResponse(playerid, dialogid, response, listitem, inputtext);
     Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext);
-
+	Pkr_PlayerChipsDialogResponse(playerid, response, inputtext);
     return 1;
 }
 

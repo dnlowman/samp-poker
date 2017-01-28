@@ -12,6 +12,7 @@ PkrCMD_Chips(const playerid) {
 		return;
 	}
 
+	Pkr_ShowChipsDialog(playerid);
 	return;
 }
 
