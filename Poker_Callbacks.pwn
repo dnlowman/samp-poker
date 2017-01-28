@@ -164,10 +164,14 @@ public OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 	if(issuerid == INVALID_PLAYER_ID)
 		return;
 
+	if(GetPVarType(playerid, POKER_SIT_VAR_NAME) == PLAYER_VARTYPE_NONE)
+		return;
+
 	SetCameraBehindPlayer(playerid);
 	Pkr_HidePlayerTextDraws(playerid, gameId);
 	TogglePlayerControllable(playerid, 0);
 	SendClientMessage(playerid, COLOR_GREEN, "You've taken damage, you can sit at the game again by using /pkr sit");
+	DeletePVar(playerid, POKER_SIT_VAR_NAME);
     return;
 }
 
