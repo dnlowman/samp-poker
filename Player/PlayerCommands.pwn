@@ -91,7 +91,8 @@ PkrCMD_Help(const playerid) {
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr spec - Allows you to spectate and stop spectating a game.");
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr cam - Allows you to toggle the camera view on the table.");
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr stand - Allows you to stand from a table.");
-	SendClientMessage(playerid, COLOR_ORANGE, "/pkr sit - Allows you to sit at a table");
+	SendClientMessage(playerid, COLOR_ORANGE, "/pkr sit - Allows you to sit at a table.");
+	SendClientMessage(playerid, COLOR_ORANGE, "/pkr chips - Allows you to place more chips on the table.");
 	return;
 }
 
