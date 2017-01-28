@@ -44,7 +44,7 @@ Special Thanks:
 
 #include "Camera\Camera.pwn"
 #include "Cards\Cards.pwn"
-#include "Blinds\BlindsState.pwn"
+#include "Blinds\Blinds.pwn"
 #include "PlayerReady\PlayerReadyMain.pwn"
 #include "PlayerStatus\PlayerStatusMain.pwn"
 #include "PlayerChips\PlayerChipsMain.pwn"

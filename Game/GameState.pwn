@@ -112,8 +112,8 @@ stock Pkr_SetPlayerPlaying(const gameId, const playerSlot)
 }
 
 stock Pkr_StartGame(const gameId)
-{
-    for(new _j, _playerId = INVALID_PLAYER_ID; _j < MAX_POKER_PLAYERS; ++_j)
+{	
+	for(new _j, _playerId = INVALID_PLAYER_ID; _j < MAX_POKER_PLAYERS; ++_j)
     {
         _playerId = Pkr_GetPlayerId(gameId, _j);
         if(_playerId == INVALID_PLAYER_ID)
@@ -449,21 +449,25 @@ stock Pkr_SetGameToLobby(const gameId)
     Pkr_SetAmountOfPlays(gameId, 0);
 	Pkr_SetTimerTextDrawText(gameId, "_");
     Pkr_SendFormattedGameMessage(gameId, COLOR_GREY, "Use '/pkr start' to start the game.");
-
-    new playerid = INVALID_PLAYER_ID;
-    for(new i; i < MAX_POKER_PLAYERS; ++i)
-    {
-        playerid = Pkr_GetPlayerId(gameId, i);
-        if(playerid != INVALID_PLAYER_ID)
-        {
-            if(Pkr_GetPlayerChips(gameId, i) < Pkr_GetBigBlind(gameId))
-            {
-                SendClientMessage(playerid, COLOR_RED, "You cannot meet the big blind, you have been removed from the game.");
-                Pkr_UnassignPlayerFromGame(playerid, gameId);
-            }
-        }
-    }
+	Pkr_BlindMeetCheck(gameId);
     return;
+}
+
+Pkr_BlindMeetCheck(const gameId) {
+	new playerid = INVALID_PLAYER_ID;
+	for(new i; i < MAX_POKER_PLAYERS; ++i)
+	{
+		playerid = Pkr_GetPlayerId(gameId, i);
+		if(playerid != INVALID_PLAYER_ID)
+		{
+			if(Pkr_GetPlayerChips(gameId, i) < Pkr_GetSmallBlind(gameId))
+			{
+				SendClientMessage(playerid, COLOR_RED, "You cannot meet the small blind, you have been removed from the game.");
+				Pkr_UnassignPlayerFromGame(playerid, gameId);
+			}
+		}
+	}
+	return;
 }
 
 static stock Pkr_FindNextPlayer(const gameId, const currentPlayer)

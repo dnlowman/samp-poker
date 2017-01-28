@@ -64,6 +64,11 @@ PkrCMD_Start(const playerId)
         return;
     }
 
+	Pkr_BlindMeetCheck(_gameId);
+	_playerCount = Pkr_GetAmountOfPlayersOnGame(_gameId);
+	if(_playerCount < 2)
+		return;
+
     Pkr_StartGame(_gameId);
     return;
 }

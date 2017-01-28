@@ -9,23 +9,24 @@ Pkr_RouteCommands(playerid, cmdtext[])
 		return 1;
 	}
 
-    if(strcmp("addbot", command) == 0) PkrCMD_AddBot(playerid, parameters);
-    else if(strcmp("removebot", command) == 0) PkrCMD_RemoveBot(playerid, parameters);
-    else if(strcmp("join", command) == 0) PkrCMD_Join(playerid);
+    if(strcmp("join", command) == 0) PkrCMD_Join(playerid);
     else if(strcmp("leave", command) == 0) PkrCMD_Leave(playerid);
 	else if(strcmp("mouse", command) == 0) PkrCMD_Mouse(playerid);
     else if(strcmp("start", command) == 0) PkrCMD_Start(playerid);
 	else if(strcmp("nexthand", command) == 0) PkrCMD_NextHand(playerid);
 	#if defined POKER_DEBUG
     else if(strcmp("stats", command) == 0) PkrCMD_Stats(playerid, parameters);
-	#endif
 	else if(strcmp("destroy", command) == 0) PkrCMD_Destroy(playerid, parameters);
 	else if(strcmp("dealplayer", command) == 0) PkrCMD_DealPlayer(playerid, parameters);
 	else if(strcmp("dealtable", command) == 0) PkrCMD_DealTable(playerid, parameters);
+	else if(strcmp("addbot", command) == 0) PkrCMD_AddBot(playerid, parameters);
+	else if(strcmp("removebot", command) == 0) PkrCMD_RemoveBot(playerid, parameters);
+	#endif
 	else if(strcmp("spec", command) == 0) PkrCMD_Spectate(playerid);
 	else if(strcmp("cam", command) == 0) PkrCMD_Camera(playerid);
 	else if(strcmp("sit", command) == 0) PkrCMD_Sit(playerid);
 	else if(strcmp("stand", command) == 0) PkrCMD_Stand(playerid);
+	else if(strcmp("blind", command) == 0) PkrCMD_SetBlind(playerid, parameters);
 	else if(strcmp("help", command) == 0) PkrCMD_Help(playerid);
 	return 1;
 }

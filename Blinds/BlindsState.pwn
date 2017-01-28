@@ -1,5 +1,3 @@
-#include "Blinds_TextDraws.pwn"
-
 #define Pkr_GetSmallBlind(%0) \
             g_rgPokerGames[%0][BLIND]
 
