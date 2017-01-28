@@ -112,7 +112,7 @@ stock Pkr_SetPlayerPlaying(const gameId, const playerSlot)
 }
 
 stock Pkr_StartGame(const gameId)
-{	
+{
 	for(new _j, _playerId = INVALID_PLAYER_ID; _j < MAX_POKER_PLAYERS; ++_j)
     {
         _playerId = Pkr_GetPlayerId(gameId, _j);
@@ -394,7 +394,7 @@ stock Pkr_Evaluate(const gameId)
 					Pkr_SubFromPot(gameId, _pot);
 					for(new i = 0; i < _wincount; ++i)
 					{
-                        Pkr_AddPlayerChips(_winners[i], gameId, contributions[_b][1]);
+                        Pkr_AddPlayerChips(gameId, _winners[i], contributions[_b][1]);
 					    _pot -= contributions[_b][1];
 						format(_sz, sizeof(_sz), "%s %s", _sz, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[i]]));
 					}
