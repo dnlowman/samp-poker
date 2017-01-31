@@ -16,7 +16,7 @@ PkrCMD_Join(const playerid) {
         return;
     }
 
-    new objectId = furn_pokerTableCheck(propertyId, playerid);
+    new objectId = 1;//furn_pokerTableCheck(propertyId, playerid);
     //new modelId = Streamer_GetIntData(STREAMER_TYPE_OBJECT , objectId, E_STREAMER_MODEL_ID);
 
 	//|| modelId != POKER_OBJECT_MODEL
