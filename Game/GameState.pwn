@@ -378,8 +378,6 @@ stock Pkr_Evaluate(const gameId)
 					}
 				}
 
-
-
                 Pkr_SetPlayerStatusEvaluated(gameId, contributions[_b][0]);
 
 				_wincount = 0;
@@ -388,8 +386,6 @@ stock Pkr_Evaluate(const gameId)
 
 				if(_wincount > 1) // Multiple winners
 				{
-
-
                     strdel(_sz, 0, sizeof(_sz));
 					Pkr_SubFromPot(gameId, _pot);
 					for(new i = 0; i < _wincount; ++i)
@@ -416,12 +412,13 @@ stock Pkr_Evaluate(const gameId)
 				}
 				else
 				{
-
                     // check winner, repeat...
 					format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}is the winner of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(_pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
 					Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
                     Pkr_AddPlayerChips(gameId, _winners[0], _pot);
+					printf("Adding %d to player slot %d", _pot, _winners[0]);
 					Pkr_SubFromPot(gameId, _pot);
+					printf("Subtracting %d from the pot...", _pot);
 				}
 				contributions[_b][1] = 0;
 				++count;
