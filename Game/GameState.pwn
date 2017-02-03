@@ -308,121 +308,158 @@ stock Pkr_Evaluate(const gameId)
             REPEAT
         */
 
-
-
-        // 2d array of player slots and their contributions
-        printf("Pot is %d", Pkr_GetPotAmount(gameId));
-
+		// All of the contributions
+		/*
+			0: Player Slot
+			1: Amount
+		*/
+		new count; // The count of the pots dished out...
         new contributions[MAX_POKER_PLAYERS][2];
-        new totalContributions;
-        for(new i; i < MAX_POKER_PLAYERS; ++i)
-        {
+        for(new i; i < MAX_POKER_PLAYERS; ++i) {
             contributions[i][0] = i;
             contributions[i][1] = Pkr_GetPlayerPotContribution(gameId, i);
-            printf("Contribution for player %d is $%d", i, contributions[i][1]);
-            totalContributions += contributions[i][1];
         }
 
-        printf("Total is now $%d", totalContributions);
-        printf("Ordering...");
+		printf("Gathered all of the players contributions...");
 
-        for(new i, _b, tmp; i < MAX_POKER_PLAYERS; ++i)
+		printf("Ordering the contributions...");
+
+		for(new i; i < MAX_POKER_PLAYERS; ++i) {
+			printf("Contribution for index: %d slot: %d amount: %d", i, contributions[i][0], contributions[i][1]);
+		}
+
+		// Ordered contributions bubble sort...
+        for(new i; i < MAX_POKER_PLAYERS; ++i)
         {
-            for(_b = 0; _b < MAX_POKER_PLAYERS; ++_b)
+            for(new j; j < MAX_POKER_PLAYERS; ++j)
             {
-                if(contributions[i][1] < contributions[_b][1])
+                if(contributions[i][1] < contributions[j][1])
                 {
-                    tmp = contributions[i][0];
-                    contributions[i][0] = contributions[_b][0];
-                    contributions[_b][0] = tmp;
+					new tmp = contributions[i][0];
+                    contributions[i][0] = contributions[j][0];
+                    contributions[j][0] = tmp;
 
                     tmp = contributions[i][1];
-                    contributions[i][1] = contributions[_b][1];
-                    contributions[_b][1] = tmp;
+                    contributions[i][1] = contributions[j][1];
+                    contributions[j][1] = tmp;
                 }
             }
         }
 
-        for(new i; i < MAX_POKER_PLAYERS; ++i)
-        {
-            printf("Contribution for player %d is $%d", i, contributions[i][1]);
-        }
+		printf("Ordered...");
+
+		for(new i; i < MAX_POKER_PLAYERS; ++i) {
+			printf("Contribution for index: %d slot: %d amount: %d", i, contributions[i][0], contributions[i][1]);
+		}
+
+		// Foreach contribution
+		for(new i; i < MAX_POKER_PLAYERS; ++i) {
+			printf("Checking the contribution at index %d", i);
 
 
+			// If there is nothing in this contribution continue...
+			if(contributions[i][1] == 0) {
+				printf("Looks like that player contributed nothing! Excluding slot: %d index %d", contributions[i][0], i);
+				// Mark the player as evaluated, they contributed nothing...
+				Pkr_SetPlayerStatusEvaluated(gameId, contributions[i][0]);
+				continue;
+			}
 
-        for(new _b, _pot, count; _b < MAX_POKER_PLAYERS; ++_b)
-		{
-			_pot = 0;
-			if(contributions[_b][1] != 0)
-			{
-                for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
-                    _winners[_i] = INVALID_PLAYER_ID;
+			// Reset the last winners...
+			for(new j; j < MAX_POKER_PLAYERS; ++j)
+				_winners[j] = INVALID_PLAYER_ID;
 
-                _value = Pkr_FindWinner(gameId, _winners);
+			printf("The last winners have been reset...");
 
+			// Get the winner...
+			_value = Pkr_FindWinner(gameId, _winners);
 
-				// FIND THE LOWEST
-				// SUBTRACT FROM ALL THE REST AND MAKE THE POT
+			printf("Found the winners...");
 
-				new _cache = contributions[_b][1];
-				_pot = _cache;
-				for(new i = _b; i < MAX_POKER_PLAYERS; ++i)
-				{
-					if(contributions[i][1] != 0)
-					{
-						if(i != _b)
-						{
-							_pot += _cache;
-							contributions[i][1] -= contributions[_b][1];
-						}
-					}
+			// Store the current lowest value...
+			new lowest = contributions[i][1];
+
+			printf("The current lowest contribution is %d", contributions[i][1]);
+
+			new pot;
+
+			printf("The current pot is at %d", pot);
+
+			// Foreach player
+			for(new j; j < MAX_POKER_PLAYERS; ++j) {
+				printf("The player id at slot %d is %d", j, Pkr_GetPlayerId(gameId, contributions[j][0]));
+				printf("The player status at slot %d is %d", j, Pkr_GetPlayerStatus(gameId, contributions[j][0]));
+				if(Pkr_GetPlayerId(gameId, contributions[j][0]) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, contributions[j][0]) != POKER_PLAYER_STATUS: EVALUATED) {
+					pot += lowest;
+					contributions[j][1] -= lowest;
 				}
+			}
 
-                Pkr_SetPlayerStatusEvaluated(gameId, contributions[_b][0]);
+			printf("The pot has been added up and is now at %d", pot);
 
-				_wincount = 0;
-				for(new i; i < MAX_POKER_PLAYERS; ++i)
-                    if(_winners[i] != INVALID_PLAYER_ID) ++_wincount;
+			printf("The contributions are now...");
+			for(new j; j < MAX_POKER_PLAYERS; ++j) {
+				printf("Contribution for index: %d amount: %d", j, contributions[j][1]);
+			}
 
-				if(_wincount > 1) // Multiple winners
+			// The lowest contributor has now been excluded...
+			Pkr_SetPlayerStatusEvaluated(gameId, contributions[i][0]);
+
+			printf("The lowest player has now been excluded...");
+
+			_wincount = 0;
+			for(new j; j < MAX_POKER_PLAYERS; ++j)
+				if(_winners[j] != INVALID_PLAYER_ID) ++_wincount;
+
+			printf("The amount of players who have won this pot are %d", _wincount);
+
+			if(_wincount > 1) // Multiple winners
+			{
+				printf("Yep the win count is greater than 1...");
+
+				strdel(_sz, 0, sizeof(_sz));
+				Pkr_SubFromPot(gameId, pot);
+
+				printf("Subtracting %d from the pot.", pot);
+
+				for(new j = 0; j < _wincount; ++j)
+					format(_sz, sizeof(_sz), "%s %s", _sz, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]));
+
+				new _split;
+
+				if(!Pkr_IsOdd(_wincount) && Pkr_IsOdd(pot))
 				{
-                    strdel(_sz, 0, sizeof(_sz));
-					Pkr_SubFromPot(gameId, _pot);
-					for(new i = 0; i < _wincount; ++i)
-					{
-                        Pkr_AddPlayerChips(gameId, _winners[i], contributions[_b][1]);
-					    _pot -= contributions[_b][1];
-						format(_sz, sizeof(_sz), "%s %s", _sz, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[i]]));
-					}
+					printf("Looks like the amount of winners is even but the pot is odd! Taking 1 away...");
 
-					if(_pot > 0)
-					{
-						new _split;
-						if((Pkr_IsOdd(_split) && !Pkr_IsOdd(_wincount)) || (!Pkr_IsOdd(_split) && Pkr_IsOdd(_wincount)))
-						{
-							_pot -= 1;
-							_split = _pot / _wincount;
-						}
-						else _split = _pot / _wincount;
-						for(new i = 0; i < _wincount; ++i)
-                            Pkr_AddPlayerChips(gameId, _winners[i], _split);
-					}
-					format(_sz, sizeof(_sz), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", _sz, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
-					Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
+					pot -= 1;
+					_split = pot / _wincount;
 				}
 				else
-				{
-                    // check winner, repeat...
-					format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}is the winner of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(_pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
-					Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
-                    Pkr_AddPlayerChips(gameId, _winners[0], _pot);
-					printf("Adding %d to player slot %d", _pot, _winners[0]);
-					Pkr_SubFromPot(gameId, _pot);
-					printf("Subtracting %d from the pot...", _pot);
-				}
-				contributions[_b][1] = 0;
-				++count;
+					_split = pot / _wincount;
+
+				printf("Looks like the split is: %d", _split);
+
+				// Give the split to each player who won...
+				for(new j = 0; j < _wincount; ++j)
+					Pkr_AddPlayerChips(gameId, _winners[j], _split);
+
+				printf("I've given each player the split %d", _split);
+
+				format(_sz, sizeof(_sz), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", _sz, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
+				Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
 			}
+			else
+			{
+				format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}is the winner of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
+				Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
+
+				printf("Looks like only one player won that pot of %d", pot);
+
+				Pkr_AddPlayerChips(gameId, _winners[0], pot);
+				Pkr_SubFromPot(gameId, pot);
+			}
+
+			++count;
 		}
     }
 
