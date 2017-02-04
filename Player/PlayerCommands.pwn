@@ -9,19 +9,9 @@ PkrCMD_Join(const playerid) {
 		return;
 	}
 
-    new propertyId = GetPlayersCurrentProperty(playerid);
+	new objectId = furn_pokerTableCheck(GetPlayerVirtualWorld(playerid), playerid);
 
-    if(propertyId == -1) {
-        SendClientMessage(playerid, COLOR_RED, "You have to be inside a property to play poker.");
-        return;
-    }
-
-    new objectId = 1;//furn_pokerTableCheck(propertyId, playerid);
-    //new modelId = Streamer_GetIntData(STREAMER_TYPE_OBJECT , objectId, E_STREAMER_MODEL_ID);
-
-	//|| modelId != POKER_OBJECT_MODEL
-
-    if(objectId == INVALID_OBJECT_ID) {
+    if(objectId <= 0 || objectId == INVALID_OBJECT_ID) {
         SendClientMessage(playerid, COLOR_RED, "You're not near any poker game.");
         return;
     }

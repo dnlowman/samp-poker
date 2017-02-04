@@ -33,8 +33,7 @@ bool: Pkr_AssignPlayerToGame(const playerid, const gameId, const chips) {
         Pkr_CreatePlayerPrivateCardTDs(gameId, _slot);
         Pkr_ShowCursorForPlayerId(playerid);
 
-		new propertyId = GetPlayersCurrentProperty(playerid);
-		new objectId = furn_pokerTableCheck(propertyId, playerid);
+		new objectId = furn_pokerTableCheck(GetPlayerVirtualWorld(playerid), playerid);
 		if(objectId >= 0) {
 			PkrSys_SetPlayerCamera(playerid, objectId);
 			SetPVarInt(playerid, POKER_CAMERA_VAR_NAME, 1);
