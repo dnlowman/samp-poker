@@ -21,7 +21,7 @@ Pkr_PlayerConfirmBet(const gameId, const player, const amount)
 // meetAmount is the total amount of chips the player has to meet the previous bet
 Pkr_PlayerConfirmRaise(const gameId, const player, const amount, const meetAmount)
 {
-    Pkr_AddToPot(gameId, meetAmount);
+    Pkr_AddToPot(gameId, meetAmount + amount);
     Pkr_MinusPlayerChips(gameId, player, meetAmount + amount);
     Pkr_AddToPlayerBetContribution(gameId, player, meetAmount + amount);
     Pkr_AddToPlayerPotContribution(gameId, player, meetAmount + amount);
