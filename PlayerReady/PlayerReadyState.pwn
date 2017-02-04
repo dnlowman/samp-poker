@@ -1,9 +1,6 @@
 #define Pkr_GetPlayerReady(%0) \
             GetPVarInt(%0, POKER_PLAYER_READY_VAR)
 
-#define Pkr_SetAllPlayersNotReady(%0) \
-    Pkr_ForeachPlayer(playerSlot) if(Pkr_GetPlayerId(%0, playerSlot) != INVALID_PLAYER_ID) Pkr_SetPlayerNotReady(%0, playerSlot)
-
 Pkr_SetPlayerReady(const gameId, const playerSlot)
 {
     SetPVarInt(Pkr_GetPlayerId(gameId, playerSlot), POKER_PLAYER_READY_VAR, 1);

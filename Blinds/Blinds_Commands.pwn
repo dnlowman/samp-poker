@@ -25,6 +25,7 @@ PkrCMD_SetBlind(const playerid, const parameters[]) {
 	}
 
 	Pkr_SetBlindValue(gameId, amount);
+	Pkr_SetAllPlayersNotReady(gameId);
 	Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has set the small blind to: $%d. Make sure you have enough cash to meet the blinds!", Pkr_GetClientName(playerid), amount);
 	return;
 }

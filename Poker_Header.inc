@@ -260,3 +260,6 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
 #define Pkr_HideCursorForPlayerId(%0) \
 		CancelSelectTextDraw(playerid)
+
+#define Pkr_SetAllPlayersNotReady(%0) \
+    	Pkr_ForeachPlayer(playerSlot) if(Pkr_GetPlayerId(%0, playerSlot) != INVALID_PLAYER_ID) Pkr_SetPlayerNotReady(%0, playerSlot)
