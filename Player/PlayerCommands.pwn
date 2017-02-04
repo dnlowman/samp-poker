@@ -92,14 +92,7 @@ PkrCMD_Spectate(const playerid) {
         return;
     }
 
-	new propertyId = GetPlayersCurrentProperty(playerid);
-
-    if(propertyId == -1) {
-        SendClientMessage(playerid, COLOR_RED, "You have to be inside a property to spectate a poker game.");
-        return;
-    }
-
-    new objectId = furn_pokerTableCheck(propertyId, playerid);
+	new objectId = furn_pokerTableCheck(GetPlayerVirtualWorld(playerid), playerid);
 
     if(objectId == INVALID_OBJECT_ID) {
         SendClientMessage(playerid, COLOR_RED, "You're not near any poker game.");
