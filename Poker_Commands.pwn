@@ -6,6 +6,7 @@ Pkr_RouteCommands(playerid, cmdtext[])
 
 	if(strlen(command) == 0) {
 		SendClientMessage(playerid, COLOR_GREY, "USAGE: /pkr [command]");
+		SendClientMessage(playerid, COLOR_GREY, "Hint: Use '/pkr help' for the full list of commands.");
 		return 1;
 	}
 
@@ -33,6 +34,12 @@ Pkr_RouteCommands(playerid, cmdtext[])
 }
 
 CMD:pkr(playerid, cmdtext[])
+{
+	Pkr_RouteCommands(playerid, cmdtext);
+	return 1;
+}
+
+CMD:poker(playerid, cmdtext[])
 {
 	Pkr_RouteCommands(playerid, cmdtext);
 	return 1;
