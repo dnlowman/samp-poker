@@ -75,4 +75,4 @@ Special Thanks:
 #endif
 
 #include "Poker_Callbacks.pwn"
-#include "TableManager\Main.pwn"
+//#include "TableManager\Main.pwn"
