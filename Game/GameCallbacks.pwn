@@ -205,6 +205,12 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			Pkr_AddToPot(gameId, playerChips);
 			Pkr_AddToPlayerBetContribution(gameId, playerSlot, playerChips);
 			Pkr_AddToPlayerPotContribution(gameId, playerSlot, playerChips);
+
+			new message[128];
+			format(message, sizeof(message), "Adding %d to playerSlots %d contribution", playerChips, playerSlot);
+			SendClientMessageToAll(COLOR_RED, message);
+
+
 			Pkr_MinusPlayerChips(gameId, playerSlot, playerChips);
 			Pkr_SetNextPlayerPlaying(gameId);
 			return;

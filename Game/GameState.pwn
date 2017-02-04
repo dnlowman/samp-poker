@@ -308,6 +308,15 @@ stock Pkr_Evaluate(const gameId)
             REPEAT
         */
 
+		SendClientMessageToAll(COLOR_RED, "[!] POKER SIDE POT EVALUATION START");
+
+		new potAmount = Pkr_GetPotAmount(gameId);
+
+		new message[128];
+		format(message, sizeof(message), "The pot amount for the game is: %d", potAmount);
+		SendClientMessageToAll(COLOR_RED, message);
+
+
 		// All of the contributions
 		/*
 			0: Player Slot
@@ -320,12 +329,12 @@ stock Pkr_Evaluate(const gameId)
             contributions[i][1] = Pkr_GetPlayerPotContribution(gameId, i);
         }
 
-		printf("Gathered all of the players contributions...");
-
-		printf("Ordering the contributions...");
+		SendClientMessageToAll(COLOR_RED, "[!] Gathered all of the players contributions...");
+		SendClientMessageToAll(COLOR_RED, "[!] Ordering the contributions......");
 
 		for(new i; i < MAX_POKER_PLAYERS; ++i) {
-			printf("Contribution for index: %d slot: %d amount: %d", i, contributions[i][0], contributions[i][1]);
+			format(message, sizeof(message), "Contribution for index: %d slot: %d amount: %d", i, contributions[i][0], contributions[i][1]);
+			SendClientMessageToAll(COLOR_RED, message);
 		}
 
 		// Ordered contributions bubble sort...
@@ -346,20 +355,25 @@ stock Pkr_Evaluate(const gameId)
             }
         }
 
-		printf("Ordered...");
+		SendClientMessageToAll(COLOR_RED, "The contributions have been ordered...");
 
 		for(new i; i < MAX_POKER_PLAYERS; ++i) {
-			printf("Contribution for index: %d slot: %d amount: %d", i, contributions[i][0], contributions[i][1]);
+			format(message, sizeof(message), "Contribution for index: %d slot: %d amount: %d", i, contributions[i][0], contributions[i][1]);
+			SendClientMessageToAll(COLOR_RED, message);
 		}
 
 		// Foreach contribution
 		for(new i; i < MAX_POKER_PLAYERS; ++i) {
 			printf("Checking the contribution at index %d", i);
 
+			format(message, sizeof(message), "Checking the contribution at index %d", i);
+			SendClientMessageToAll(COLOR_RED, message);
 
 			// If there is nothing in this contribution continue...
 			if(contributions[i][1] == 0) {
-				printf("Looks like that player contributed nothing! Excluding slot: %d index %d", contributions[i][0], i);
+				format(message, sizeof(message), "Looks like that player contributed nothing! Excluding slot: %d index %d", contributions[i][0], i);
+				SendClientMessageToAll(COLOR_RED, message);
+
 				// Mark the player as evaluated, they contributed nothing...
 				Pkr_SetPlayerStatusEvaluated(gameId, contributions[i][0]);
 				continue;
@@ -369,58 +383,69 @@ stock Pkr_Evaluate(const gameId)
 			for(new j; j < MAX_POKER_PLAYERS; ++j)
 				_winners[j] = INVALID_PLAYER_ID;
 
-			printf("The last winners have been reset...");
+			SendClientMessageToAll(COLOR_RED, "The last winners have been reset...");
 
 			// Get the winner...
 			_value = Pkr_FindWinner(gameId, _winners);
 
-			printf("Found the winners...");
+			SendClientMessageToAll(COLOR_RED, "Found the winners...");
 
 			// Store the current lowest value...
 			new lowest = contributions[i][1];
 
-			printf("The current lowest contribution is %d", contributions[i][1]);
+			format(message, sizeof(message), "The current lowest contribution is %d", contributions[i][1]);
+			SendClientMessageToAll(COLOR_RED, message);
 
 			new pot;
 
-			printf("The current pot is at %d", pot);
+			format(message, sizeof(message), "The current pot is at %d", pot);
+			SendClientMessageToAll(COLOR_RED, message);
 
 			// Foreach player
 			for(new j; j < MAX_POKER_PLAYERS; ++j) {
-				printf("The player id at slot %d is %d", j, Pkr_GetPlayerId(gameId, contributions[j][0]));
-				printf("The player status at slot %d is %d", j, Pkr_GetPlayerStatus(gameId, contributions[j][0]));
+				format(message, sizeof(message), "The player id at slot %d is %d", j, Pkr_GetPlayerId(gameId, contributions[j][0]));
+				SendClientMessageToAll(COLOR_RED, message);
+
+				format(message, sizeof(message), "The player status at slot %d is %d", j, Pkr_GetPlayerStatus(gameId, contributions[j][0]));
+				SendClientMessageToAll(COLOR_RED, message);
+
 				if(Pkr_GetPlayerId(gameId, contributions[j][0]) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, contributions[j][0]) != POKER_PLAYER_STATUS: EVALUATED) {
 					pot += lowest;
 					contributions[j][1] -= lowest;
 				}
 			}
 
-			printf("The pot has been added up and is now at %d", pot);
+			format(message, sizeof(message), "The pot has been added up and is now at %d", pot);
+			SendClientMessageToAll(COLOR_RED, message);
 
-			printf("The contributions are now...");
+
+			SendClientMessageToAll(COLOR_RED, "The contributions are now...");
 			for(new j; j < MAX_POKER_PLAYERS; ++j) {
-				printf("Contribution for index: %d amount: %d", j, contributions[j][1]);
+				format(message, sizeof(message), "Contribution for index: %d amount: %d", j, contributions[j][1]);
+				SendClientMessageToAll(COLOR_RED, message);
 			}
 
 			// The lowest contributor has now been excluded...
 			Pkr_SetPlayerStatusEvaluated(gameId, contributions[i][0]);
 
-			printf("The lowest player has now been excluded...");
+			SendClientMessageToAll(COLOR_RED, "The lowest player has now been excluded...");
 
 			_wincount = 0;
 			for(new j; j < MAX_POKER_PLAYERS; ++j)
 				if(_winners[j] != INVALID_PLAYER_ID) ++_wincount;
 
-			printf("The amount of players who have won this pot are %d", _wincount);
+			format(message, sizeof(message), "The amount of players who have won this pot are %d", _wincount);
+			SendClientMessageToAll(COLOR_RED, message);
 
 			if(_wincount > 1) // Multiple winners
 			{
-				printf("Yep the win count is greater than 1...");
+				SendClientMessageToAll(COLOR_RED, "Yep the win count is greater than 1...");
 
 				strdel(_sz, 0, sizeof(_sz));
 				Pkr_SubFromPot(gameId, pot);
 
-				printf("Subtracting %d from the pot.", pot);
+				format(message, sizeof(message), "Subtracting %d from the pot.", pot);
+				SendClientMessageToAll(COLOR_RED, message);
 
 				for(new j = 0; j < _wincount; ++j)
 					format(_sz, sizeof(_sz), "%s %s", _sz, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]));
@@ -429,7 +454,7 @@ stock Pkr_Evaluate(const gameId)
 
 				if(!Pkr_IsOdd(_wincount) && Pkr_IsOdd(pot))
 				{
-					printf("Looks like the amount of winners is even but the pot is odd! Taking 1 away...");
+					SendClientMessageToAll(COLOR_RED, "Looks like the amount of winners is even but the pot is odd! Taking 1 away...");
 
 					pot -= 1;
 					_split = pot / _wincount;
@@ -437,13 +462,15 @@ stock Pkr_Evaluate(const gameId)
 				else
 					_split = pot / _wincount;
 
-				printf("Looks like the split is: %d", _split);
+				format(message, sizeof(message), "Looks like the split is: %d", _split);
+				SendClientMessageToAll(COLOR_RED, message);
 
 				// Give the split to each player who won...
 				for(new j = 0; j < _wincount; ++j)
 					Pkr_AddPlayerChips(gameId, _winners[j], _split);
 
-				printf("I've given each player the split %d", _split);
+				format(message, sizeof(message), "I've given each player the split %d", _split);
+				SendClientMessageToAll(COLOR_RED, message);
 
 				format(_sz, sizeof(_sz), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", _sz, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
 				Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
@@ -453,7 +480,8 @@ stock Pkr_Evaluate(const gameId)
 				format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}is the winner of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
 				Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
 
-				printf("Looks like only one player won that pot of %d", pot);
+				format(message, sizeof(message), "Looks like only one player won that pot of %d", pot);
+				SendClientMessageToAll(COLOR_RED, message);
 
 				Pkr_AddPlayerChips(gameId, _winners[0], pot);
 				Pkr_SubFromPot(gameId, pot);
@@ -462,6 +490,8 @@ stock Pkr_Evaluate(const gameId)
 			++count;
 		}
     }
+
+	SendClientMessageToAll(COLOR_RED, "[!] POKER SIDE POT EVALUATION END");
 
     Pkr_SendFormattedGameMessage(gameId, COLOR_GREY, "Use '/pkr nexthand' to return to the lobby and start a new hand.");
     return;
