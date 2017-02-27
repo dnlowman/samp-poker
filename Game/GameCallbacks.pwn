@@ -6,6 +6,9 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 	new gameId = Pkr_GetPlayerGame(playerid);
 
+	if(gameId == INVALID_POKER_GAME_ID)
+		return;
+
 	#if !defined POKER_DEBUG
 		new currentPlayerPosition = Pkr_GetCurrentPlayerPosition(gameId);
 		new playerPosition = Pkr_GetPlayerSlot(playerid, gameId);
