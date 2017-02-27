@@ -45,6 +45,8 @@ CMD:poker(playerid, cmdtext[])
 	return 1;
 }
 
+#if defined POKER_DEBUG
+
 PkrCMD_DealPlayer(const playerid, const parameters[]) {
 	new gameId;
 	new slot;
@@ -113,3 +115,5 @@ PkrCMD_DealTable(const playerid, const parameters[]) {
 
 	return;
 }
+
+#endif

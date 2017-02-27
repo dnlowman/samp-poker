@@ -1,3 +1,5 @@
+#if defined POKER_DEBUG
+
 PkrCMD_AddBot(const playerid, const params[])
 {
     new gameId = 0;
@@ -69,3 +71,5 @@ static Pkr_FindAvailableBot()
     }
     return INVALID_PLAYER_ID;
 }
+
+#endif

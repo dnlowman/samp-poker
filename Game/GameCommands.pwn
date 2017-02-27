@@ -1,3 +1,4 @@
+#if defined POKER_DEBUG
 PkrCMD_Destroy(const playerid, const parameters[]) {
 	new gameId = INVALID_POKER_GAME_ID;
 
@@ -25,6 +26,7 @@ PkrCMD_Destroy(const playerid, const parameters[]) {
 	SendClientMessage(playerid, COLOR_RED, message);
 	return;
 }
+#endif
 
 PkrCMD_Start(const playerId)
 {
