@@ -6,6 +6,12 @@ public OnFilterScriptInit()
         TM_OnFilterScriptInit();
     #endif
     TM_InitialisePokerTableArray();
+
+	ConnectNPC("Bot_A", "npcidle");
+	ConnectNPC("Bot_B", "npcidle");
+	ConnectNPC("Bot_C", "npcidle");
+	ConnectNPC("Bot_D", "npcidle");
+	ConnectNPC("Bot_E", "npcidle");
 }
 
 #else
