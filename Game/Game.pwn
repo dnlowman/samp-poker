@@ -61,6 +61,7 @@ Pkr_InitialiseGame(const gameId) {
     Pkr_SetLastBet(gameId, 0);
     Pkr_SetObjectId(gameId, INVALID_OBJECT_ID);
 	Pkr_SetTimer(gameId, MAX_POKER_TIMER);
+	Pkr_SetRake(gameId, 0.0);
 
     for(new _j = 0; _j < MAX_POKER_PLAYERS; ++_j) {
         g_rgPokerGames[gameId][PLAYERS][_j] = INVALID_PLAYER_ID;
