@@ -263,11 +263,11 @@ stock Pkr_Evaluate(const gameId)
 		if(_wincount > 1)
         {
 			new pot = Pkr_GetPotAmount(gameId);
-			new split = pot / _wincount;
+			new _split = pot / _wincount;
 			new message[128];
 
 			for(new i; i < _wincount; ++i) {
-				Pkr_SetPlayerChips(gameId, _winners[i], split);
+				Pkr_SetPlayerChips(gameId, _winners[i], _split);
 				new playerId = Pkr_GetPlayerId(gameId, _winners[i]);
 				format(message, sizeof(message), "%s %s", message, Pkr_GetClientName(playerId));
 			}
