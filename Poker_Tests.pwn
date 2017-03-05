@@ -1,26 +1,9 @@
 #if defined RUN_TESTS
-
-    #include "Pot\PotTests.pwn"
-    #include "Background\BackgroundTests.pwn"
-    #include "Blinds\BlindTests.pwn"
-    #include "PlayerStatus\PlayerStatusTests.pwn"
-    #include "PlayerReady\PlayerReadyTests.pwn"
-    #include "Game\GameTests.pwn"
-    #include "Game\GameCmdsTests.pwn"
-    #include "Game\GameStateTests.pwn"
-    #include "Player\PlayerCmdsTests.pwn"
+	#include "Game\GameStateTests.pwn"
 
     Pkr_InitialiseTests()
     {
-        Pkr_InitialisePotTests();
-        Pkr_InitialiseBackgroundTests();
-        Pkr_InitialiseBlindTests();
-        Pkr_InitialisePlayerStatusTests();
-        Pkr_InitialisePlayerReadyTests();
-        Pkr_InitialiseGameTests();
-        Pkr_InitialiseGameStateTests();
-        Pkr_InitialisePlayerCmdsTests();
-        Pkr_InitialiseGameCmdsTests();
+		Pkr_InitialiseGameStateTests();
         return;
     }
 
