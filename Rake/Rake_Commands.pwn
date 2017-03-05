@@ -17,7 +17,13 @@ PkrCMD_SetRake(const playerid, const parameters[]) {
 
     if(gameId == -1) {
         SendClientMessage(playerid, COLOR_RED, "You're not near any poker game.");
+		return;
     }
+
+	if(Pkr_GetGameStatus(gameId) != POKER_GAME_STATUS: LOBBY) {
+		SendClientMessage(playerid, COLOR_RED, "The game has to be in the lobby to modify the rake.");
+		return;
+	}
 
 	Pkr_SetRake(gameId, amount);
 	new message[128];
