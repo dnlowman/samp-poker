@@ -32,7 +32,7 @@ stock Pkr_GetClientName(playerid) {
     return _name;
 }
 
-#if !defined GetPlayerRealMoney
+#if !defined POKER_LSRP
 GetPlayerRealMoney(playerid) {
     #pragma unused playerid
     return 1000000;
