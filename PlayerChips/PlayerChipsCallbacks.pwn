@@ -2,16 +2,16 @@ Pkr_PlayerChipsDialogResponse(const playerid, const response, const inputtext[])
     new pokerDialogId = Pkr_GetPokerDialog(playerid);
 	new gameId = Pkr_GetPlayerGame(playerid);
 
-	new POKER_GAME_STATUS: status = Pkr_GetGameStatus(gameId);
-	if(status != POKER_GAME_STATUS: LOBBY) {
-		SendClientMessage(playerid, COLOR_RED, "You can only add more chips to your stack in the lobby.");
-		return;
-	}
-
     switch(pokerDialogId) {
         case (POKER_DIALOGS: CHIPS): {
 			if(!response) {
 				Pkr_ShowCursorForPlayerId(playerid);
+				return;
+			}
+
+			new POKER_GAME_STATUS: status = Pkr_GetGameStatus(gameId);
+			if(status != POKER_GAME_STATUS: LOBBY) {
+				SendClientMessage(playerid, COLOR_RED, "You can only add more chips to your stack in the lobby.");
 				return;
 			}
 
@@ -43,6 +43,12 @@ Pkr_PlayerChipsDialogResponse(const playerid, const response, const inputtext[])
 
 			if(!response) {
 				Pkr_ShowChipsDialog(playerid);
+				return;
+			}
+
+			new POKER_GAME_STATUS: status = Pkr_GetGameStatus(gameId);
+			if(status != POKER_GAME_STATUS: LOBBY) {
+				SendClientMessage(playerid, COLOR_RED, "You can only add more chips to your stack in the lobby.");
 				return;
 			}
 
