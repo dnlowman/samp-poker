@@ -36,6 +36,8 @@ Test:ShowAllPlayersReadyTD()
     // When
     Pkr_ShowAllPlayersReadyTextDraw(gameId);
 
+	printf("Amount of calls: %d", textDrawShowForPlayerCalls);
+
     // Then
     ASSERT(textDrawShowForPlayerCalls == 12);
 }

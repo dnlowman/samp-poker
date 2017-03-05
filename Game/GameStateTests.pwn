@@ -1,4 +1,4 @@
-const gameId = 0;
+static const gameId = 0;
 
 Pkr_InitialiseGameStateTests()
 {
