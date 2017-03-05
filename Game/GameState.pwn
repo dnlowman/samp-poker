@@ -247,7 +247,7 @@ Pkr_DealRemainingRounds(const gameId)
 
 stock Pkr_Evaluate(const gameId)
 {
-    Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: EVALUATION);
+	Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: EVALUATION);
 	Pkr_ShowAllPlayerCards(gameId);
 
     new _sz[128];
@@ -260,30 +260,18 @@ stock Pkr_Evaluate(const gameId)
 
     if(Pkr_CountPlayerStatus(gameId, POKER_PLAYER_STATUS: ALL_IN) == 0)
     {
-        if(_wincount > 1)
+		if(_wincount > 1)
         {
-            for(new i; i < _wincount; ++i)
-            {
-                Pkr_SetPlayerChips(gameId, _winners[i], Pkr_GetPlayerChips(gameId, _winners[i]) + g_rgPokerGames[gameId][PLAYER_POT_CONTRIBUTIONS][_winners[i]]);
-                Pkr_SubFromPot(gameId, Pkr_GetPlayerPotContribution(gameId, _winners[i]));
-                format(_sz, sizeof(_sz), "%s %s", _sz, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[i]]));
-            }
+			new pot = Pkr_GetPotAmount(gameId);
+			new split = pot / _wincount;
 
-            if(Pkr_GetPotAmount(gameId) > 0)
-            {
-                new _split = Pkr_GetPotAmount(gameId);
+			for(new i; i < _wincount; ++i)
+				Pkr_SetPlayerChips(gameId, _winners[i], split);
 
-                if((Pkr_IsOdd(_split) && !Pkr_IsOdd(_wincount)) || (!Pkr_IsOdd(_split) && Pkr_IsOdd(_wincount)))
-                    Pkr_SubFromPot(gameId, 1);
+			Pkr_SetPotAmount(gameId, 0);
 
-                _split /= _wincount;
-
-                for(new _i = 0; _i < _wincount; ++_i)
-                    Pkr_SetPlayerChips(gameId, _winners[_i], Pkr_GetPlayerChips(gameId, _winners[_i]) + _split);
-            }
             format(_sz, sizeof(_sz), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", _sz, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
             Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
-            Pkr_SetPotAmount(gameId, 0);
         }
         else // One winner
         {
@@ -295,7 +283,7 @@ stock Pkr_Evaluate(const gameId)
     }
     else
     {
-        /*
+		/*
             ORDER EVERY CONTRIBUTION ASCENDING
             MINUS LOWEST FROM EVERY PLAYER
             CHECK WINNER
@@ -316,10 +304,18 @@ stock Pkr_Evaluate(const gameId)
 		*/
 		new count; // The count of the pots dished out...
         new contributions[MAX_POKER_PLAYERS][2];
+
+		new contributionSum = 0;
+
         for(new i; i < MAX_POKER_PLAYERS; ++i) {
             contributions[i][0] = i;
             contributions[i][1] = Pkr_GetPlayerPotContribution(gameId, i);
+			contributionSum += contributions[i][1];
         }
+
+		new message[128];
+		format(message, sizeof(message), "Contribution Sum: %d Pot Amount: %d", contributionSum, Pkr_GetPotAmount(gameId));
+		SendClientMessageToAll(COLOR_RED, message);
 
 		// Ordered contributions bubble sort...
         for(new i; i < MAX_POKER_PLAYERS; ++i)
@@ -362,7 +358,7 @@ stock Pkr_Evaluate(const gameId)
 
 			// Foreach player
 			for(new j; j < MAX_POKER_PLAYERS; ++j) {
-				if(Pkr_GetPlayerId(gameId, contributions[j][0]) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, contributions[j][0]) != POKER_PLAYER_STATUS: EVALUATED) {
+				if(Pkr_GetPlayerId(gameId, contributions[j][0]) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, contributions[j][0]) != POKER_PLAYER_STATUS: EVALUATED && contributions[j][1] != 0) {
 					pot += lowest;
 					contributions[j][1] -= lowest;
 				}
@@ -378,24 +374,18 @@ stock Pkr_Evaluate(const gameId)
 			if(_wincount > 1) // Multiple winners
 			{
 				strdel(_sz, 0, sizeof(_sz));
+
 				Pkr_SubFromPot(gameId, pot);
 
 				for(new j = 0; j < _wincount; ++j)
 					format(_sz, sizeof(_sz), "%s %s", _sz, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]));
 
-				new _split;
-
-				if(!Pkr_IsOdd(_wincount) && Pkr_IsOdd(pot))
-				{
-					pot -= 1;
-					_split = pot / _wincount;
-				}
-				else
-					_split = pot / _wincount;
+				new _split = pot / _wincount;
 
 				// Give the split to each player who won...
-				for(new j = 0; j < _wincount; ++j)
+				for(new j = 0; j < _wincount; ++j) {
 					Pkr_AddPlayerChips(gameId, _winners[j], _split);
+				}
 			}
 			else
 			{
