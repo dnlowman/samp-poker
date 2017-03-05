@@ -264,14 +264,17 @@ stock Pkr_Evaluate(const gameId)
         {
 			new pot = Pkr_GetPotAmount(gameId);
 			new split = pot / _wincount;
+			new message[128];
 
-			for(new i; i < _wincount; ++i)
+			for(new i; i < _wincount; ++i) {
 				Pkr_SetPlayerChips(gameId, _winners[i], split);
-
+				new playerId = Pkr_GetPlayerId(gameId, _winners[i]);
+				format(message, sizeof(message), "%s %s", message, Pkr_GetClientName(playerId));
+			}
 			Pkr_SetPotAmount(gameId, 0);
 
-            format(_sz, sizeof(_sz), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", _sz, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
-            Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
+            format(message, sizeof(message), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", message, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
+            Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
         }
         else // One winner
         {
@@ -312,10 +315,6 @@ stock Pkr_Evaluate(const gameId)
             contributions[i][1] = Pkr_GetPlayerPotContribution(gameId, i);
 			contributionSum += contributions[i][1];
         }
-
-		new message[128];
-		format(message, sizeof(message), "Contribution Sum: %d Pot Amount: %d", contributionSum, Pkr_GetPotAmount(gameId));
-		SendClientMessageToAll(COLOR_RED, message);
 
 		// Ordered contributions bubble sort...
         for(new i; i < MAX_POKER_PLAYERS; ++i)
@@ -373,12 +372,15 @@ stock Pkr_Evaluate(const gameId)
 
 			if(_wincount > 1) // Multiple winners
 			{
-				strdel(_sz, 0, sizeof(_sz));
-
 				Pkr_SubFromPot(gameId, pot);
 
+				new message[128];
+
 				for(new j = 0; j < _wincount; ++j)
-					format(_sz, sizeof(_sz), "%s %s", _sz, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]));
+					format(message, sizeof(message), "%s %s", message, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]));
+
+				format(message, sizeof(message), "{CC6600}%s {FF9900}are the winners of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
+	            Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
 
 				new _split = pot / _wincount;
 
