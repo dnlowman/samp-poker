@@ -68,6 +68,7 @@ Special Thanks:
 #include "Bots\Bots.pwn"
 #include "Poker_Commands.pwn"
 #include "Timer\Timer_Main.pwn"
+#include "Rake\Rake_Main.pwn"
 
 #if defined RUN_TESTS
     #include <YSI\y_testing>
