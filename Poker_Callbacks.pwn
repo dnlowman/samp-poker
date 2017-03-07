@@ -184,3 +184,26 @@ public OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 #if defined Pkr_OnPlayerTakeDamage
     forward Pkr_OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart);
 #endif
+
+public OnPlayerDisconnect(playerid, reason)
+{
+	#if defined Pkr_OnPlayerDisconnect
+		Pkr_OnPlayerDisconnect(playerid, reason);
+	#endif
+
+	new gameId = Pkr_GetPlayerGame(playerid);
+	if(gameId != INVALID_POKER_GAME_ID)
+		Pkr_UnassignPlayerFromGame(playerid, gameId);
+
+	return;
+}
+
+#if defined _ALS_OnPlayerDisconnect
+	#undef OnPlayerDisconnect
+#else
+	#define _ALS_OnPlayerDisconnect
+#endif
+#define OnPlayerDisconnect Pkr_OnPlayerDisconnect
+#if defined Pkr_OnPlayerDisconnect
+	forward Pkr_OnPlayerDisconnect(playerid, reason);
+#endif
