@@ -422,7 +422,6 @@ stock Pkr_SetGameToLobby(const gameId)
     Pkr_SetAmountOfPlays(gameId, 0);
 	Pkr_SetTimerTextDrawText(gameId, "_");
     Pkr_SendFormattedGameMessage(gameId, COLOR_GREY, "Use '/pkr start' to start the game.");
-	Pkr_BlindMeetCheck(gameId);
     return;
 }
 
