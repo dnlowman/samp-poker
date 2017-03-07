@@ -16,7 +16,7 @@ public Pkr_OnOneSecond() {
 		if(gameStatus != POKER_GAME_STATUS: LOBBY && gameStatus != POKER_GAME_STATUS: EVALUATION) {
 			new currentTime = Pkr_GetTimer(gameId);
 
-			if(currentTime <= 3 && currentTime > 0)
+			if(currentTime <= 6 && currentTime > 0)
 				Pkr_PlaySoundForPlayers(gameId, 1137);
 
 			if(currentTime == 0) {
