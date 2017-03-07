@@ -17,16 +17,21 @@ PkrCMD_SetTimer(const playerid, const parameters[]) {
     {
 		SendClientMessage(playerid, COLOR_GREY, "USAGE: /pkr timer [amount]");
         SendClientMessage(playerid, COLOR_GREY, "HINT: You can set the timer between 10 - 60 seconds.");
+		SendClientMessage(playerid, COLOR_GREY, "Setting the timer to 0 will turn it off.");
         return;
     }
 
-	if(amount < 10 || amount > 60) {
+	if(amount != 0 && (amount < 10 || amount > 60)) {
 		SendClientMessage(playerid, COLOR_RED, "You can only set the timer between 10 - 60 seconds.");
 		return;
 	}
 
 	Pkr_SetTimerStart(gameId, amount);
 	Pkr_SetAllPlayersNotReady(gameId);
-	Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has set the timer to: %d.", Pkr_GetClientName(playerid), amount);
+
+	if(amount == 0)
+		Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has disabled the timer.", Pkr_GetClientName(playerid));
+	else
+		Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has set the timer to: %d.", Pkr_GetClientName(playerid), amount);
 	return;
 }
