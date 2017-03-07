@@ -16,7 +16,11 @@ public Pkr_OnOneSecond() {
 		if(gameStatus != POKER_GAME_STATUS: LOBBY && gameStatus != POKER_GAME_STATUS: EVALUATION) {
 			new currentTime = Pkr_GetTimer(gameId);
 
+			if(currentTime <= 3 && currentTime > 0)
+				Pkr_PlaySoundForPlayers(gameId, 1137);
+
 			if(currentTime == 0) {
+				Pkr_PlaySoundForPlayers(gameId, 1085);
 				new playerSlot = Pkr_GetCurrentPlayerPosition(gameId);
 				Pkr_SetPlayerStatusFolded(gameId, playerSlot);
 				Pkr_SetNextPlayerPlaying(gameId);
@@ -28,4 +32,10 @@ public Pkr_OnOneSecond() {
 	}
 
 	return;
+}
+
+Pkr_PlaySoundForPlayers(const gameId, const soundId) {
+	Pkr_ForeachPlayer(playerSlot) {
+		PlayerPlaySound(Pkr_GetPlayerId(gameId, playerSlot), soundId, 0.0, 0.0, 0.0);
+	}
 }
