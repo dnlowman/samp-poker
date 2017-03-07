@@ -19,7 +19,7 @@ PkrCMD_SetBlind(const playerid, const parameters[]) {
         return;
     }
 
-	if(amount < 0 || amount >= 10000) {
+	if(amount < 0 || amount > 10000) {
 		SendClientMessage(playerid, COLOR_RED, "You can only set the small blind in a range of $0 - $10000.");
 		return;
 	}
