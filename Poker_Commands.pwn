@@ -30,6 +30,7 @@ Pkr_RouteCommands(playerid, cmdtext[])
 	else if(strcmp("blind", command) == 0) PkrCMD_SetBlind(playerid, parameters);
 	else if(strcmp("chips", command) == 0) PkrCMD_Chips(playerid);
 	else if(strcmp("rake", command) == 0) PkrCMD_SetRake(playerid, parameters);
+	else if(strcmp("timer", command) == 0) PkrCMD_SetTimer(playerid, parameters);
 	else if(strcmp("help", command) == 0) PkrCMD_Help(playerid);
 	return 1;
 }

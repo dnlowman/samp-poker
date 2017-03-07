@@ -107,6 +107,7 @@ enum POKER_GAME {
     AMOUNT_OF_PLAYS,
     LAST_BET,
 	TIMER,
+	TIMER_START,
 	Float: RAKE
 };
 new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
@@ -255,6 +256,12 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
 #define Pkr_SetTimer(%0,%1) \
 			g_rgPokerGames[%0][TIMER] = %1
+
+#define Pkr_GetTimerStart(%0) \
+			g_rgPokerGames[%0][TIMER_START]
+
+#define Pkr_SetTimerStart(%0,%1) \
+			g_rgPokerGames[%0][TIMER_START] = %1
 
 #define Pkr_ShowCursorForPlayerId(%0) \
 		SelectTextDraw(%0, COLOR_ORANGE)
