@@ -195,7 +195,7 @@ public OnPlayerDisconnect(playerid, reason)
 	if(gameId != INVALID_POKER_GAME_ID)
 		Pkr_UnassignPlayerFromGame(playerid, gameId);
 
-	return;
+	return 1;
 }
 
 #if defined _ALS_OnPlayerDisconnect
