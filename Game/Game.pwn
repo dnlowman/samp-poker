@@ -62,7 +62,7 @@ Pkr_InitialiseGame(const gameId) {
     Pkr_SetObjectId(gameId, INVALID_OBJECT_ID);
 	Pkr_SetTimerStart(gameId, MAX_POKER_TIMER);
 	Pkr_SetTimer(gameId, MAX_POKER_TIMER);
-	Pkr_SetRake(gameId, 0.0);
+	Pkr_SetBusiness(gameId, -1);
 
     for(new _j = 0; _j < MAX_POKER_PLAYERS; ++_j) {
         g_rgPokerGames[gameId][PLAYERS][_j] = INVALID_PLAYER_ID;
@@ -108,12 +108,14 @@ Pkr_CreateGame(const Float: x, const Float: y, const Float: z) {
     return -1;
 }
 
-Pkr_CreateGameByObjectId(const objectId) {
+Pkr_CreateGameByObjectId(const objectId, const businessId = -1) {
     new Float: x, Float: y, Float: z;
     if(GetDynamicObjectPos(objectId, x, y, z) == 0)
         return -1;
     new gameId = Pkr_CreateGame(x, y, z);
     Pkr_SetObjectId(gameId, objectId);
+	if(businessId != -1)
+		Pkr_SetBusiness(gameId, businessId);
     return gameId;
 }
 

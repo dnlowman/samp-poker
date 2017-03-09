@@ -108,7 +108,7 @@ enum POKER_GAME {
     LAST_BET,
 	TIMER,
 	TIMER_START,
-	Float: RAKE
+	BUSINESS_ID
 };
 new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
 
@@ -273,7 +273,13 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
     	Pkr_ForeachPlayer(playerSlot) if(Pkr_GetPlayerId(%0, playerSlot) != INVALID_PLAYER_ID) Pkr_SetPlayerNotReady(%0, playerSlot)
 
 #define Pkr_SetRake(%0,%1) \
-			g_rgPokerGames[%0][RAKE] = %1
+			BizInfo[%0][BIZ_POKER_RAKE] = %1
 
 #define Pkr_GetRake(%0) \
-			g_rgPokerGames[%0][RAKE]
+			BizInfo[%0][BIZ_POKER_RAKE]
+
+#define Pkr_SetBusiness(%0,%1) \
+			g_rgPokerGames[%0][BUSINESS_ID] = %1
+
+#define Pkr_GetBusiness(%0) \
+			g_rgPokerGames[%0][BUSINESS_ID]

@@ -19,7 +19,8 @@ PkrCMD_Join(const playerid) {
     new gameId = Pkr_GetGameByObjectId(objectId);
 
     if(gameId == -1) {
-        gameId = Pkr_CreateGameByObjectId(objectId);
+		new businessId = GetPlayersCurrentBusiness(playerid);
+        gameId = Pkr_CreateGameByObjectId(objectId, businessId);
     }
 
     if(gameId == -1) {

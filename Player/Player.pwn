@@ -71,8 +71,13 @@ Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
 		new nonFoldedPlayer = Pkr_GetCurrentPlayerPosition(gameId);
 		new nonFoldedPlayerId = Pkr_GetPlayerId(gameId, nonFoldedPlayer);
 
+		new pot = Pkr_GetPotAmount(gameId);
+		new rakeAmount = Pkr_TakeRake(gameId, pot);
+		if(rakeAmount > 0)
+			pot -= rakeAmount;
+
 		Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players leaving.", Pkr_GetClientName(nonFoldedPlayerId));
-		Pkr_AddPlayerChips(gameId, nonFoldedPlayer, Pkr_GetPotAmount(gameId));
+		Pkr_AddPlayerChips(gameId, nonFoldedPlayer, pot);
 		Pkr_SetPotAmount(gameId, 0);
 		Pkr_SetGameToLobby(gameId);
 	}

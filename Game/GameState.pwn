@@ -41,8 +41,13 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
 		new nonFoldedPlayer = Pkr_GetFirstPlayerWithoutStatus(gameId, FOLDED);
 		new nonFoldedPlayerId = Pkr_GetPlayerId(gameId, nonFoldedPlayer);
 
+		new pot = Pkr_GetPotAmount(gameId);
+		new rakeAmount = Pkr_TakeRake(gameId, pot);
+		if(rakeAmount > 0)
+			pot -= rakeAmount;
+
 		Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId));
-		Pkr_AddPlayerChips(gameId, nonFoldedPlayer, Pkr_GetPotAmount(gameId));
+		Pkr_AddPlayerChips(gameId, nonFoldedPlayer, pot);
 		Pkr_SetPotAmount(gameId, 0);
 		Pkr_SetGameToLobby(gameId);
 		return;
@@ -63,8 +68,13 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
         new nonFoldedPlayer = Pkr_GetFirstPlayerWithoutStatus(gameId, FOLDED);
         new nonFoldedPlayerId = Pkr_GetPlayerId(gameId, nonFoldedPlayer);
 
+		new pot = Pkr_GetPotAmount(gameId);
+		new rakeAmount = Pkr_TakeRake(gameId, pot);
+		if(rakeAmount > 0)
+			pot -= rakeAmount;
+
         Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId));
-        Pkr_AddPlayerChips(gameId, nonFoldedPlayer, Pkr_GetPotAmount(gameId));
+        Pkr_AddPlayerChips(gameId, nonFoldedPlayer, pot);
         Pkr_SetPotAmount(gameId, 0);
         Pkr_SetGameToLobby(gameId);
         return;
@@ -245,6 +255,27 @@ Pkr_DealRemainingRounds(const gameId)
     return;
 }
 
+Pkr_TakeRake(const gameId, const pot) {
+	new businessId = Pkr_GetBusiness(gameId);
+
+	if(businessId != -1) {
+		new Float: rake = Pkr_GetRake(businessId);
+		if(rake > 0.0) {
+			new rakeAmount = floatround((pot / 100) * rake);
+
+			SetUpBizCashBank(businessId, rakeAmount);
+
+			new rakeMessage[128];
+			format(rakeMessage, sizeof(rakeMessage), "The business has taken a %.1f percentage rake off of the pot which amounts to: $%s", rake, Pkr_FormatNumber(rakeAmount));
+			Pkr_SendGameMessage(gameId, COLOR_ORANGE, rakeMessage);
+
+			return rakeAmount;
+		}
+	}
+
+	return 0;
+}
+
 stock Pkr_Evaluate(const gameId)
 {
 	Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: EVALUATION);
@@ -263,6 +294,11 @@ stock Pkr_Evaluate(const gameId)
 		if(_wincount > 1)
         {
 			new pot = Pkr_GetPotAmount(gameId);
+
+			new rakeAmount = Pkr_TakeRake(gameId, pot);
+			if(rakeAmount > 0)
+				pot -= rakeAmount;
+
 			new _split = pot / _wincount;
 			new message[128];
 
@@ -278,7 +314,12 @@ stock Pkr_Evaluate(const gameId)
         }
         else // One winner
         {
-            format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}wins the pot ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
+			new pot = Pkr_GetPotAmount(gameId);
+			new rakeAmount = Pkr_TakeRake(gameId, pot);
+			if(rakeAmount > 0)
+				pot -= rakeAmount;
+
+			format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}wins the pot ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
             Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
             Pkr_SetPlayerChips(gameId, _winners[0], Pkr_GetPlayerChips(gameId, _winners[0]) + Pkr_GetPotAmount(gameId));
             Pkr_SetPotAmount(gameId, 0);
@@ -372,7 +413,12 @@ stock Pkr_Evaluate(const gameId)
 
 			if(_wincount > 1) // Multiple winners
 			{
-				Pkr_SubFromPot(gameId, pot);
+				new originalPot = pot;
+				new rakeAmount = Pkr_TakeRake(gameId, pot);
+				if(rakeAmount > 0)
+					pot -= rakeAmount;
+
+				Pkr_SubFromPot(gameId, originalPot);
 
 				new message[128];
 
@@ -391,11 +437,17 @@ stock Pkr_Evaluate(const gameId)
 			}
 			else
 			{
+				new originalPot = pot;
+
+				new rakeAmount = Pkr_TakeRake(gameId, pot);
+				if(rakeAmount > 0)
+					pot -= rakeAmount;
+
 				format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}is the winner of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
 				Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
 
 				Pkr_AddPlayerChips(gameId, _winners[0], pot);
-				Pkr_SubFromPot(gameId, pot);
+				Pkr_SubFromPot(gameId, originalPot);
 			}
 
 			++count;

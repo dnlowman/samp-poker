@@ -6,29 +6,28 @@ PkrCMD_SetRake(const playerid, const parameters[]) {
         return;
     }
 
-	new objectId = furn_pokerTableCheck(GetPlayerVirtualWorld(playerid), playerid);
+	new businessId = GetPlayersCurrentBusiness(playerid);
 
-    if(objectId <= 0 || objectId == INVALID_OBJECT_ID) {
-        SendClientMessage(playerid, COLOR_RED, "You're not near any poker game. TODO: Biz owners can use this command...");
+	if(businessId == -1) {
+		SendClientMessage(playerid, COLOR_RED, "You need to be inside a business to use this command.");
         return;
-    }
-
-    new gameId = Pkr_GetGameByObjectId(objectId);
-
-    if(gameId == -1) {
-        SendClientMessage(playerid, COLOR_RED, "You're not near any poker game.");
-		return;
-    }
-
-	if(Pkr_GetGameStatus(gameId) != POKER_GAME_STATUS: LOBBY) {
-		SendClientMessage(playerid, COLOR_RED, "The game has to be in the lobby to modify the rake.");
-		return;
 	}
 
-	Pkr_SetRake(gameId, amount);
+	new hasAccess = DoesPlayerAccessBusiness(playerid, businessId);
+
+	if(!hasAccess) {
+		SendClientMessage(playerid, COLOR_RED, "You need to own or be employed by the business to use this command.");
+        return;
+	}
+
+	if(amount < 0.0 || amount > 10.0) {
+		SendClientMessage(playerid, COLOR_RED, "The rake has to be a value in the range of 0.0 to 10.0 percent.");
+        return;
+	}
+
+	Pkr_SetRake(businessId, amount);
 	new message[128];
-	format(message, sizeof(message), "%s has updated the rake to %f percent.", Pkr_GetClientName(playerid), amount);
-	Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
-	Pkr_SetAllPlayersNotReady(gameId);
+	format(message, sizeof(message), "You have updated the business poker rake to %.1f percent.", amount);
+	SendClientMessage(playerid, COLOR_RED, message);
 	return;
 }
