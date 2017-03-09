@@ -422,10 +422,13 @@ stock Pkr_Evaluate(const gameId)
 
 				new message[128];
 
-				for(new j = 0; j < _wincount; ++j)
+				for(new j = 0; j < _wincount; ++j) {
+					if(_winners[j] == INVALID_PLAYER_ID)
+						continue;
 					format(message, sizeof(message), "%s %s", message, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]));
+				}
 
-				format(message, sizeof(message), "{CC6600}%s {FF9900}are the winners of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
+				format(message, sizeof(message), "{CC6600}%s {FF9900}are the winners of the %s ($%s) with a %s and a value of %i.", message, (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
 	            Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
 
 				new _split = pot / _wincount;
