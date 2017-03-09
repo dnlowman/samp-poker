@@ -85,6 +85,7 @@ PkrCMD_Help(const playerid) {
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr sit - Allows you to sit at a table.");
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr chips - Allows you to place more chips on the table.");
 	SendClientMessage(playerid, COLOR_ORANGE, "/pkr rake - Allows business owners to set the rake on the table.");
+	SendClientMessage(playerid, COLOR_ORANGE, "/pkr timer - Allows you to modify the countdown timer.");
 	return;
 }
 
