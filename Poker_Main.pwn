@@ -1,12 +1,15 @@
-/* ================================================== *\
-                    --------------------
-                    Los Santos Role Play
-                    Texas Hold 'em Poker
-                    --------------------
+/*
+                    	© Los Santos Role Play 2017
+                       		Texas Hold 'em Poker
+
+							Release Candidate 1
+--------------------------------------------------------------------------------
 
 Description:
     A complete Texas Hold 'em Poker mini-game
     for San Andreas Multiplayer.
+
+--------------------------------------------------------------------------------
 
 Author(s):
     Noble -
@@ -20,12 +23,19 @@ Author(s):
     Paul Senzee -
         Hash optimizations.
 
-Special Thanks:
-    Los Santos Role Play development team
-    San Andreas Mutliplayer development team
-    Los Santos Role Play tester team
+--------------------------------------------------------------------------------
 
-\* ================================================== */
+Special Thanks:
+    Los Santos Role Play development team.
+    San Andreas Mutliplayer development team.
+    Los Santos Role Play tester team.
+
+--------------------------------------------------------------------------------
+
+License:
+	Please see the enclosed LICENSE file in the repository.
+
+*/
 
 #if defined POKER_SYSTEM
     #endinput
@@ -33,7 +43,7 @@ Special Thanks:
 
 #define POKER_SYSTEM
 
-//#define RUN_TESTS // Uncomment this line if you want to run the Unit Tests (Requires y_testing)
+//#define RUN_TESTS
 
 #if defined RUN_TESTS
     #include "Poker_TestSpies.pwn"

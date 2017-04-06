@@ -9,6 +9,11 @@ public OnFilterScriptInit()
 
 	SetTimer("Pkr_OnOneSecond", 1000, true);
 
+	Pkr_ForeachPlayer(playerid) {
+		if(IsPlayerNPC(playerid))
+			SetPlayerPos(playerid, 0.0, 0.0, 0.0);
+	}
+
     #if defined RUN_TESTS
         Pkr_InitialiseTests();
     #endif
