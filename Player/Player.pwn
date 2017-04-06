@@ -54,7 +54,8 @@ Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
         return false;
 
 	new currentPlayer = Pkr_GetCurrentPlayerPosition(gameId);
-	if(currentPlayer == _slot)
+	new POKER_GAME_STATUS: gameStatus = Pkr_GetGameStatus(gameId);
+	if(currentPlayer == _slot && gameStatus != POKER_GAME_STATUS: LOBBY && gameStatus != POKER_GAME_STATUS: EVALUATION)
 		Pkr_SetNextPlayerPlaying(gameId);
 
 	new chips = Pkr_GetPlayerChips(gameId, _slot);
