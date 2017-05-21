@@ -299,26 +299,13 @@ Pkr_DealRemainingRounds(const gameId)
 Pkr_TakeRake(const gameId, const pot) {
 	new businessId = Pkr_GetBusiness(gameId);
 
-    printf("Taking the rake for gameId: %d with the pot %d", gameId, pot);
-    printf("The businessId is: %d", businessId);
-
 	if(businessId != -1) {
-        printf("The businessId is not -1");
-
 		new Float: rake = Pkr_GetRake(businessId);
 
-        printf("The rake is %f", rake);
-
 		if(rake > 0.0) {
-            printf("The rake is > 0.0!");
-
 			new rakeAmount = floatround((pot / 100) * rake);
 
-            printf("The rake amount is: %d", rakeAmount);
-
 			SetUpBizCashBank(businessId, rakeAmount);
-
-            printf("Setup the biz cash!");
 
 			new rakeMessage[128];
 			format(rakeMessage, sizeof(rakeMessage), "The business has taken a %.1f percentage rake off of the pot which amounts to: $%s", rake, Pkr_FormatNumber(rakeAmount));
@@ -350,19 +337,12 @@ stock Pkr_Evaluate(const gameId)
         {
 			new pot = Pkr_GetPotAmount(gameId);
 
-            printf("Taking the rake for the non all in multi-winner evaluation!");
-
 			new rakeAmount = Pkr_TakeRake(gameId, pot);
-            printf("The rakeAmount is: %d", rakeAmount);
             if(rakeAmount > 0) {
-                printf("Minusing the rakeAmount: %d from the pot %d", rakeAmount, pot);
 				pot -= rakeAmount;
-
-                printf("I've taken the rakeAmount, time to sub from pot!");
             }
 
 			new _split = floatround(pot / _wincount);
-            printf("I've taken the rakeAmount, time to sub from pot!");
 
 			new message[128];
 
@@ -372,7 +352,6 @@ stock Pkr_Evaluate(const gameId)
 				format(message, sizeof(message), "%s %s", message, Pkr_GetClientName(playerId));
 			}
 			Pkr_SetPotAmount(gameId, 0);
-            printf("set the pot amount!");
 
             format(message, sizeof(message), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", message, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
             Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
@@ -380,24 +359,17 @@ stock Pkr_Evaluate(const gameId)
         }
         else // One winner
         {
-            printf("Taking the rake for the non all in one player evaluation!");
-
             new pot = Pkr_GetPotAmount(gameId);
             new rakeAmount = Pkr_TakeRake(gameId, pot);
-            printf("The rakeAmount is: %d", rakeAmount);
             if(rakeAmount > 0) {
-                printf("Minusing the rakeAmount: %d from the pot %d", rakeAmount, pot);
 				pot -= rakeAmount;
             }
-
-            printf("subbed the rake");
 
 			format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}wins the pot ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
             Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
             Pkr_SetPlayerChips(gameId, _winners[0], Pkr_GetPlayerChips(gameId, _winners[0]) + Pkr_GetPotAmount(gameId));
             Pkr_Log("%s wins the pot ($%s) with a %s and a value of %i for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
             Pkr_SetPotAmount(gameId, 0);
-            printf("set the pot amount!");
         }
     }
     else
@@ -488,21 +460,13 @@ stock Pkr_Evaluate(const gameId)
 
 			if(_wincount > 1) // Multiple winners
 			{
-                printf("Taking the rake for the all in evaluation with multiple winners!");
-
                 new originalPot = pot;
                 new rakeAmount = Pkr_TakeRake(gameId, pot);
-                printf("The rakeAmount is: %d", rakeAmount);
                 if(rakeAmount > 0) {
-                    printf("Minusing the rakeAmount: %d from the pot %d", rakeAmount, pot);
     				pot -= rakeAmount;
                 }
 
-                printf("I've taken the rakeAmount, time to sub from pot!");
-
 				Pkr_SubFromPot(gameId, originalPot);
-
-                printf("subbed from pot!");
 
 				new message[128];
 
@@ -510,49 +474,34 @@ stock Pkr_Evaluate(const gameId)
 					if(_winners[j] == INVALID_PLAYER_ID)
 						continue;
 					format(message, sizeof(message), "%s %s", message, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]));
-                    printf("Generated the message for the winner at index: %d", j);
 				}
 
 				format(message, sizeof(message), "{CC6600}%s {FF9900}are the winners of the %s ($%s) with a %s and a value of %i.", message, (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
                 Pkr_Log("%s are the winners of the %s ($%s) with a %s and a value of %i for GameId: %d.", message, (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
                 Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
 
-                printf("Getting split...");
-
 				new _split = floatround(pot / _wincount);
-
-                printf("calculated the split!");
 
 				// Give the split to each player who won...
 				for(new j = 0; j < _wincount; ++j) {
 					Pkr_AddPlayerChips(gameId, _winners[j], _split);
-                    printf("adding chips!");
                     Pkr_Log("%s wins the split with a value of $%d for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]), gameId, _split);
 				}
 			}
 			else
 			{
 				new originalPot = pot;
-                printf("Taking the rake for the all in evaluation with a single winner!");
 
                 new rakeAmount = Pkr_TakeRake(gameId, pot);
-                printf("The rakeAmount is: %d", rakeAmount);
                 if(rakeAmount > 0) {
-                    printf("Minusing the rakeAmount: %d from the pot %d", rakeAmount, pot);
     				pot -= rakeAmount;
                 }
-
-                printf("Got the rake taking from pot now!");
 
 				format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}is the winner of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
 				Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
                 Pkr_Log("%s is the winner of the %s ($%s) with a %s and a value of %i for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
-                printf("adding chips!");
 				Pkr_AddPlayerChips(gameId, _winners[0], pot);
-                printf("chips added!");
-                printf("subbing from pot!");
 				Pkr_SubFromPot(gameId, originalPot);
-                printf("subbed from pot!");
 			}
 
 			++count;
