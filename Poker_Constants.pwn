@@ -40,8 +40,8 @@ License:
 native Eval5(hand[5]);
 native Eval7(hand[7]);
 
-#define POKER_DEBUG
-//#define POKER_LSRP
+//#define POKER_DEBUG
+#define POKER_LSRP
 
 const MAX_POKER_GAMES = 20;
 const MAX_POKER_PLAYERS = 6;
