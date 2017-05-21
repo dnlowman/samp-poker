@@ -491,6 +491,7 @@ stock Pkr_Evaluate(const gameId)
 
 				format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}is the winner of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
 				Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
+                Pkr_Log("[Poker Debug]: %s is the winner of the %s ($%s) with a %s and a value of %i for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
 
 				Pkr_AddPlayerChips(gameId, _winners[0], pot);
 				Pkr_SubFromPot(gameId, originalPot);
