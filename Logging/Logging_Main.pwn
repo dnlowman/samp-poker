@@ -1,6 +1,5 @@
 #define POKER_LOG_PATH "scriptfiles/poker.log"
 static const LOGGING_ADMIN_LEVEL = 1;
-//static bool:gIsPokerDebug = true;
 
 Pkr_Log(fstring[], {Float, _}:...)
 {
@@ -45,12 +44,26 @@ Pkr_Log(fstring[], {Float, _}:...)
         #emit ADD
         #emit SCTRL          4
 
-        sendFormatAdminWarn(LOGGING_ADMIN_LEVEL, COLOR_WHITE, message);
+        new Year, Month, Day, Hour, Minute, Second;
+        getdate(Year, Month, Day);
+        gettime(Hour, Minute, Second);
+        format(message, 256, "%02d/%02d/%d %02d:%02d:%02d - %s", Day, Month, Year, Hour, Minute, Second, message);
+
+        #if defined POKER_DEBUG
+            sendFormatAdminWarn(LOGGING_ADMIN_LEVEL, COLOR_WHITE, message);
+        #endif
         ThreadW(POKER_LOG_PATH, message);
     }
     else
     {
-        sendFormatAdminWarn(LOGGING_ADMIN_LEVEL, COLOR_WHITE, fstring);
+        new Year, Month, Day, Hour, Minute, Second;
+        getdate(Year, Month, Day);
+        gettime(Hour, Minute, Second);
+        format(fstring, 256, "%02d/%02d/%d %02d:%02d:%02d - %s", Day, Month, Year, Hour, Minute, Second, fstring);
+
+        #if defined POKER_DEBUG
+            sendFormatAdminWarn(LOGGING_ADMIN_LEVEL, COLOR_WHITE, fstring);
+        #endif
         ThreadW(POKER_LOG_PATH, fstring);
     }
 }
