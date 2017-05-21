@@ -610,12 +610,14 @@ static stock PkrSys_AssignBlinds(const gameId)
     Pkr_SetPlayerStatusSmallBlind(gameId, _smallBlindPosition);
     Pkr_AddToPlayerPotContribution(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
     Pkr_SetPlayerChips(gameId, _smallBlindPosition, Pkr_GetPlayerChips(gameId, _smallBlindPosition) - Pkr_GetSmallBlind(gameId));
+    Pkr_Log("[Poker Debug]: %s is the small blind $%d for GameId: %d", Pkr_GetClientName(Pkr_GetPlayerId(gameId, _smallBlindPosition)), Pkr_GetSmallBlind(gameId), gameId);
     Pkr_AddToPot(gameId, Pkr_GetSmallBlind(gameId));
     Pkr_AddToPlayerBetContribution(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
 
     Pkr_SetPlayerStatusBigBlind(gameId, _bigBlindPosition);
     Pkr_AddToPlayerPotContribution(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));
     Pkr_SetPlayerChips(gameId, _bigBlindPosition, Pkr_GetPlayerChips(gameId, _bigBlindPosition) - Pkr_GetBigBlind(gameId));
+    Pkr_Log("[Poker Debug]: %s is the big blind $%d for GameId: %d", Pkr_GetClientName(Pkr_GetPlayerId(gameId, _bigBlindPosition)), Pkr_GetBigBlind(gameId), gameId);
     Pkr_SetCurrentBet(gameId, Pkr_GetBigBlind(gameId));
     Pkr_AddToPot(gameId, Pkr_GetBigBlind(gameId));
     Pkr_AddToPlayerBetContribution(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));
