@@ -361,7 +361,7 @@ stock Pkr_Evaluate(const gameId)
                 printf("I've taken the rakeAmount, time to sub from pot!");
             }
 
-			new _split = pot / _wincount;
+			new _split = floatround(pot / _wincount);
             printf("I've taken the rakeAmount, time to sub from pot!");
 
 			new message[128];
@@ -510,13 +510,16 @@ stock Pkr_Evaluate(const gameId)
 					if(_winners[j] == INVALID_PLAYER_ID)
 						continue;
 					format(message, sizeof(message), "%s %s", message, Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]));
+                    printf("Generated the message for the winner at index: %d", j);
 				}
 
 				format(message, sizeof(message), "{CC6600}%s {FF9900}are the winners of the %s ($%s) with a %s and a value of %i.", message, (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
                 Pkr_Log("[Poker Debug]: %s are the winners of the %s ($%s) with a %s and a value of %i for GameId: %d.", message, (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
                 Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
 
-				new _split = pot / _wincount;
+                printf("Getting split...");
+
+				new _split = floatround(pot / _wincount);
 
                 printf("calculated the split!");
 
