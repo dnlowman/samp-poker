@@ -82,6 +82,7 @@ bool: Pkr_AssignPlayerToGame(const playerid, const gameId, const chips) {
 		SetupPlayerMoney(playerid, -chips);
 		SetPVarInt(playerid, POKER_SIT_VAR_NAME, 1);
         Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has joined the game. (Game ID: %d)", Pkr_GetClientName(playerid), gameId);
+        Pkr_Log("[Poker Debug]: %s has joined GameId: %d with: $%d chips.", Pkr_GetClientName(playerid), gameId, chips);
         return true;
     }
     return false;
@@ -103,6 +104,7 @@ Pkr_UnassignPlayerFromGame(const playerid, const gameId) {
     Pkr_UnassignPlayerSlotFromGame(gameId, _slot);
 
     Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has left the game. (Game ID: %d)", Pkr_GetClientName(playerid), gameId);
+    Pkr_Log("[Poker Debug]: %s has left GameId: %d with: $%d chips.", Pkr_GetClientName(playerid), gameId, chips);
 
 	new amountOfPlayersOnGame = Pkr_GetAmountOfPlayersOnGame(gameId);
 	new POKER_GAME_STATUS: status = Pkr_GetGameStatus(gameId);
