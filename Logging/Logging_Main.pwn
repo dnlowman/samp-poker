@@ -13,7 +13,7 @@ Pkr_Log(fstring[], {Float, _}:...)
     if (n)
     {
         new
-            message[144],
+            message[256],
             arg_start,
             arg_end;
         #emit CONST.alt        fstring
@@ -34,7 +34,7 @@ Pkr_Log(fstring[], {Float, _}:...)
         while (arg_end > arg_start);
 
         #emit PUSH.S          fstring
-        #emit PUSH.C          128
+        #emit PUSH.C          256
         #emit PUSH.ADR         message
 
         n += BYTES_PER_CELL * 3;
