@@ -74,6 +74,7 @@ Pkr_PlayerConfirmCall(const gameId, const player, const amount)
 {
     Pkr_AddToPot(gameId, amount);
     Pkr_MinusPlayerChips(gameId, player, amount);
+    Pkr_Log("[Poker Debug]: %s confirmed the call with $%d for GameId: %d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, player)), amount, gameId);
     Pkr_AddToPlayerBetContribution(gameId, player, amount);
     Pkr_AddToPlayerPotContribution(gameId, player, amount);
     Pkr_IncAmountOfPlays(gameId);
