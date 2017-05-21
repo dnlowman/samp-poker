@@ -41,7 +41,7 @@ native Eval5(hand[5]);
 native Eval7(hand[7]);
 
 #define POKER_DEBUG
-#define POKER_LSRP
+//#define POKER_LSRP
 
 const MAX_POKER_GAMES = 20;
 const MAX_POKER_PLAYERS = 6;
@@ -65,3 +65,7 @@ const Float:POKER_CAMERA_HEIGHT = 4.0;
 #define POKER_CAMERA_VAR_NAME "POKER_CAMERA"
 #define POKER_SIT_VAR_NAME "POKER_SIT_VAR"
 #define POKER_CHIPS_VAR_NAME "POKER_CHIPS"
+
+#if !defined BYTES_PER_CELL
+    #define BYTES_PER_CELL (cellbits / 8)
+#endif
