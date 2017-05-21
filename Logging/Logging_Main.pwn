@@ -1,5 +1,8 @@
 #define POKER_LOG_PATH "scriptfiles/poker.log"
-static const LOGGING_ADMIN_LEVEL = 1;
+
+#if defined POKER_DEBUG
+    static const LOGGING_ADMIN_LEVEL = 1;
+#endif
 
 Pkr_Log(fstring[], {Float, _}:...)
 {
