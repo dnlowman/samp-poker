@@ -81,9 +81,9 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
 		new nonFoldedPlayerId = Pkr_GetPlayerId(gameId, nonFoldedPlayer);
 
 		new pot = Pkr_GetPotAmount(gameId);
-		/*new rakeAmount = Pkr_TakeRake(gameId, pot);
+		new rakeAmount = Pkr_TakeRake(gameId, pot);
 		if(rakeAmount > 0)
-			pot -= rakeAmount;*/
+			pot -= rakeAmount;
 
 		Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId));
         Pkr_Log("[Poker Debug]: %s wins GameId: %d with pot: $%d due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId), gameId, pot);
@@ -109,9 +109,9 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
         new nonFoldedPlayerId = Pkr_GetPlayerId(gameId, nonFoldedPlayer);
 
 		new pot = Pkr_GetPotAmount(gameId);
-		/*new rakeAmount = Pkr_TakeRake(gameId, pot);
+		new rakeAmount = Pkr_TakeRake(gameId, pot);
 		if(rakeAmount > 0)
-			pot -= rakeAmount;*/
+			pot -= rakeAmount;
 
         Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId));
         Pkr_Log("[Poker Debug]: %s wins GameId: %d with pot: $%d due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId), gameId, pot);
@@ -336,9 +336,9 @@ stock Pkr_Evaluate(const gameId)
         {
 			new pot = Pkr_GetPotAmount(gameId);
 
-			/*new rakeAmount = Pkr_TakeRake(gameId, pot);
+			new rakeAmount = Pkr_TakeRake(gameId, pot);
 			if(rakeAmount > 0)
-				pot -= rakeAmount;*/
+				pot -= rakeAmount;
 
 			new _split = pot / _wincount;
 			new message[128];
@@ -357,9 +357,9 @@ stock Pkr_Evaluate(const gameId)
         else // One winner
         {
 			new pot = Pkr_GetPotAmount(gameId);
-			/*new rakeAmount = Pkr_TakeRake(gameId, pot);
+			new rakeAmount = Pkr_TakeRake(gameId, pot);
 			if(rakeAmount > 0)
-				pot -= rakeAmount;*/
+				pot -= rakeAmount;
 
 			format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}wins the pot ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
             Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
@@ -457,9 +457,9 @@ stock Pkr_Evaluate(const gameId)
 			if(_wincount > 1) // Multiple winners
 			{
 				new originalPot = pot;
-				/*new rakeAmount = Pkr_TakeRake(gameId, pot);
+				new rakeAmount = Pkr_TakeRake(gameId, pot);
 				if(rakeAmount > 0)
-					pot -= rakeAmount;*/
+					pot -= rakeAmount;
 
 				Pkr_SubFromPot(gameId, originalPot);
 
@@ -487,9 +487,9 @@ stock Pkr_Evaluate(const gameId)
 			{
 				new originalPot = pot;
 
-				/*new rakeAmount = Pkr_TakeRake(gameId, pot);
+				new rakeAmount = Pkr_TakeRake(gameId, pot);
 				if(rakeAmount > 0)
-					pot -= rakeAmount;*/
+					pot -= rakeAmount;
 
 				format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}is the winner of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
 				Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
