@@ -50,7 +50,7 @@ Pkr_Log(fstring[], {Float, _}:...)
         new Year, Month, Day, Hour, Minute, Second;
         getdate(Year, Month, Day);
         gettime(Hour, Minute, Second);
-        format(message, 256, "%02d/%02d/%d %02d:%02d:%02d - %s", Day, Month, Year, Hour, Minute, Second, message);
+        format(message, 256, "%02d/%02d/%d %02d:%02d:%02d - %s\n", Day, Month, Year, Hour, Minute, Second, message);
 
         #if defined POKER_DEBUG
             sendFormatAdminWarn(LOGGING_ADMIN_LEVEL, COLOR_WHITE, message);
@@ -62,7 +62,7 @@ Pkr_Log(fstring[], {Float, _}:...)
         new Year, Month, Day, Hour, Minute, Second;
         getdate(Year, Month, Day);
         gettime(Hour, Minute, Second);
-        format(fstring, 256, "%02d/%02d/%d %02d:%02d:%02d - %s", Day, Month, Year, Hour, Minute, Second, fstring);
+        format(fstring, 256, "%02d/%02d/%d %02d:%02d:%02d - %s\n", Day, Month, Year, Hour, Minute, Second, fstring);
 
         #if defined POKER_DEBUG
             sendFormatAdminWarn(LOGGING_ADMIN_LEVEL, COLOR_WHITE, fstring);
