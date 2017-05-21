@@ -114,6 +114,7 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
 			pot -= rakeAmount;
 
         Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId));
+        Pkr_Log("[Poker Debug]: %s wins GameId: %d with pot: $%d due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId), gameId, pot);
         Pkr_AddPlayerChips(gameId, nonFoldedPlayer, pot);
         Pkr_SetPotAmount(gameId, 0);
         Pkr_SetGameToLobby(gameId);
