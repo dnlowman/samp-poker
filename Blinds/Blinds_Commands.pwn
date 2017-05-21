@@ -54,7 +54,7 @@ PkrCMD_SetBlind(const playerid, const parameters[]) {
     new amount;
     if(sscanf(parameters, "i", amount))
     {
-        SendClientMessage(playerid, COLOR_GREY, "DEBUG USAGE: /pkr blind [amount]");
+        SendClientMessage(playerid, COLOR_GREY, "USAGE: /pkr blind [amount]");
         return;
     }
 
