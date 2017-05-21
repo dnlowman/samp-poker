@@ -86,7 +86,7 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
 			pot -= rakeAmount;
 
 		Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId));
-        Pkr_Log("[Poker Debug]: %s wins GameId: %d with pot: $%d due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId), gameId, pot);
+        Pkr_Log("%s wins GameId: %d with pot: $%d due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId), gameId, pot);
 		Pkr_AddPlayerChips(gameId, nonFoldedPlayer, pot);
 		Pkr_SetPotAmount(gameId, 0);
 		Pkr_SetGameToLobby(gameId);
@@ -114,7 +114,7 @@ stock Pkr_SetNextPlayerPlaying(const gameId)
 			pot -= rakeAmount;
 
         Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s wins the game due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId));
-        Pkr_Log("[Poker Debug]: %s wins GameId: %d with pot: $%d due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId), gameId, pot);
+        Pkr_Log("%s wins GameId: %d with pot: $%d due to all players folding.", Pkr_GetClientName(nonFoldedPlayerId), gameId, pot);
         Pkr_AddPlayerChips(gameId, nonFoldedPlayer, pot);
         Pkr_SetPotAmount(gameId, 0);
         Pkr_SetGameToLobby(gameId);
@@ -376,7 +376,7 @@ stock Pkr_Evaluate(const gameId)
 
             format(message, sizeof(message), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", message, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
             Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
-            Pkr_Log("[Poker Debug]: The pot has been split between %s due to players having a %s with a value of %i for GameId: %d.", message, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
+            Pkr_Log("The pot has been split between %s due to players having a %s with a value of %i for GameId: %d.", message, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
         }
         else // One winner
         {
@@ -395,7 +395,7 @@ stock Pkr_Evaluate(const gameId)
 			format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}wins the pot ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
             Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
             Pkr_SetPlayerChips(gameId, _winners[0], Pkr_GetPlayerChips(gameId, _winners[0]) + Pkr_GetPotAmount(gameId));
-            Pkr_Log("[Poker Debug]: %s wins the pot ($%s) with a %s and a value of %i for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
+            Pkr_Log("%s wins the pot ($%s) with a %s and a value of %i for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), Pkr_FormatNumber(Pkr_GetPotAmount(gameId)), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
             Pkr_SetPotAmount(gameId, 0);
             printf("set the pot amount!");
         }
@@ -514,7 +514,7 @@ stock Pkr_Evaluate(const gameId)
 				}
 
 				format(message, sizeof(message), "{CC6600}%s {FF9900}are the winners of the %s ($%s) with a %s and a value of %i.", message, (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
-                Pkr_Log("[Poker Debug]: %s are the winners of the %s ($%s) with a %s and a value of %i for GameId: %d.", message, (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
+                Pkr_Log("%s are the winners of the %s ($%s) with a %s and a value of %i for GameId: %d.", message, (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
                 Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
 
                 printf("Getting split...");
@@ -527,7 +527,7 @@ stock Pkr_Evaluate(const gameId)
 				for(new j = 0; j < _wincount; ++j) {
 					Pkr_AddPlayerChips(gameId, _winners[j], _split);
                     printf("adding chips!");
-                    Pkr_Log("[Poker Debug]: %s wins the split with a value of $%d for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]), gameId, _split);
+                    Pkr_Log("%s wins the split with a value of $%d for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]), gameId, _split);
 				}
 			}
 			else
@@ -546,7 +546,7 @@ stock Pkr_Evaluate(const gameId)
 
 				format(_sz, sizeof(_sz), "{CC6600}%s {FF9900}is the winner of the %s ($%s) with a %s and a value of %i.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
 				Pkr_SendGameMessage(gameId, COLOR_ORANGE, _sz);
-                Pkr_Log("[Poker Debug]: %s is the winner of the %s ($%s) with a %s and a value of %i for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
+                Pkr_Log("%s is the winner of the %s ($%s) with a %s and a value of %i for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[0]]), (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
                 printf("adding chips!");
 				Pkr_AddPlayerChips(gameId, _winners[0], pot);
                 printf("chips added!");
@@ -666,14 +666,14 @@ static stock PkrSys_AssignBlinds(const gameId)
     Pkr_SetPlayerStatusSmallBlind(gameId, _smallBlindPosition);
     Pkr_AddToPlayerPotContribution(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
     Pkr_SetPlayerChips(gameId, _smallBlindPosition, Pkr_GetPlayerChips(gameId, _smallBlindPosition) - Pkr_GetSmallBlind(gameId));
-    Pkr_Log("[Poker Debug]: %s is the small blind $%d for GameId: %d", Pkr_GetClientName(Pkr_GetPlayerId(gameId, _smallBlindPosition)), Pkr_GetSmallBlind(gameId), gameId);
+    Pkr_Log("%s is the small blind $%d for GameId: %d", Pkr_GetClientName(Pkr_GetPlayerId(gameId, _smallBlindPosition)), Pkr_GetSmallBlind(gameId), gameId);
     Pkr_AddToPot(gameId, Pkr_GetSmallBlind(gameId));
     Pkr_AddToPlayerBetContribution(gameId, _smallBlindPosition, Pkr_GetSmallBlind(gameId));
 
     Pkr_SetPlayerStatusBigBlind(gameId, _bigBlindPosition);
     Pkr_AddToPlayerPotContribution(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));
     Pkr_SetPlayerChips(gameId, _bigBlindPosition, Pkr_GetPlayerChips(gameId, _bigBlindPosition) - Pkr_GetBigBlind(gameId));
-    Pkr_Log("[Poker Debug]: %s is the big blind $%d for GameId: %d", Pkr_GetClientName(Pkr_GetPlayerId(gameId, _bigBlindPosition)), Pkr_GetBigBlind(gameId), gameId);
+    Pkr_Log("%s is the big blind $%d for GameId: %d", Pkr_GetClientName(Pkr_GetPlayerId(gameId, _bigBlindPosition)), Pkr_GetBigBlind(gameId), gameId);
     Pkr_SetCurrentBet(gameId, Pkr_GetBigBlind(gameId));
     Pkr_AddToPot(gameId, Pkr_GetBigBlind(gameId));
     Pkr_AddToPlayerBetContribution(gameId, _bigBlindPosition, Pkr_GetBigBlind(gameId));

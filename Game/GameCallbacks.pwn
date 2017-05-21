@@ -248,7 +248,7 @@ Pkr_GameDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			Pkr_AddToPlayerBetContribution(gameId, playerSlot, playerChips);
 			Pkr_AddToPlayerPotContribution(gameId, playerSlot, playerChips);
 			Pkr_MinusPlayerChips(gameId, playerSlot, playerChips);
-            Pkr_Log("[Poker Debug]: %s went all in with $%d for GameId: %d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, playerSlot)), playerChips, gameId);
+            Pkr_Log("%s went all in with $%d for GameId: %d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, playerSlot)), playerChips, gameId);
 			Pkr_SetNextPlayerPlaying(gameId);
 			return;
 		}
