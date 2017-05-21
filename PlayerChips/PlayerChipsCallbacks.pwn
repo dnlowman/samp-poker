@@ -97,6 +97,7 @@ Pkr_PlayerChipsDialogResponse(const playerid, const response, const inputtext[])
 			SetupPlayerMoney(playerid, -amount);
 			Pkr_ShowCursorForPlayerId(playerid);
 			Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "%s has added $%s chips to their stack.", Pkr_GetClientName(playerid), Pkr_FormatNumber(amount));
+            Pkr_Log("[Poker Debug]: %s has added $%s chips to their stack on GameId %d.", Pkr_GetClientName(playerid), Pkr_FormatNumber(amount), gameId);
 			return;
 		}
     }
