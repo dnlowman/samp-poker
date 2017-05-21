@@ -470,13 +470,15 @@ stock Pkr_Evaluate(const gameId)
 				}
 
 				format(message, sizeof(message), "{CC6600}%s {FF9900}are the winners of the %s ($%s) with a %s and a value of %i.", message, (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
-	            Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
+                Pkr_Log("[Poker Debug]: %s are the winners of the %s ($%s) with a %s and a value of %i for GameId: %d.", message, (count == 0) ? ("main pot") : ("side pot"), Pkr_FormatNumber(pot), Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
+                Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
 
 				new _split = pot / _wincount;
 
 				// Give the split to each player who won...
 				for(new j = 0; j < _wincount; ++j) {
 					Pkr_AddPlayerChips(gameId, _winners[j], _split);
+                    Pkr_Log("[Poker Debug]: %s wins the split with a value of $%d for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]), gameId, _split);
 				}
 			}
 			else
