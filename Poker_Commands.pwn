@@ -67,6 +67,7 @@ Pkr_RouteCommands(playerid, cmdtext[])
 	else if(strcmp("sit", command) == 0) PkrCMD_Sit(playerid);
 	else if(strcmp("stand", command) == 0) PkrCMD_Stand(playerid);
 	else if(strcmp("blind", command) == 0) PkrCMD_SetBlind(playerid, parameters);
+    else if(strcmp("blinds", command) == 0) PkrCMD_SetBlind(playerid, parameters);
 	else if(strcmp("chips", command) == 0) PkrCMD_Chips(playerid);
 	else if(strcmp("rake", command) == 0) PkrCMD_SetRake(playerid, parameters);
 	else if(strcmp("timer", command) == 0) PkrCMD_SetTimer(playerid, parameters);
