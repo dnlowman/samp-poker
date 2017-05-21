@@ -41,7 +41,7 @@ Pkr_PlayerConfirmBet(const gameId, const player, const amount)
 {
     Pkr_AddToPot(gameId, amount);
     Pkr_MinusPlayerChips(gameId, player, amount);
-    Pkr_Log("[Poker Debug]: %s confirmed the bet with $%d for GameId: %d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, player)), amount, gameId);
+    Pkr_Log("%s confirmed the bet with $%d for GameId: %d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, player)), amount, gameId);
     Pkr_SetLastAggressivePlayer(gameId, player);
     Pkr_AddToPlayerBetContribution(gameId, player, amount);
     Pkr_AddToPlayerPotContribution(gameId, player, amount);
@@ -58,7 +58,7 @@ Pkr_PlayerConfirmRaise(const gameId, const player, const amount, const meetAmoun
 {
     Pkr_AddToPot(gameId, meetAmount + amount);
     Pkr_MinusPlayerChips(gameId, player, meetAmount + amount);
-    Pkr_Log("[Poker Debug]: %s confirmed the raise with $%d for GameId: %d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, player)), meetAmount + amount, gameId);
+    Pkr_Log("%s confirmed the raise with $%d for GameId: %d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, player)), meetAmount + amount, gameId);
     Pkr_AddToPlayerBetContribution(gameId, player, meetAmount + amount);
     Pkr_AddToPlayerPotContribution(gameId, player, meetAmount + amount);
     Pkr_SetLastAggressivePlayer(gameId, player);
@@ -74,7 +74,7 @@ Pkr_PlayerConfirmCall(const gameId, const player, const amount)
 {
     Pkr_AddToPot(gameId, amount);
     Pkr_MinusPlayerChips(gameId, player, amount);
-    Pkr_Log("[Poker Debug]: %s confirmed the call with $%d for GameId: %d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, player)), amount, gameId);
+    Pkr_Log("%s confirmed the call with $%d for GameId: %d.", Pkr_GetClientName(Pkr_GetPlayerId(gameId, player)), amount, gameId);
     Pkr_AddToPlayerBetContribution(gameId, player, amount);
     Pkr_AddToPlayerPotContribution(gameId, player, amount);
     Pkr_IncAmountOfPlays(gameId);
