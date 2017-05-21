@@ -52,6 +52,7 @@ License:
 #include "Poker_Constants.pwn"
 #include "Poker_Header.inc"
 
+#include "Logging\Logging_Main.pwn"
 #include "Camera\Camera.pwn"
 #include "Cards\Cards.pwn"
 #include "Blinds\Blinds.pwn"
