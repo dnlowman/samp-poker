@@ -216,7 +216,7 @@ new g_rgPokerGames[MAX_POKER_GAMES][POKER_GAME];
             Pkr_SetPlayerPotContribution(%0, %1, Pkr_GetPlayerPotContribution(%0, %1) + %2)
 
 #define Pkr_SetAllPlayerPotContribution(%0,%1) \
-            for(new _j = 0; _j < MAX_POKER_PLAYERS; ++_j) if(Pkr_GetPlayerId(%0, _j) != INVALID_PLAYER_ID) Pkr_SetPlayerPotContribution(%0, _j, %1)
+            for(new _j = 0; _j < MAX_POKER_PLAYERS; ++_j) Pkr_SetPlayerPotContribution(%0, _j, %1)
 
 #define Pkr_GetCurrentBet(%0) \
             g_rgPokerGames[%0][CURRENT_BET]
