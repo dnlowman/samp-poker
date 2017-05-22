@@ -163,8 +163,8 @@ Pkr_DestroyGame(const gameId) {
 		Pkr_UnassignPlayerSlotFromGame(gameId, playerSlot);
 	}
 	Pkr_UnassignAllSpectators(gameId);
-    Pkr_InitialiseGame(gameId);
     Pkr_DestroyGameTextDraws(gameId);
+    Pkr_InitialiseGame(gameId);
     return;
 }
 
