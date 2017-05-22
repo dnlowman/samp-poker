@@ -238,15 +238,3 @@ Pkr_RemovePlayerVars(const gameId, const player) {
     g_rgPokerGames[gameId][PLAYER_STATUS][player] = POKER_PLAYER_STATUS: EMPTY;
     return;
 }
-
-stock Pkr_SumPotContributions(const gameId)
-{
-    new _total = 0;
-    for(new _i = 0; _i < MAX_POKER_PLAYERS; ++_i)
-    {
-        if(Pkr_GetPlayerId(gameId, _i) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, _i) != POKER_PLAYER_STATUS: FOLDED)
-            _total += Pkr_GetPlayerPotContribution(gameId, _i);
-    }
-
-    return _total;
-}
