@@ -357,7 +357,7 @@ stock Pkr_Evaluate(const gameId)
 
             format(message, sizeof(message), "The pot has been split between {CC6600}%s {FF9900}due to players having a %s with a value of %i.", message, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value);
             Pkr_SendGameMessage(gameId, COLOR_ORANGE, message);
-            Pkr_Log("The pot has been split between %s due to players having a %s with a value of %i for GameId: %d.", message, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
+            Pkr_Log("The pot: %d has been split: $%d between %s due to players having a %s with a value of %i for GameId: %d.", pot, _split, message, Pkr_ReturnHandName(Pkr_HandRank(_value)), _value, gameId);
         }
         else // One winner
         {
