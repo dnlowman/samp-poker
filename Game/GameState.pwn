@@ -320,7 +320,7 @@ Pkr_TakeRake(const gameId, const pot) {
 
 stock Pkr_Evaluate(const gameId)
 {
-	Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: EVALUATION);
+    Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: EVALUATION);
 	Pkr_ShowAllPlayerCards(gameId);
 
     new _sz[128];
@@ -428,6 +428,7 @@ stock Pkr_Evaluate(const gameId)
 
 		// Foreach contribution
 		for(new i; i < MAX_POKER_PLAYERS; ++i) {
+
 			// If there is nothing in this contribution continue...
 			if(contributions[i][1] == 0) {
 				// Mark the player as evaluated, they contributed nothing...
@@ -449,7 +450,7 @@ stock Pkr_Evaluate(const gameId)
 
 			// Foreach player
 			for(new j; j < MAX_POKER_PLAYERS; ++j) {
-				if(Pkr_GetPlayerId(gameId, contributions[j][0]) != INVALID_PLAYER_ID && Pkr_GetPlayerStatus(gameId, contributions[j][0]) != POKER_PLAYER_STATUS: EVALUATED && contributions[j][1] != 0) {
+				if(Pkr_GetPlayerStatus(gameId, contributions[j][0]) != POKER_PLAYER_STATUS: EVALUATED && contributions[j][1] != 0) {
 					pot += lowest;
 					contributions[j][1] -= lowest;
 				}
@@ -494,6 +495,11 @@ stock Pkr_Evaluate(const gameId)
                     Pkr_Log("%s wins the split with a value of $%d for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]), gameId, _split);
 				}
 			}
+            if(_wincount == 0)
+            {
+                Pkr_SubFromPot(gameId, pot);
+                Pkr_Log("Looks like no one is elligable for these chips due to a disconnect $%d.", pot);
+            }
 			else
 			{
 				new originalPot = pot;
