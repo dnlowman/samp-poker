@@ -347,6 +347,8 @@ stock Pkr_Evaluate(const gameId)
 			new message[128];
 
 			for(new i; i < _wincount; ++i) {
+                if(_winners[i] == INVALID_PLAYER_ID)
+                    continue;
 				Pkr_SetPlayerChips(gameId, _winners[i], _split);
 				new playerId = Pkr_GetPlayerId(gameId, _winners[i]);
 				format(message, sizeof(message), "%s %s", message, Pkr_GetClientName(playerId));
@@ -403,6 +405,8 @@ stock Pkr_Evaluate(const gameId)
             contributions[i][1] = Pkr_GetPlayerPotContribution(gameId, i);
 			contributionSum += contributions[i][1];
         }
+
+        Pkr_SendFormattedGameMessage(gameId, COLOR_RED, "The total contributions to the pot are: $%d with the pot standing at: $%d.", contributionSum, Pkr_GetPotAmount(gameId));
 
 		// Ordered contributions bubble sort...
         for(new i; i < MAX_POKER_PLAYERS; ++i)
@@ -484,6 +488,8 @@ stock Pkr_Evaluate(const gameId)
 
 				// Give the split to each player who won...
 				for(new j = 0; j < _wincount; ++j) {
+                    if(_winners[j] == INVALID_PLAYER_ID)
+                        continue;
 					Pkr_AddPlayerChips(gameId, _winners[j], _split);
                     Pkr_Log("%s wins the split with a value of $%d for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]), gameId, _split);
 				}
