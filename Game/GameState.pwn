@@ -349,7 +349,7 @@ stock Pkr_Evaluate(const gameId)
 			for(new i; i < _wincount; ++i) {
                 if(_winners[i] == INVALID_PLAYER_ID)
                     continue;
-				Pkr_SetPlayerChips(gameId, _winners[i], _split);
+                Pkr_AddPlayerChips(gameId, _winners[i], _split);
 				new playerId = Pkr_GetPlayerId(gameId, _winners[i]);
 				format(message, sizeof(message), "%s %s", message, Pkr_GetClientName(playerId));
 			}
