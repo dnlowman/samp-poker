@@ -495,7 +495,7 @@ stock Pkr_Evaluate(const gameId)
                     Pkr_Log("%s wins the split with a value of $%d for GameId: %d.", Pkr_GetClientName(g_rgPokerGames[gameId][PLAYERS][_winners[j]]), gameId, _split);
 				}
 			}
-            if(_wincount == 0)
+            else if(_wincount == 0)
             {
                 Pkr_SubFromPot(gameId, pot);
                 Pkr_Log("Looks like no one is elligable for these chips due to a disconnect $%d.", pot);
@@ -536,6 +536,7 @@ stock Pkr_SetGameToLobby(const gameId)
     Pkr_SetGameStatus(gameId, POKER_GAME_STATUS: LOBBY);
     Pkr_SetAllPlayerPotContribution(gameId, 0);
     Pkr_ResetPlayerBetContributions(gameId);
+    Pkr_SetPotAmount(gameId, 0);
     Pkr_SetLastBet(gameId, 0);
     Pkr_SetAmountOfPlays(gameId, 0);
 	Pkr_SetTimerTextDrawText(gameId, "_");
