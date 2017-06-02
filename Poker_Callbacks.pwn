@@ -192,13 +192,13 @@ public OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-	#if defined Pkr_OnPlayerDisconnect
-		Pkr_OnPlayerDisconnect(playerid, reason);
-	#endif
-
-	new gameId = Pkr_GetPlayerGame(playerid);
+    new gameId = Pkr_GetPlayerGame(playerid);
 	if(gameId != INVALID_POKER_GAME_ID)
 		Pkr_UnassignPlayerFromGame(playerid, gameId);
+
+    #if defined Pkr_OnPlayerDisconnect
+		Pkr_OnPlayerDisconnect(playerid, reason);
+	#endif
 
 	return 1;
 }
